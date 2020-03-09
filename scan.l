@@ -8,25 +8,42 @@ extern void yyerror(const char *msg);
 %} 
  
 %% 
-"#".*			; /* comment */
-">="			return GE; 
-"<="			return LE; 
-"=="			return EQ; 
-"!="			return NE; 
-"while"			return WHILE; 
-"if"			return IF; 
-"else"			return ELSE; 
-"print"			return PRINT; 
-"read"			return READ; 
-"program"		return PROGRAM; 
-"end"			return END; 
+\$\$.*			; /* explanatory comments */
+\$([^\$]|\$\$)*\$	; /* operational comments */
 
-[A-Za-z][A-Za-z0-9_]*	{ yylval.s = dupstr(yytext); return VARIABLE; } 
-\'[^']*\'		{ yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return STRING; }
-[0-9]+			{ yylval.i = strtol(yytext, 0, 10); return INTEGER; } 
+"program" return PROGRAM;
+"module" return MODULE;
+"start" return START;
+"end" return END;
+"void" return VOID;
+"const" return CONST;
+"number" return NUMBER;
+"array" return ARRAY;
+"string" return STRING;
+"function" return FUNCTION;
+"public" return PUBLIC;
+"forward" return FORWARD;
+"if" return IF;
+"then" return THEN;
+"else" return ELSE;
+"elif" return ELIF;
+"fi" return FI;
+"for" return FOR;
+"until" return UNTIL;
+"step" return STEP;
+"do" return DO;
+"done" return DONE;
+"repeat" return REPEAT;
+"stop" return STOP;
+"return" return RETURN;
+
+
+[A-Za-z][A-Za-z0-9_]*	{ yylval.s = dupstr(yytext); return VARIABLE; /* Identifier */} 
+\'[^']*\'		{ yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return STRING; /* String */}
+[0-9]+			{ yylval.i = strtol(yytext, 0, 10); return INTEGER; /* Literal */} 
 [-()<>=+*/%;{}.]	return *yytext; 
  
-[ \t\n\r]+		; /* ignore whitespace */ 
+[ \t\n\r]+		; /* whitespace */ 
  
 .			yyerror("Unknown character"); 
 %% 
