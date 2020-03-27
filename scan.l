@@ -1,16 +1,18 @@
-%{ 
-#include <stdlib.h> 
-#include <string.h> 
-#include "node.h" 
-#include "y.tab.h" 
+%{
+#include <stdlib.h>
+#include <string.h>
+#include "node.h"
+#include "y.tab.h"
 char *dupstr(const char *s);
 extern void yyerror(const char *msg);
-%} 
- 
-%% 
+%}
+
+%%
+
 \$\$.*			; /* explanatory comments */
 \$([^\$]|\$\$)*\$	; /* operational comments */
 
+ /*
 "program" return PROGRAM;
 "module" return MODULE;
 "start" return START;
@@ -36,16 +38,16 @@ extern void yyerror(const char *msg);
 "repeat" return REPEAT;
 "stop" return STOP;
 "return" return RETURN;
+ */
 
-
-[A-Za-z][A-Za-z0-9_]*	{ yylval.s = dupstr(yytext); return VARIABLE; /* Identifier */} 
+[A-Za-z][A-Za-z0-9_]*	{ yylval.s = dupstr(yytext); return VARIABLE; /* Identifier */}
 \'[^']*\'		{ yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return STRING; /* String */}
-[0-9]+			{ yylval.i = strtol(yytext, 0, 10); return INTEGER; /* Literal */} 
-[-()<>=+*/%;{}.]	return *yytext; 
- 
-[ \t\n\r]+		; /* whitespace */ 
- 
-.			yyerror("Unknown character"); 
-%% 
-int yywrap(void) { return 1; } 
+[0-9]+			{ yylval.i = strtol(yytext, 0, 10); return INTEGER; /* Literal */}
+[-()<>=+*/%;{}.]	return *yytext;
+
+[ \t\n\r]+		; /* whitespace */
+
+.			yyerror("Unknown character");
+%%
+int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
