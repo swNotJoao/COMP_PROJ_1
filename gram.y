@@ -10,6 +10,7 @@ int yylex();
 void evaluate(Node *p);
 void yyerror(char *s);
 int lbl;
+int yydebug=1;
 %}
 
 %union {
@@ -35,7 +36,7 @@ int lbl;
 %token LABEL JMP JZ JNZ ETIQ
 
 %%
-sw : joao {printf("joao\n");}
+
 
 %%
 

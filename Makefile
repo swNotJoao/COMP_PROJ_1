@@ -21,8 +21,8 @@ $(LANG): gram.y scan.l code.brg
 	make -C $(RUN)
 	-cp $(RUN)/lib$(LANG).a .
 
-examples:: $(LANG)
-	make -C $(EXS)
+#examples:: $(LANG)
+#	make -C $(EXS)
 
 run:: $(LANG)
 	make -C $(EXS) run
@@ -34,5 +34,5 @@ run:: $(LANG)
 clean::
 	make -C $(LIB) clean
 	make -C $(RUN) clean
-	make -C $(EXS) clean
+	#make -C $(EXS) clean
 	rm -f *.o $(LANG) lib$(LANG).a lex.yy.c y.tab.c y.tab.h y.output yyselect.c *.asm *~
