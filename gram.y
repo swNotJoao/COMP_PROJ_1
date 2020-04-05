@@ -10,7 +10,7 @@ int yylex();
 void evaluate(Node *p);
 void yyerror(char *s);
 int lbl;
-int yydebug=1;
+
 %}
 
 %union {
@@ -19,9 +19,8 @@ int yydebug=1;
 	Node *n;		/* node pointer */
 };
 
-%token joao
 %token <i> INTEGER
-%token <s> VARIABLE STRING
+%token <s> VARIABLE STRING IDENTIFICADOR
 %token WHILE IF PRINT READ PROGRAM END
 
 %nonassoc IFX
@@ -31,12 +30,13 @@ int yydebug=1;
 %left '*' '/' '%'
 %nonassoc UMINUS
 
- //%type <n> stmt expr list
+%type <n> id
 
 %token LABEL JMP JZ JNZ ETIQ
 
 %%
-
+id : IDENTIFICADOR ';'{$$ = strNode(IDENTIFICADOR, $1);}
+   ;
 
 %%
 
