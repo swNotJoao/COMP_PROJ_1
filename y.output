@@ -1,0 +1,34 @@
+   0  $accept : id $end
+
+   1  id : IDENTIFICADOR ';'
+
+state 0
+	$accept : . id $end  (0)
+
+	IDENTIFICADOR  shift 1
+	.  error
+
+	id  goto 2
+
+
+state 1
+	id : IDENTIFICADOR . ';'  (1)
+
+	';'  shift 3
+	.  error
+
+
+state 2
+	$accept : id . $end  (0)
+
+	$end  accept
+
+
+state 3
+	id : IDENTIFICADOR ';' .  (1)
+
+	.  reduce 1
+
+
+32 terminals, 2 nonterminals
+2 grammar rules, 4 states

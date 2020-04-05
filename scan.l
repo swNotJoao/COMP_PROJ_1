@@ -10,6 +10,7 @@ extern void yyerror(const char *msg);
 %}
 
 %%
+
 \$\$.*			; /* explanatory comments */
 \$([^\$]|\$\$)*\$	; /* operational comments */
 

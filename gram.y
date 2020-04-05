@@ -10,6 +10,7 @@ int yylex();
 void evaluate(Node *p);
 void yyerror(char *s);
 int lbl;
+int yydebug=1;
 
 %}
 
