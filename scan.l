@@ -14,12 +14,39 @@ extern void yyerror(const char *msg);
 \$\$.*			; /* explanatory comments */
 \$([^\$]|\$\$)*\$	; /* operational comments */
 
-[A-Za-z][A-Za-z0-9_]*	return IDENTIFICADOR;
+ /* Reserved words */
+"program" return PROGRAM;
+"module" return MODULE;
+"start" return START;
+"end" return END;
+"void" return VOID;
+"const" return CONST;
+"number" return NUMBER;
+"array" return ARRAY;
+"string" return STRING;
+"function" return FUNCTION;
+"public" return PUBLIC;
+"forward" return FORWARD;
+"if" return IF;
+"then" return THEN;
+"else" return ELSE;
+"elif" return ELIF;
+"fi" return FI;
+"for" return FOR;
+"until" return UNTIL;
+"step" return STEP;
+"do" return DO;
+"done" return DONE;
+"repeat" return REPEAT;
+"stop" return STOP;
+"return" return RETURN;
+
+[A-Za-z][A-Za-z0-9_]*\0	return IDENTIFICADOR;
 \'[^']*\'		;
-[0-9]+			;
+[0-9]+			{yylval.i = strtol(yytext, 0, 10); return INTEGER;}
 [-()<>=+*/%;{}.]	return *yytext;
 
-[ \t\n\r]+		ECHO; /* ignore whitespace */
+[ \t\n\r]+		; /* ignore whitespace */
 
 .			yyerror("Unknown character");
 %%

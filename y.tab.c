@@ -78,79 +78,92 @@ typedef union {
 extern int YYPARSE_DECL();
 
 #define INTEGER 257
-#define VARIABLE 258
-#define STRING 259
-#define IDENTIFICADOR 260
-#define WHILE 261
-#define IF 262
-#define PRINT 263
-#define READ 264
-#define PROGRAM 265
-#define END 266
-#define IFX 267
-#define ELSE 268
-#define GE 269
-#define LE 270
-#define EQ 271
-#define NE 272
-#define UMINUS 273
-#define LABEL 274
-#define JMP 275
-#define JZ 276
-#define JNZ 277
-#define ETIQ 278
+#define IDENTIFICADOR 258
+#define PROGRAM 259
+#define MODULE 260
+#define START 261
+#define END 262
+#define VOID 263
+#define CONST 264
+#define NUMBER 265
+#define ARRAY 266
+#define STRING 267
+#define FUNCTION 268
+#define PUBLIC 269
+#define FORWARD 270
+#define IF 271
+#define THEN 272
+#define ELSE 273
+#define ELIF 274
+#define FI 275
+#define FOR 276
+#define UNTIL 277
+#define STEP 278
+#define DO 279
+#define DONE 280
+#define REPEAT 281
+#define STOP 282
+#define RETURN 283
+#define IFX 284
+#define GE 285
+#define LE 286
+#define EQ 287
+#define NE 288
+#define UMINUS 289
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,
+    0,    1,
 };
 static const YYINT yylen[] = {                            2,
-    2,
+    1,    1,
 };
 static const YYINT yydefred[] = {                         0,
-    0,    0,    1,
+    1,    0,
 };
 static const YYINT yydgoto[] = {                          2,
+    0,
 };
-static const YYINT yysindex[] = {                      -260,
-  -58,    0,    0,
+static const YYINT yysindex[] = {                      -257,
+    0,    0,
 };
 static const YYINT yyrindex[] = {                         0,
-    0,    0,    0,
+    0,    0,
 };
 static const YYINT yygindex[] = {                         0,
+    0,
 };
-#define YYTABLESIZE 1
+#define YYTABLESIZE 0
 static const YYINT yytable[] = {                          1,
-    3,
 };
-static const YYINT yycheck[] = {                        260,
-   59,
+static const YYINT yycheck[] = {                        257,
 };
 #define YYFINAL 2
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 278
-#define YYUNDFTOKEN 281
+#define YYMAXTOKEN 289
+#define YYUNDFTOKEN 293
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
 
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,"'%'",0,0,0,0,"'*'","'+'",0,"'-'",0,"'/'",0,0,0,0,0,0,0,0,0,0,0,"';'",
-"'<'",0,"'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,"'%'",0,0,0,0,"'*'","'+'",0,"'-'",0,"'/'",0,0,0,0,0,0,0,0,0,0,0,0,"'<'",0,
+"'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,"INTEGER","VARIABLE","STRING","IDENTIFICADOR","WHILE","IF","PRINT","READ",
-"PROGRAM","END","IFX","ELSE","GE","LE","EQ","NE","UMINUS","LABEL","JMP","JZ",
-"JNZ","ETIQ",0,0,"illegal-symbol",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"INTEGER","IDENTIFICADOR","PROGRAM","MODULE","START","END","VOID","CONST",
+"NUMBER","ARRAY","STRING","FUNCTION","PUBLIC","FORWARD","IF","THEN","ELSE",
+"ELIF","FI","FOR","UNTIL","STEP","DO","DONE","REPEAT","STOP","RETURN","IFX",
+"GE","LE","EQ","NE","UMINUS",0,0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
-"$accept : id",
-"id : IDENTIFICADOR ';'",
+"$accept : integer",
+"integer : INTEGER",
+"id : IDENTIFICADOR",
 
 };
 #endif
@@ -188,7 +201,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 43 "gram.y"
+#line 50 "gram.y"
 
 char *mklbl(int n) {
   static char buf[20];
@@ -202,7 +215,7 @@ char **yynames =
 #else
 		 0;
 #endif
-#line 206 "y.tab.c"
+#line 219 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -405,10 +418,14 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 39 "gram.y"
-	{yyval.n = strNode(IDENTIFICADOR, yystack.l_mark[-1].s);}
+#line 43 "gram.y"
+	{yyval.n = intNode(INTEGER, yystack.l_mark[0].i);}
 break;
-#line 412 "y.tab.c"
+case 2:
+#line 46 "gram.y"
+	{yyval.n = strNode(IDENTIFICADOR, yystack.l_mark[0].s);}
+break;
+#line 429 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

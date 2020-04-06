@@ -21,8 +21,13 @@ int yydebug=1;
 };
 
 %token <i> INTEGER
-%token <s> VARIABLE STRING IDENTIFICADOR
-%token WHILE IF PRINT READ PROGRAM END
+%token <s> IDENTIFICADOR
+
+%token PROGRAM MODULE START END
+%token VOID CONST NUMBER ARRAY STRING
+%token FUNCTION PUBLIC FORWARD
+%token IF THEN ELSE ELIF FI FOR UNTIL STEP DO DONE REPEAT STOP
+%token RETURN
 
 %nonassoc IFX
 %nonassoc ELSE
@@ -31,12 +36,14 @@ int yydebug=1;
 %left '*' '/' '%'
 %nonassoc UMINUS
 
-%type <n> id
-
-%token LABEL JMP JZ JNZ ETIQ
+%type <n> id integer
 
 %%
-id : IDENTIFICADOR ';'{$$ = strNode(IDENTIFICADOR, $1);}
+
+integer : INTEGER {$$ = intNode(INTEGER, $1);}
+        ;
+
+id : IDENTIFICADOR {$$ = strNode(IDENTIFICADOR, $1);}
    ;
 
 %%
