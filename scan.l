@@ -42,8 +42,8 @@ extern void yyerror(const char *msg);
 "return" return RETURN;
 
 [A-Za-z][A-Za-z0-9_]*\0	return IDENTIFICADOR;
-\'[^']*\'		;
-[0-9]+			{yylval.i = strtol(yytext, 0, 10); return INTEGER;}
+\'[^']*\'		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
+[0-9]+			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
 [-()<>=+*/%;{}.]	return *yytext;
 
 [ \t\n\r]+		; /* ignore whitespace */

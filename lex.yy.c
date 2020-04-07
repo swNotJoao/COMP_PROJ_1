@@ -1183,12 +1183,12 @@ case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
 #line 45 "scan.l"
-;
+{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 46 "scan.l"
-{yylval.i = strtol(yytext, 0, 10); return INTEGER;}
+{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP

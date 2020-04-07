@@ -77,52 +77,52 @@ typedef union {
 
 extern int YYPARSE_DECL();
 
-#define INTEGER 257
-#define IDENTIFICADOR 258
-#define PROGRAM 259
-#define MODULE 260
-#define START 261
-#define END 262
-#define VOID 263
-#define CONST 264
-#define NUMBER 265
-#define ARRAY 266
-#define STRING 267
-#define FUNCTION 268
-#define PUBLIC 269
-#define FORWARD 270
-#define IF 271
-#define THEN 272
-#define ELSE 273
-#define ELIF 274
-#define FI 275
-#define FOR 276
-#define UNTIL 277
-#define STEP 278
-#define DO 279
-#define DONE 280
-#define REPEAT 281
-#define STOP 282
-#define RETURN 283
-#define IFX 284
-#define GE 285
-#define LE 286
-#define EQ 287
-#define NE 288
-#define UMINUS 289
+#define LITERAL_I 257
+#define LITERAL_S 258
+#define IDENTIFICADOR 259
+#define PROGRAM 260
+#define MODULE 261
+#define START 262
+#define END 263
+#define VOID 264
+#define CONST 265
+#define NUMBER 266
+#define ARRAY 267
+#define STRING 268
+#define FUNCTION 269
+#define PUBLIC 270
+#define FORWARD 271
+#define IF 272
+#define THEN 273
+#define ELSE 274
+#define ELIF 275
+#define FI 276
+#define FOR 277
+#define UNTIL 278
+#define STEP 279
+#define DO 280
+#define DONE 281
+#define REPEAT 282
+#define STOP 283
+#define RETURN 284
+#define IFX 285
+#define GE 286
+#define LE 287
+#define EQ 288
+#define NE 289
+#define UMINUS 290
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,    1,
+    0,
 };
 static const YYINT yylen[] = {                            2,
-    1,    1,
+    1,
 };
 static const YYINT yydefred[] = {                         0,
     1,    0,
 };
 static const YYINT yydgoto[] = {                          2,
-    0,
 };
 static const YYINT yysindex[] = {                      -257,
     0,    0,
@@ -131,7 +131,6 @@ static const YYINT yyrindex[] = {                         0,
     0,    0,
 };
 static const YYINT yygindex[] = {                         0,
-    0,
 };
 #define YYTABLESIZE 0
 static const YYINT yytable[] = {                          1,
@@ -142,7 +141,7 @@ static const YYINT yycheck[] = {                        257,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 289
+#define YYMAXTOKEN 290
 #define YYUNDFTOKEN 293
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
@@ -155,15 +154,14 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-"INTEGER","IDENTIFICADOR","PROGRAM","MODULE","START","END","VOID","CONST",
-"NUMBER","ARRAY","STRING","FUNCTION","PUBLIC","FORWARD","IF","THEN","ELSE",
-"ELIF","FI","FOR","UNTIL","STEP","DO","DONE","REPEAT","STOP","RETURN","IFX",
-"GE","LE","EQ","NE","UMINUS",0,0,0,"illegal-symbol",
+"LITERAL_I","LITERAL_S","IDENTIFICADOR","PROGRAM","MODULE","START","END","VOID",
+"CONST","NUMBER","ARRAY","STRING","FUNCTION","PUBLIC","FORWARD","IF","THEN",
+"ELSE","ELIF","FI","FOR","UNTIL","STEP","DO","DONE","REPEAT","STOP","RETURN",
+"IFX","GE","LE","EQ","NE","UMINUS",0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : integer",
-"integer : INTEGER",
-"id : IDENTIFICADOR",
+"integer : LITERAL_I",
 
 };
 #endif
@@ -201,7 +199,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 50 "gram.y"
+#line 49 "gram.y"
 
 char *mklbl(int n) {
   static char buf[20];
@@ -215,7 +213,7 @@ char **yynames =
 #else
 		 0;
 #endif
-#line 219 "y.tab.c"
+#line 217 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -418,14 +416,10 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 43 "gram.y"
-	{yyval.n = intNode(INTEGER, yystack.l_mark[0].i);}
+#line 45 "gram.y"
+	{yyval.n = intNode(LITERAL_I, yystack.l_mark[0].i);}
 break;
-case 2:
-#line 46 "gram.y"
-	{yyval.n = strNode(IDENTIFICADOR, yystack.l_mark[0].s);}
-break;
-#line 429 "y.tab.c"
+#line 423 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

@@ -20,7 +20,9 @@ int yydebug=1;
 	Node *n;		/* node pointer */
 };
 
-%token <i> INTEGER
+%token <i> LITERAL_I
+%token <s> LITERAL_S
+
 %token <s> IDENTIFICADOR
 
 %token PROGRAM MODULE START END
@@ -36,15 +38,12 @@ int yydebug=1;
 %left '*' '/' '%'
 %nonassoc UMINUS
 
-%type <n> id integer
+%type <n> integer
 
 %%
 
-integer : INTEGER {$$ = intNode(INTEGER, $1);}
+integer : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
         ;
-
-id : IDENTIFICADOR {$$ = strNode(IDENTIFICADOR, $1);}
-   ;
 
 %%
 
