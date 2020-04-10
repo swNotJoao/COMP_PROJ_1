@@ -1,27 +1,80 @@
-   0  $accept : integer $end
+   0  $accept : program $end
 
-   1  integer : LITERAL_I
+   1  program : PROGRAM instructs END
+
+   2  instructs : statement
+   3            | instructs statement
+
+   4  statement : ';'
+   5            | IF
 
 state 0
-	$accept : . integer $end  (0)
+	$accept : . program $end  (0)
 
-	LITERAL_I  shift 1
+	PROGRAM  shift 1
 	.  error
 
-	integer  goto 2
+	program  goto 2
 
 
 state 1
-	integer : LITERAL_I .  (1)
+	program : PROGRAM . instructs END  (1)
 
-	.  reduce 1
+	IF  shift 3
+	';'  shift 4
+	.  error
+
+	instructs  goto 5
+	statement  goto 6
 
 
 state 2
-	$accept : integer . $end  (0)
+	$accept : program . $end  (0)
 
 	$end  accept
 
 
-43 terminals, 2 nonterminals
-2 grammar rules, 3 states
+state 3
+	statement : IF .  (5)
+
+	.  reduce 5
+
+
+state 4
+	statement : ';' .  (4)
+
+	.  reduce 4
+
+
+state 5
+	program : PROGRAM instructs . END  (1)
+	instructs : instructs . statement  (3)
+
+	END  shift 7
+	IF  shift 3
+	';'  shift 4
+	.  error
+
+	statement  goto 8
+
+
+state 6
+	instructs : statement .  (2)
+
+	.  reduce 2
+
+
+state 7
+	program : PROGRAM instructs END .  (1)
+
+	.  reduce 1
+
+
+state 8
+	instructs : instructs statement .  (3)
+
+	.  reduce 3
+
+
+44 terminals, 4 nonterminals
+6 grammar rules, 9 states

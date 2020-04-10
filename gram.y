@@ -25,6 +25,7 @@ int yydebug=1;
 
 %token <s> IDENTIFICADOR
 
+ /* Reserved words */
 %token PROGRAM MODULE START END
 %token VOID CONST NUMBER ARRAY STRING
 %token FUNCTION PUBLIC FORWARD
@@ -38,14 +39,24 @@ int yydebug=1;
 %left '*' '/' '%'
 %nonassoc UMINUS
 
-%type <n> integer
+%start program
+
+%type <n> program instructs statement
 
 %%
 
-integer : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
-        ;
+program : PROGRAM instructs END {;}
+	;
 
+instructs : statement {;}
+	| instructs statement {;}
+					;
+
+statement : ';' {;}
+	| IF {;}
+	;
 %%
+
 
 char *mklbl(int n) {
   static char buf[20];

@@ -1,4 +1,5 @@
 %{
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "node.h"
@@ -11,10 +12,9 @@ extern void yyerror(const char *msg);
 
 %%
 
-\$\$.*			; /* explanatory comments */
-\$([^\$]|\$\$)*\$	; /* operational comments */
+\$\$.*			;
+\$([^\$]|\$\$)*\$	;
 
- /* Reserved words */
 "program" return PROGRAM;
 "module" return MODULE;
 "start" return START;
@@ -41,14 +41,15 @@ extern void yyerror(const char *msg);
 "stop" return STOP;
 "return" return RETURN;
 
-[A-Za-z][A-Za-z0-9_]*\0	return IDENTIFICADOR;
-\'[^']*\'		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
+[A-Za-z][A-Za-z0-9_]*	return IDENTIFICADOR;
+\"([^"]|\\\")*\"		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
+\'([^']|\\\')*\'		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 [0-9]+			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
 [-()<>=+*/%;{}.]	return *yytext;
 
-[ \t\n\r]+		; /* ignore whitespace */
+[ \t\n\r]+		;
 
-.			yyerror("Unknown character");
+.			yyerror("Unknown Character");
 %%
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
