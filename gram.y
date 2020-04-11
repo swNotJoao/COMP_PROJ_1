@@ -35,11 +35,11 @@ int yydebug=1;
 
 %nonassoc IFX
 %nonassoc ELSE
-%right ATTR
+%right ATTR '^'
 %left GE LE EQ NE '>' '<'
 %left '+' '-'
-%left '*' '/' '%'
-%nonassoc UMINUS
+%left '*' '/' '%' '&' '|'
+%nonassoc UMINUS  '?' '~' UAND
 
 %type <n> file program module declarations declaration instructs instruct
 
@@ -50,6 +50,7 @@ file : program {;}
 	;
 
 program : PROGRAM declarations START body END {;}
+	| PROGRAM declarations START END {;}
 	| PROGRAM START body END {;}
 	;
 
@@ -73,30 +74,27 @@ literals : literal {;}
 	;
 
 literal : LITERAL_I {;}
-	| LITERAL_C {;}
+	| LITERAL_C {/*$$ = yylval.s[0])*/;}
 	| LITERAL_S {;}
 	;
 
 function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
 	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
 	| FUNCTION qualifier type IDENTIFICADOR	DO body {;}
-	| FUNCTION qualifier type IDENTIFICADOR DONE {;}
-	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier type IDENTIFICADOR	DONE {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
 	| FUNCTION qualifier VOID IDENTIFICADOR variables	DONE {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
 	| FUNCTION qualifier VOID IDENTIFICADOR	DO body {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR DONE {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR	DONE {;}
+	| FUNCTION type IDENTIFICADOR variables	DO body {;}
 	| FUNCTION type IDENTIFICADOR variables	DONE {;}
-	| FUNCTION type IDENTIFICADOR variables	DO body {;}
 	| FUNCTION type IDENTIFICADOR	DO body {;}
-	| FUNCTION type IDENTIFICADOR DONE {;}
-	| FUNCTION type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION type IDENTIFICADOR	DONE {;}
+	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
 	| FUNCTION VOID IDENTIFICADOR variables	DONE {;}
-	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
 	| FUNCTION VOID IDENTIFICADOR	DO body {;}
-	| FUNCTION VOID IDENTIFICADOR DONE {;}
-	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
+	| FUNCTION VOID IDENTIFICADOR	DONE {;}
 	;
 
 qualifier : PUBLIC {;}
@@ -146,11 +144,22 @@ elifs : elif {;}
 elif : ELIF expression THEN instructs {;}
 	;
 
+args : expression {;}
+	| args ',' expression {;}
+	;
+
 expression	: LITERAL_I			  {;}
+	| LITERAL_C {;}
+	| LITERAL_S {;}
 	| IDENTIFICADOR			  {;}
+	| IDENTIFICADOR '(' args ')' {;}
+	| IDENTIFICADOR '[' expression ']' ATTR expression {;}
+	| IDENTIFICADOR ATTR expression {;}
 	| '-' expression %prec UMINUS		  {;}
+	| '&' expression %prec UAND	{;}
+	| '~' expression %prec '~' {;}
+	| '?' expression %prec '?' {;}
 	| expression '^' expression			  {;}
-	| expression '~' expression			  {;}
 	| expression '&' expression			  {;}
 	| expression '|' expression			  {;}
 	| expression '+' expression			  {;}
@@ -160,11 +169,12 @@ expression	: LITERAL_I			  {;}
 	| expression '%' expression			  {;}
 	| expression '<' expression			  {;}
 	| expression '>' expression			  {;}
+	| expression '=' expression			  {;}
 	| expression GE expression			  {;}
 	| expression LE expression			  {;}
 	| expression NE expression			  {;}
-	| expression '=' expression			  {;}
 	| '(' expression ')'			  {;}
+	| '[' expression ']' {;}
 	;
 
 

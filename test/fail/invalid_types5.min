@@ -1,0 +1,3 @@
+module
+    function number hello do 2 !
+end

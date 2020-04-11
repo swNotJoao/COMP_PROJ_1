@@ -1,0 +1,6 @@
+program
+    array x[2] := 1, 2;
+    string y := 0
+start
+    x[y] := 3;
+end

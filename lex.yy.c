@@ -488,7 +488,7 @@ static const YY_CHAR yy_ec[256] =
        11,   12,    4,    1,   13,   13,   13,   13,   13,   13,
        13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
        13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
-        1,   14,    1,    4,   15,    1,   16,   17,   18,   19,
+        4,   14,    4,    4,   15,    1,   16,   17,   18,   19,
 
        20,   21,   22,   23,   24,   13,   13,   25,   26,   27,
        28,   29,   13,   30,   31,   32,   33,   34,   35,   13,
@@ -1191,7 +1191,7 @@ return NE;
 case 32:
 YY_RULE_SETUP
 #line 48 "scan.l"
-return IDENTIFICADOR;
+{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return IDENTIFICADOR;}
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
@@ -1203,7 +1203,7 @@ case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
 #line 50 "scan.l"
-{if (yyleng - 2 == 1) return LITERAL_C; yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
+{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); if (yyleng - 3 == 0) return LITERAL_C; return LITERAL_S;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
