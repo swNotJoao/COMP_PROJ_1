@@ -5,10 +5,28 @@ program
 
 public const number my_number := 1999 ;
 number var_1;
+number var_3 := 12, 231, 23, "string", 'alsostr', 'c';
 string var_2
 
 start
 
-doasdads();
+repeat
+
+$$instruct
+if 12 + 21 then
+  12 + 21!
+  12 + 21;
+elif 13 + 12 then
+  12 + 22;
+  21 + 22!
+elif 13 + 12 then
+  12 + 22;
+  21 + 22!
+else
+  122 + 22!
+  2222 + 22;
+fi
+
+return 23 + 23
 
 end

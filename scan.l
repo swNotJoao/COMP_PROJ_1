@@ -44,9 +44,9 @@ extern void yyerror(const char *msg);
 
 [A-Za-z][A-Za-z0-9_]*	return IDENTIFICADOR;
 \"([^"]|\\\")*\"		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
-\'([^']|\\\')*\'		{if (yyleng - 1 == 0) return LITERAL_C; yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
+\'([^']|\\\')*\'		{if (yyleng - 2 == 1) return LITERAL_C; yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 [0-9]+			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
-[-()<>=+*/%;{}.]	return *yytext;
+[-()<>=+*/%^;{}.,!?|&~]	return *yytext;
 
 [ \t\n\r]+		;
 

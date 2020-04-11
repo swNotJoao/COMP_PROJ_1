@@ -67,12 +67,36 @@ declaration : function {;}
 	| variable {;}
 	;
 
-literals : LITERAL_I {;}
+literals : literal {;}
+	| literals literal {;}
+	| literals ',' literal {;}
+	;
+
+literal : LITERAL_I {;}
 	| LITERAL_C {;}
 	| LITERAL_S {;}
 	;
 
-function: DO {;}
+function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
+	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier type IDENTIFICADOR	DO body {;}
+	| FUNCTION qualifier type IDENTIFICADOR DONE {;}
+	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DONE {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR	DO body {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR DONE {;}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
+	| FUNCTION type IDENTIFICADOR variables	DONE {;}
+	| FUNCTION type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION type IDENTIFICADOR	DO body {;}
+	| FUNCTION type IDENTIFICADOR DONE {;}
+	| FUNCTION type IDENTIFICADOR variables	DO body {;}
+	| FUNCTION VOID IDENTIFICADOR variables	DONE {;}
+	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
+	| FUNCTION VOID IDENTIFICADOR	DO body {;}
+	| FUNCTION VOID IDENTIFICADOR DONE {;}
+	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
 	;
 
 qualifier : PUBLIC {;}
@@ -105,12 +129,25 @@ instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
 	| IF expression THEN instructs elifs FI {;}
 	| IF expression THEN instructs FI {;}
 	| IF expression THEN elifs FI {;}
+	| IF expression THEN FI {;}
+	| FOR expression UNTIL expression STEP expression DO instructs DONE {;}
+	| expression '!' {;}
+	| expression ';' {;}
+	| REPEAT {;}
+	| STOP {;}
+	| RETURN expression {;}
+	| RETURN {;}
 	;
 
-elifs : ELIF expression THEN instructs {;}
+elifs : elif {;}
+	| elifs elif {;}
 	;
 
-expression : LITERAL_I '+' LITERAL_I {;}
+elif : ELIF expression THEN instructs {;}
+	;
+
+expression : LITERAL_I {;}
+	| LITERAL_I '+' LITERAL_I {;}
 	;
 
 module : MODULE declarations END {;}
