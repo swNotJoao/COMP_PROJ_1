@@ -3,6 +3,12 @@ $cominside$
 
 program
 
-if if if ;
+public const number my_number := 1999 ;
+number var_1;
+string var_2
+
+start
+
+doasdads();
 
 end

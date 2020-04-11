@@ -1,80 +1,509 @@
-   0  $accept : program $end
+   0  $accept : file $end
 
-   1  program : PROGRAM instructs END
+   1  file : program
+   2       | module
 
-   2  instructs : statement
-   3            | instructs statement
+   3  program : PROGRAM declarations START instructs END
+   4          | PROGRAM START instructs END
 
-   4  statement : ';'
-   5            | IF
+   5  declarations : declaration
+   6               | declarations ';' declaration
+
+   7  declaration : function
+   8              | qualifier CONST variable ATTR literals
+   9              | qualifier CONST variable
+  10              | qualifier variable
+  11              | CONST variable
+  12              | CONST variable ATTR literals
+  13              | variable ATTR literals
+  14              | variable
+
+  15  literals : LITERAL_I
+  16           | LITERAL_C
+  17           | LITERAL_S
+
+  18  function : DO
+
+  19  qualifier : PUBLIC
+  20            | FORWARD
+
+  21  variables : variable
+  22            | variables ';' variable
+
+  23  variable : type IDENTIFICADOR '[' LITERAL_I ']'
+  24           | type IDENTIFICADOR
+
+  25  type : NUMBER
+  26       | STRING
+  27       | ARRAY
+
+  28  instructs : instruct
+  29            | instructs instruct
+
+  30  instruct : IDENTIFICADOR '(' ')' ';'
+
+  31  module : MODULE declarations END
+  32         | MODULE END
 
 state 0
-	$accept : . program $end  (0)
+	$accept : . file $end  (0)
 
 	PROGRAM  shift 1
+	MODULE  shift 2
 	.  error
 
-	program  goto 2
+	file  goto 3
+	program  goto 4
+	module  goto 5
 
 
 state 1
-	program : PROGRAM . instructs END  (1)
+	program : PROGRAM . declarations START instructs END  (3)
+	program : PROGRAM . START instructs END  (4)
 
-	IF  shift 3
-	';'  shift 4
+	START  shift 6
+	CONST  shift 7
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	PUBLIC  shift 11
+	FORWARD  shift 12
+	DO  shift 13
 	.  error
 
-	instructs  goto 5
-	statement  goto 6
+	declarations  goto 14
+	declaration  goto 15
+	function  goto 16
+	qualifier  goto 17
+	variable  goto 18
+	type  goto 19
 
 
 state 2
-	$accept : program . $end  (0)
+	module : MODULE . declarations END  (31)
+	module : MODULE . END  (32)
+
+	END  shift 20
+	CONST  shift 7
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	PUBLIC  shift 11
+	FORWARD  shift 12
+	DO  shift 13
+	.  error
+
+	declarations  goto 21
+	declaration  goto 15
+	function  goto 16
+	qualifier  goto 17
+	variable  goto 18
+	type  goto 19
+
+
+state 3
+	$accept : file . $end  (0)
 
 	$end  accept
 
 
-state 3
-	statement : IF .  (5)
-
-	.  reduce 5
-
-
 state 4
-	statement : ';' .  (4)
-
-	.  reduce 4
-
-
-state 5
-	program : PROGRAM instructs . END  (1)
-	instructs : instructs . statement  (3)
-
-	END  shift 7
-	IF  shift 3
-	';'  shift 4
-	.  error
-
-	statement  goto 8
-
-
-state 6
-	instructs : statement .  (2)
-
-	.  reduce 2
-
-
-state 7
-	program : PROGRAM instructs END .  (1)
+	file : program .  (1)
 
 	.  reduce 1
 
 
+state 5
+	file : module .  (2)
+
+	.  reduce 2
+
+
+state 6
+	program : PROGRAM START . instructs END  (4)
+
+	IDENTIFICADOR  shift 22
+	.  error
+
+	instructs  goto 23
+	instruct  goto 24
+
+
+state 7
+	declaration : CONST . variable  (11)
+	declaration : CONST . variable ATTR literals  (12)
+
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
+
+	variable  goto 25
+	type  goto 19
+
+
 state 8
-	instructs : instructs statement .  (3)
+	type : NUMBER .  (25)
+
+	.  reduce 25
+
+
+state 9
+	type : ARRAY .  (27)
+
+	.  reduce 27
+
+
+state 10
+	type : STRING .  (26)
+
+	.  reduce 26
+
+
+state 11
+	qualifier : PUBLIC .  (19)
+
+	.  reduce 19
+
+
+state 12
+	qualifier : FORWARD .  (20)
+
+	.  reduce 20
+
+
+state 13
+	function : DO .  (18)
+
+	.  reduce 18
+
+
+state 14
+	program : PROGRAM declarations . START instructs END  (3)
+	declarations : declarations . ';' declaration  (6)
+
+	START  shift 26
+	';'  shift 27
+	.  error
+
+
+state 15
+	declarations : declaration .  (5)
+
+	.  reduce 5
+
+
+state 16
+	declaration : function .  (7)
+
+	.  reduce 7
+
+
+state 17
+	declaration : qualifier . CONST variable ATTR literals  (8)
+	declaration : qualifier . CONST variable  (9)
+	declaration : qualifier . variable  (10)
+
+	CONST  shift 28
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
+
+	variable  goto 29
+	type  goto 19
+
+
+state 18
+	declaration : variable . ATTR literals  (13)
+	declaration : variable .  (14)
+
+	ATTR  shift 30
+	START  reduce 14
+	END  reduce 14
+	';'  reduce 14
+
+
+state 19
+	variable : type . IDENTIFICADOR '[' LITERAL_I ']'  (23)
+	variable : type . IDENTIFICADOR  (24)
+
+	IDENTIFICADOR  shift 31
+	.  error
+
+
+state 20
+	module : MODULE END .  (32)
+
+	.  reduce 32
+
+
+state 21
+	declarations : declarations . ';' declaration  (6)
+	module : MODULE declarations . END  (31)
+
+	END  shift 32
+	';'  shift 27
+	.  error
+
+
+state 22
+	instruct : IDENTIFICADOR . '(' ')' ';'  (30)
+
+	'('  shift 33
+	.  error
+
+
+state 23
+	program : PROGRAM START instructs . END  (4)
+	instructs : instructs . instruct  (29)
+
+	IDENTIFICADOR  shift 22
+	END  shift 34
+	.  error
+
+	instruct  goto 35
+
+
+state 24
+	instructs : instruct .  (28)
+
+	.  reduce 28
+
+
+state 25
+	declaration : CONST variable .  (11)
+	declaration : CONST variable . ATTR literals  (12)
+
+	ATTR  shift 36
+	START  reduce 11
+	END  reduce 11
+	';'  reduce 11
+
+
+state 26
+	program : PROGRAM declarations START . instructs END  (3)
+
+	IDENTIFICADOR  shift 22
+	.  error
+
+	instructs  goto 37
+	instruct  goto 24
+
+
+state 27
+	declarations : declarations ';' . declaration  (6)
+
+	CONST  shift 7
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	PUBLIC  shift 11
+	FORWARD  shift 12
+	DO  shift 13
+	.  error
+
+	declaration  goto 38
+	function  goto 16
+	qualifier  goto 17
+	variable  goto 18
+	type  goto 19
+
+
+state 28
+	declaration : qualifier CONST . variable ATTR literals  (8)
+	declaration : qualifier CONST . variable  (9)
+
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
+
+	variable  goto 39
+	type  goto 19
+
+
+state 29
+	declaration : qualifier variable .  (10)
+
+	.  reduce 10
+
+
+state 30
+	declaration : variable ATTR . literals  (13)
+
+	LITERAL_I  shift 40
+	LITERAL_S  shift 41
+	LITERAL_C  shift 42
+	.  error
+
+	literals  goto 43
+
+
+state 31
+	variable : type IDENTIFICADOR . '[' LITERAL_I ']'  (23)
+	variable : type IDENTIFICADOR .  (24)
+
+	'['  shift 44
+	START  reduce 24
+	END  reduce 24
+	ATTR  reduce 24
+	';'  reduce 24
+
+
+state 32
+	module : MODULE declarations END .  (31)
+
+	.  reduce 31
+
+
+state 33
+	instruct : IDENTIFICADOR '(' . ')' ';'  (30)
+
+	')'  shift 45
+	.  error
+
+
+state 34
+	program : PROGRAM START instructs END .  (4)
+
+	.  reduce 4
+
+
+state 35
+	instructs : instructs instruct .  (29)
+
+	.  reduce 29
+
+
+state 36
+	declaration : CONST variable ATTR . literals  (12)
+
+	LITERAL_I  shift 40
+	LITERAL_S  shift 41
+	LITERAL_C  shift 42
+	.  error
+
+	literals  goto 46
+
+
+state 37
+	program : PROGRAM declarations START instructs . END  (3)
+	instructs : instructs . instruct  (29)
+
+	IDENTIFICADOR  shift 22
+	END  shift 47
+	.  error
+
+	instruct  goto 35
+
+
+state 38
+	declarations : declarations ';' declaration .  (6)
+
+	.  reduce 6
+
+
+state 39
+	declaration : qualifier CONST variable . ATTR literals  (8)
+	declaration : qualifier CONST variable .  (9)
+
+	ATTR  shift 48
+	START  reduce 9
+	END  reduce 9
+	';'  reduce 9
+
+
+state 40
+	literals : LITERAL_I .  (15)
+
+	.  reduce 15
+
+
+state 41
+	literals : LITERAL_S .  (17)
+
+	.  reduce 17
+
+
+state 42
+	literals : LITERAL_C .  (16)
+
+	.  reduce 16
+
+
+state 43
+	declaration : variable ATTR literals .  (13)
+
+	.  reduce 13
+
+
+state 44
+	variable : type IDENTIFICADOR '[' . LITERAL_I ']'  (23)
+
+	LITERAL_I  shift 49
+	.  error
+
+
+state 45
+	instruct : IDENTIFICADOR '(' ')' . ';'  (30)
+
+	';'  shift 50
+	.  error
+
+
+state 46
+	declaration : CONST variable ATTR literals .  (12)
+
+	.  reduce 12
+
+
+state 47
+	program : PROGRAM declarations START instructs END .  (3)
 
 	.  reduce 3
 
 
-44 terminals, 4 nonterminals
-6 grammar rules, 9 states
+state 48
+	declaration : qualifier CONST variable ATTR . literals  (8)
+
+	LITERAL_I  shift 40
+	LITERAL_S  shift 41
+	LITERAL_C  shift 42
+	.  error
+
+	literals  goto 51
+
+
+state 49
+	variable : type IDENTIFICADOR '[' LITERAL_I . ']'  (23)
+
+	']'  shift 52
+	.  error
+
+
+state 50
+	instruct : IDENTIFICADOR '(' ')' ';' .  (30)
+
+	.  reduce 30
+
+
+state 51
+	declaration : qualifier CONST variable ATTR literals .  (8)
+
+	.  reduce 8
+
+
+state 52
+	variable : type IDENTIFICADOR '[' LITERAL_I ']' .  (23)
+
+	.  reduce 23
+
+
+Rules never reduced:
+	variables : variable  (21)
+	variables : variables ';' variable  (22)
+
+
+50 terminals, 14 nonterminals
+33 grammar rules, 53 states

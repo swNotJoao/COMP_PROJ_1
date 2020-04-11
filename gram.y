@@ -22,6 +22,7 @@ int yydebug=1;
 
 %token <i> LITERAL_I
 %token <s> LITERAL_S
+%token <i> LITERAL_C
 
 %token <s> IDENTIFICADOR
 
@@ -34,29 +35,89 @@ int yydebug=1;
 
 %nonassoc IFX
 %nonassoc ELSE
+%right ATTR
 %left GE LE EQ NE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
 %nonassoc UMINUS
 
-%start program
-
-%type <n> program instructs statement
+%type <n> file program module declarations declaration instructs instruct
 
 %%
 
-program : PROGRAM instructs END {;}
+file : program {;}
+	| module {;}
 	;
 
-instructs : statement {;}
-	| instructs statement {;}
-					;
-
-statement : ';' {;}
-	| IF {;}
+program : PROGRAM declarations START body END {;}
+	| PROGRAM START body END {;}
 	;
+
+declarations : declaration {;}
+	| declarations ';' declaration {;}
+	;
+
+declaration : function {;}
+	| qualifier CONST variable ATTR literals {;}
+	| qualifier CONST variable {;}
+	| qualifier variable{;}
+	| CONST variable {;}
+	| CONST variable ATTR literals {;}
+	| variable ATTR literals {;}
+	| variable {;}
+	;
+
+literals : LITERAL_I {;}
+	| LITERAL_C {;}
+	| LITERAL_S {;}
+	;
+
+function: DO {;}
+	;
+
+qualifier : PUBLIC {;}
+	| FORWARD {;}
+	;
+
+variables : variable {;}
+	| variables ';' variable {;}
+	;
+
+variable : type IDENTIFICADOR '[' LITERAL_I ']' {;}
+	| type IDENTIFICADOR {;}
+	;
+
+type : NUMBER {;}
+	| STRING {;}
+	| ARRAY {;}
+	;
+
+body : variables ';' instructs {;}
+	| variables ';' {;}
+	| instructs {;}
+	;
+
+instructs : instruct {;}
+	| instructs instruct {;}
+	;
+
+instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
+	| IF expression THEN instructs elifs FI {;}
+	| IF expression THEN instructs FI {;}
+	| IF expression THEN elifs FI {;}
+	;
+
+elifs : ELIF expression THEN instructs {;}
+	;
+
+expression : LITERAL_I '+' LITERAL_I {;}
+	;
+
+module : MODULE declarations END {;}
+	| MODULE END {;}
+	;
+
 %%
-
 
 char *mklbl(int n) {
   static char buf[20];
