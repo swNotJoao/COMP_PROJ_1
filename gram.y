@@ -146,9 +146,27 @@ elifs : elif {;}
 elif : ELIF expression THEN instructs {;}
 	;
 
-expression : LITERAL_I {;}
-	| LITERAL_I '+' LITERAL_I {;}
+expression	: LITERAL_I			  {;}
+	| IDENTIFICADOR			  {;}
+	| '-' expression %prec UMINUS		  {;}
+	| expression '^' expression			  {;}
+	| expression '~' expression			  {;}
+	| expression '&' expression			  {;}
+	| expression '|' expression			  {;}
+	| expression '+' expression			  {;}
+	| expression '-' expression			  {;}
+	| expression '*' expression			  {;}
+	| expression '/' expression			  {;}
+	| expression '%' expression			  {;}
+	| expression '<' expression			  {;}
+	| expression '>' expression			  {;}
+	| expression GE expression			  {;}
+	| expression LE expression			  {;}
+	| expression NE expression			  {;}
+	| expression '=' expression			  {;}
+	| '(' expression ')'			  {;}
 	;
+
 
 module : MODULE declarations END {;}
 	| MODULE END {;}
