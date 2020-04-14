@@ -136,6 +136,7 @@ instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
 	| STOP {;}
 	| RETURN expression {;}
 	| RETURN {;}
+	| expression '#' expression ';' {;}
 	;
 
 elifs : elif {;}

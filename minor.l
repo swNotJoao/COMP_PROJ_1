@@ -49,7 +49,7 @@ extern void yyerror(const char *msg);
 \"([^"]|\\\")*\"		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 \'([^']|\\\')*\'		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); if (yyleng - 3 == 0) return LITERAL_C; return LITERAL_S;}
 [0-9]+			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
-[-()<>=+*/%^;{}.,!?|&~\[\]]	return *yytext;
+[-()<>=+*/%^;{}.,!?|&~\[\]#]	return *yytext;
 
 [ \t\n\r]+		;
 
