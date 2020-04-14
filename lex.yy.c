@@ -647,8 +647,8 @@ static const flex_int16_t yy_rule_linenum[39] =
 
 char yytext[YYLMAX];
 char *yytext_ptr;
-#line 1 "scan.l"
-#line 2 "scan.l"
+#line 1 "minor.l"
+#line 2 "minor.l"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -939,7 +939,7 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 13 "scan.l"
+#line 13 "minor.l"
 
 
 #line 946 "lex.yy.c"
@@ -1034,201 +1034,201 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "scan.l"
+#line 15 "minor.l"
 ;
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 16 "scan.l"
+#line 16 "minor.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "scan.l"
+#line 18 "minor.l"
 return PROGRAM;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 19 "scan.l"
+#line 19 "minor.l"
 return MODULE;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "scan.l"
+#line 20 "minor.l"
 return START;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 21 "scan.l"
+#line 21 "minor.l"
 return END;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 22 "scan.l"
+#line 22 "minor.l"
 return VOID;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 23 "scan.l"
+#line 23 "minor.l"
 return CONST;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 24 "scan.l"
+#line 24 "minor.l"
 return NUMBER;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 25 "scan.l"
+#line 25 "minor.l"
 return ARRAY;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 26 "scan.l"
+#line 26 "minor.l"
 return STRING;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 27 "scan.l"
+#line 27 "minor.l"
 return FUNCTION;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 28 "scan.l"
+#line 28 "minor.l"
 return PUBLIC;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 29 "scan.l"
+#line 29 "minor.l"
 return FORWARD;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "scan.l"
+#line 30 "minor.l"
 return IF;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 31 "scan.l"
+#line 31 "minor.l"
 return THEN;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "scan.l"
+#line 32 "minor.l"
 return ELSE;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 33 "scan.l"
+#line 33 "minor.l"
 return ELIF;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "scan.l"
+#line 34 "minor.l"
 return FI;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "scan.l"
+#line 35 "minor.l"
 return FOR;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "scan.l"
+#line 36 "minor.l"
 return UNTIL;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "scan.l"
+#line 37 "minor.l"
 return STEP;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "scan.l"
+#line 38 "minor.l"
 return DO;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "scan.l"
+#line 39 "minor.l"
 return DONE;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 40 "scan.l"
+#line 40 "minor.l"
 return REPEAT;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 41 "scan.l"
+#line 41 "minor.l"
 return STOP;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 42 "scan.l"
+#line 42 "minor.l"
 return RETURN;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "scan.l"
+#line 43 "minor.l"
 return ATTR;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "scan.l"
+#line 44 "minor.l"
 return GE;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "scan.l"
+#line 45 "minor.l"
 return LE;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "scan.l"
+#line 46 "minor.l"
 return NE;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "scan.l"
+#line 48 "minor.l"
 {yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return IDENTIFICADOR;}
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 49 "scan.l"
+#line 49 "minor.l"
 {yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 50 "scan.l"
+#line 50 "minor.l"
 {yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); if (yyleng - 3 == 0) return LITERAL_C; return LITERAL_S;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 51 "scan.l"
+#line 51 "minor.l"
 {yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 52 "scan.l"
+#line 52 "minor.l"
 return *yytext;
 	YY_BREAK
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
-#line 54 "scan.l"
+#line 54 "minor.l"
 ;
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 56 "scan.l"
+#line 56 "minor.l"
 yyerror("Unknown Character");
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 57 "scan.l"
+#line 57 "minor.l"
 ECHO;
 	YY_BREAK
 #line 1235 "lex.yy.c"
@@ -2391,7 +2391,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 57 "scan.l"
+#line 57 "minor.l"
 
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }

@@ -17,7 +17,7 @@
 
 #define YYPURE 0
 
-#line 2 "gram.y"
+#line 2 "minor.y"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -31,7 +31,7 @@ void yyerror(char *s);
 int lbl;
 int yydebug=1;
 
-#line 17 "gram.y"
+#line 17 "minor.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -844,7 +844,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 186 "gram.y"
+#line 186 "minor.y"
 
 char *mklbl(int n) {
   static char buf[20];
@@ -1061,395 +1061,395 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 48 "gram.y"
+#line 48 "minor.y"
 	{;}
 break;
 case 2:
-#line 49 "gram.y"
+#line 49 "minor.y"
 	{;}
 break;
 case 3:
-#line 52 "gram.y"
+#line 52 "minor.y"
 	{;}
 break;
 case 4:
-#line 53 "gram.y"
+#line 53 "minor.y"
 	{;}
 break;
 case 5:
-#line 54 "gram.y"
+#line 54 "minor.y"
 	{;}
 break;
 case 6:
-#line 57 "gram.y"
+#line 57 "minor.y"
 	{;}
 break;
 case 7:
-#line 58 "gram.y"
+#line 58 "minor.y"
 	{;}
 break;
 case 8:
-#line 61 "gram.y"
+#line 61 "minor.y"
 	{;}
 break;
 case 9:
-#line 62 "gram.y"
+#line 62 "minor.y"
 	{;}
 break;
 case 10:
-#line 63 "gram.y"
+#line 63 "minor.y"
 	{;}
 break;
 case 11:
-#line 64 "gram.y"
+#line 64 "minor.y"
 	{;}
 break;
 case 12:
-#line 65 "gram.y"
+#line 65 "minor.y"
 	{;}
 break;
 case 13:
-#line 66 "gram.y"
+#line 66 "minor.y"
 	{;}
 break;
 case 14:
-#line 67 "gram.y"
+#line 67 "minor.y"
 	{;}
 break;
 case 15:
-#line 68 "gram.y"
+#line 68 "minor.y"
 	{;}
 break;
 case 16:
-#line 71 "gram.y"
+#line 71 "minor.y"
 	{;}
 break;
 case 17:
-#line 72 "gram.y"
+#line 72 "minor.y"
 	{;}
 break;
 case 18:
-#line 73 "gram.y"
+#line 73 "minor.y"
 	{;}
 break;
 case 19:
-#line 76 "gram.y"
+#line 76 "minor.y"
 	{;}
 break;
 case 20:
-#line 77 "gram.y"
+#line 77 "minor.y"
 	{/*$$ = yylval.s[0])*/;}
 break;
 case 21:
-#line 78 "gram.y"
+#line 78 "minor.y"
 	{;}
 break;
 case 22:
-#line 81 "gram.y"
+#line 81 "minor.y"
 	{;}
 break;
 case 23:
-#line 82 "gram.y"
+#line 82 "minor.y"
 	{;}
 break;
 case 24:
-#line 83 "gram.y"
+#line 83 "minor.y"
 	{;}
 break;
 case 25:
-#line 84 "gram.y"
+#line 84 "minor.y"
 	{;}
 break;
 case 26:
-#line 85 "gram.y"
+#line 85 "minor.y"
 	{;}
 break;
 case 27:
-#line 86 "gram.y"
+#line 86 "minor.y"
 	{;}
 break;
 case 28:
-#line 87 "gram.y"
+#line 87 "minor.y"
 	{;}
 break;
 case 29:
-#line 88 "gram.y"
+#line 88 "minor.y"
 	{;}
 break;
 case 30:
-#line 89 "gram.y"
+#line 89 "minor.y"
 	{;}
 break;
 case 31:
-#line 90 "gram.y"
+#line 90 "minor.y"
 	{;}
 break;
 case 32:
-#line 91 "gram.y"
+#line 91 "minor.y"
 	{;}
 break;
 case 33:
-#line 92 "gram.y"
+#line 92 "minor.y"
 	{;}
 break;
 case 34:
-#line 93 "gram.y"
+#line 93 "minor.y"
 	{;}
 break;
 case 35:
-#line 94 "gram.y"
+#line 94 "minor.y"
 	{;}
 break;
 case 36:
-#line 95 "gram.y"
+#line 95 "minor.y"
 	{;}
 break;
 case 37:
-#line 96 "gram.y"
+#line 96 "minor.y"
 	{;}
 break;
 case 38:
-#line 97 "gram.y"
+#line 97 "minor.y"
 	{;}
 break;
 case 39:
-#line 100 "gram.y"
+#line 100 "minor.y"
 	{;}
 break;
 case 40:
-#line 101 "gram.y"
+#line 101 "minor.y"
 	{;}
 break;
 case 41:
-#line 104 "gram.y"
+#line 104 "minor.y"
 	{;}
 break;
 case 42:
-#line 105 "gram.y"
+#line 105 "minor.y"
 	{;}
 break;
 case 43:
-#line 108 "gram.y"
+#line 108 "minor.y"
 	{;}
 break;
 case 44:
-#line 109 "gram.y"
+#line 109 "minor.y"
 	{;}
 break;
 case 45:
-#line 112 "gram.y"
+#line 112 "minor.y"
 	{;}
 break;
 case 46:
-#line 113 "gram.y"
+#line 113 "minor.y"
 	{;}
 break;
 case 47:
-#line 114 "gram.y"
+#line 114 "minor.y"
 	{;}
 break;
 case 48:
-#line 117 "gram.y"
+#line 117 "minor.y"
 	{;}
 break;
 case 49:
-#line 118 "gram.y"
+#line 118 "minor.y"
 	{;}
 break;
 case 50:
-#line 119 "gram.y"
+#line 119 "minor.y"
 	{;}
 break;
 case 51:
-#line 122 "gram.y"
+#line 122 "minor.y"
 	{;}
 break;
 case 52:
-#line 123 "gram.y"
+#line 123 "minor.y"
 	{;}
 break;
 case 53:
-#line 126 "gram.y"
+#line 126 "minor.y"
 	{;}
 break;
 case 54:
-#line 127 "gram.y"
+#line 127 "minor.y"
 	{;}
 break;
 case 55:
-#line 128 "gram.y"
+#line 128 "minor.y"
 	{;}
 break;
 case 56:
-#line 129 "gram.y"
+#line 129 "minor.y"
 	{;}
 break;
 case 57:
-#line 130 "gram.y"
+#line 130 "minor.y"
 	{;}
 break;
 case 58:
-#line 131 "gram.y"
+#line 131 "minor.y"
 	{;}
 break;
 case 59:
-#line 132 "gram.y"
+#line 132 "minor.y"
 	{;}
 break;
 case 60:
-#line 133 "gram.y"
+#line 133 "minor.y"
 	{;}
 break;
 case 61:
-#line 134 "gram.y"
+#line 134 "minor.y"
 	{;}
 break;
 case 62:
-#line 135 "gram.y"
+#line 135 "minor.y"
 	{;}
 break;
 case 63:
-#line 136 "gram.y"
+#line 136 "minor.y"
 	{;}
 break;
 case 64:
-#line 137 "gram.y"
+#line 137 "minor.y"
 	{;}
 break;
 case 65:
-#line 140 "gram.y"
+#line 140 "minor.y"
 	{;}
 break;
 case 66:
-#line 141 "gram.y"
+#line 141 "minor.y"
 	{;}
 break;
 case 67:
-#line 144 "gram.y"
+#line 144 "minor.y"
 	{;}
 break;
 case 68:
-#line 147 "gram.y"
+#line 147 "minor.y"
 	{;}
 break;
 case 69:
-#line 148 "gram.y"
+#line 148 "minor.y"
 	{;}
 break;
 case 70:
-#line 151 "gram.y"
+#line 151 "minor.y"
 	{;}
 break;
 case 71:
-#line 152 "gram.y"
+#line 152 "minor.y"
 	{;}
 break;
 case 72:
-#line 153 "gram.y"
+#line 153 "minor.y"
 	{;}
 break;
 case 73:
-#line 154 "gram.y"
+#line 154 "minor.y"
 	{;}
 break;
 case 74:
-#line 155 "gram.y"
+#line 155 "minor.y"
 	{;}
 break;
 case 75:
-#line 156 "gram.y"
+#line 156 "minor.y"
 	{;}
 break;
 case 76:
-#line 157 "gram.y"
+#line 157 "minor.y"
 	{;}
 break;
 case 77:
-#line 158 "gram.y"
+#line 158 "minor.y"
 	{;}
 break;
 case 78:
-#line 159 "gram.y"
+#line 159 "minor.y"
 	{;}
 break;
 case 79:
-#line 160 "gram.y"
+#line 160 "minor.y"
 	{;}
 break;
 case 80:
-#line 161 "gram.y"
+#line 161 "minor.y"
 	{;}
 break;
 case 81:
-#line 162 "gram.y"
+#line 162 "minor.y"
 	{;}
 break;
 case 82:
-#line 163 "gram.y"
+#line 163 "minor.y"
 	{;}
 break;
 case 83:
-#line 164 "gram.y"
+#line 164 "minor.y"
 	{;}
 break;
 case 84:
-#line 165 "gram.y"
+#line 165 "minor.y"
 	{;}
 break;
 case 85:
-#line 166 "gram.y"
+#line 166 "minor.y"
 	{;}
 break;
 case 86:
-#line 167 "gram.y"
+#line 167 "minor.y"
 	{;}
 break;
 case 87:
-#line 168 "gram.y"
+#line 168 "minor.y"
 	{;}
 break;
 case 88:
-#line 169 "gram.y"
+#line 169 "minor.y"
 	{;}
 break;
 case 89:
-#line 170 "gram.y"
+#line 170 "minor.y"
 	{;}
 break;
 case 90:
-#line 171 "gram.y"
+#line 171 "minor.y"
 	{;}
 break;
 case 91:
-#line 172 "gram.y"
+#line 172 "minor.y"
 	{;}
 break;
 case 92:
-#line 173 "gram.y"
+#line 173 "minor.y"
 	{;}
 break;
 case 93:
-#line 174 "gram.y"
+#line 174 "minor.y"
 	{;}
 break;
 case 94:
-#line 175 "gram.y"
+#line 175 "minor.y"
 	{;}
 break;
 case 95:
-#line 176 "gram.y"
+#line 176 "minor.y"
 	{;}
 break;
 case 96:
-#line 177 "gram.y"
+#line 177 "minor.y"
 	{;}
 break;
 case 97:
-#line 181 "gram.y"
+#line 181 "minor.y"
 	{;}
 break;
 case 98:
-#line 182 "gram.y"
+#line 182 "minor.y"
 	{;}
 break;
 #line 1456 "y.tab.c"
