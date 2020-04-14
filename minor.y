@@ -124,6 +124,7 @@ instructs : instruct {;}
 	;
 
 instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
+	| IF expression THEN instructs ELSE instructs FI {;}
 	| IF expression THEN instructs elifs FI {;}
 	| IF expression THEN instructs FI {;}
 	| IF expression THEN elifs FI {;}
@@ -148,17 +149,11 @@ args : expression {;}
 	| args ',' expression {;}
 	;
 
-expression	: LITERAL_I			  {;}
-	| LITERAL_C {;}
-	| LITERAL_S {;}
-	| IDENTIFICADOR			  {;}
-	| IDENTIFICADOR '(' args ')' {;}
-	| IDENTIFICADOR '[' expression ']' ATTR expression {;}
-	| IDENTIFICADOR ATTR expression {;}
+expression	: '?' expression %prec '?' {;}
 	| '-' expression %prec UMINUS		  {;}
 	| '&' expression %prec UAND	{;}
 	| '~' expression %prec '~' {;}
-	| '?' expression %prec '?' {;}
+	| '?' {;}
 	| expression '^' expression			  {;}
 	| expression '&' expression			  {;}
 	| expression '|' expression			  {;}
@@ -175,6 +170,14 @@ expression	: LITERAL_I			  {;}
 	| expression NE expression			  {;}
 	| '(' expression ')'			  {;}
 	| '[' expression ']' {;}
+	| LITERAL_I			  {;}
+	| LITERAL_C {;}
+	| LITERAL_S {;}
+	| IDENTIFICADOR			  {;}
+	| IDENTIFICADOR '(' args ')' {;}
+	| IDENTIFICADOR '[' expression ']' ATTR expression {;}
+	| IDENTIFICADOR '[' expression ']' {;}
+	| IDENTIFICADOR ATTR expression {;}
 	;
 
 

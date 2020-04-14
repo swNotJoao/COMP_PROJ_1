@@ -1,5 +1,3 @@
-Este programa calcula um termo (lido do terminal) da serie de Fibonacci
-
 program
 
 function number fib number n do
