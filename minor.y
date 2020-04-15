@@ -10,7 +10,7 @@ int yylex();
 void evaluate(Node *p);
 void yyerror(char *s);
 int lbl;
-int yydebug=1;
+/*int yydebug=1;*/
 
 %}
 
@@ -176,9 +176,9 @@ expression	: '?' expression %prec '?' {;}
 	| LITERAL_S {;}
 	| IDENTIFICADOR			  {;}
 	| IDENTIFICADOR '(' args ')' {;}
-	| IDENTIFICADOR '[' expression ']' ATTR expression {;}
-	| IDENTIFICADOR '[' expression ']' {;}
+	| expression '[' expression ']' ATTR expression {;}
 	| IDENTIFICADOR ATTR expression {;}
+	| expression '[' expression ']'
 	;
 
 
