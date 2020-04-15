@@ -171,9 +171,7 @@ expression	: '?' expression %prec '?' {;}
 	| expression NE expression			  {;}
 	| '(' expression ')'			  {;}
 	| '[' expression ']' {;}
-	| LITERAL_I			  {;}
-	| LITERAL_C {;}
-	| LITERAL_S {;}
+	| literals {;}
 	| IDENTIFICADOR			  {;}
 	| IDENTIFICADOR '(' args ')' {;}
 	| expression '[' expression ']' ATTR expression {;}

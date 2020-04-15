@@ -18,7 +18,7 @@ start
 
     s := "\fg\a0c"; $$ Same as:
                     $$ s := '\f' 'g' '\a0' 'c'
-    
+
     s := "\ff\a0c"; $$ Same as:
                     $$ s := '\ff' '\a0' 'c'
 end
