@@ -6,120 +6,120 @@
    3  program : PROGRAM declarations START body END
    4          | PROGRAM declarations START END
    5          | PROGRAM START body END
-   6          | PROGRAM START END
 
-   7  declarations : declaration
-   8               | declarations ';' declaration
+   6  module : MODULE declarations END
+   7         | MODULE END
 
-   9  declaration : function
-  10              | qualifier CONST variable ATTR literals
-  11              | qualifier CONST variable
-  12              | qualifier variable
-  13              | CONST variable ATTR literals
-  14              | CONST variable
-  15              | variable ATTR literals
-  16              | variable
+   8  declarations : declaration
+   9               | declarations ';' declaration
 
-  17  literals : literal
-  18           | literals literal
-  19           | literals ',' literal
+  10  declaration : function
+  11              | qualifier CONST variable ATTR literals
+  12              | qualifier CONST variable ATTR int_vec
+  13              | qualifier CONST variable
+  14              | qualifier variable
+  15              | CONST variable ATTR literals
+  16              | CONST variable ATTR int_vec
+  17              | CONST variable
+  18              | variable ATTR literals
+  19              | variable ATTR int_vec
+  20              | variable
 
-  20  literal : LITERAL_I
-  21          | LITERAL_C
-  22          | LITERAL_S
+  21  literals : literal
+  22           | literals literal
 
-  23  function : FUNCTION qualifier type IDENTIFICADOR variables DONE
-  24           | FUNCTION qualifier type IDENTIFICADOR variables DO body
-  25           | FUNCTION qualifier type IDENTIFICADOR DO body
-  26           | FUNCTION qualifier type IDENTIFICADOR DONE
-  27           | FUNCTION qualifier VOID IDENTIFICADOR variables DO body
-  28           | FUNCTION qualifier VOID IDENTIFICADOR variables DONE
-  29           | FUNCTION qualifier VOID IDENTIFICADOR DO body
-  30           | FUNCTION qualifier VOID IDENTIFICADOR DONE
-  31           | FUNCTION type IDENTIFICADOR variables DO body
-  32           | FUNCTION type IDENTIFICADOR variables DONE
-  33           | FUNCTION type IDENTIFICADOR DO body
-  34           | FUNCTION type IDENTIFICADOR DONE
-  35           | FUNCTION VOID IDENTIFICADOR variables DO body
-  36           | FUNCTION VOID IDENTIFICADOR variables DONE
-  37           | FUNCTION VOID IDENTIFICADOR DO body
-  38           | FUNCTION VOID IDENTIFICADOR DONE
+  23  int_vec : LITERAL_I
+  24          | int_vec ',' LITERAL_I
 
-  39  qualifier : PUBLIC
-  40            | FORWARD
+  25  literal : LITERAL_I
+  26          | LITERAL_C
+  27          | LITERAL_S
 
-  41  variables : variable
-  42            | variables ';' variable
+  28  function : FUNCTION qualifier type IDENTIFICADOR variables DONE
+  29           | FUNCTION qualifier type IDENTIFICADOR variables DO body
+  30           | FUNCTION qualifier type IDENTIFICADOR DO body
+  31           | FUNCTION qualifier type IDENTIFICADOR DONE
+  32           | FUNCTION qualifier VOID IDENTIFICADOR variables DO body
+  33           | FUNCTION qualifier VOID IDENTIFICADOR variables DONE
+  34           | FUNCTION qualifier VOID IDENTIFICADOR DO body
+  35           | FUNCTION qualifier VOID IDENTIFICADOR DONE
+  36           | FUNCTION type IDENTIFICADOR variables DO body
+  37           | FUNCTION type IDENTIFICADOR variables DONE
+  38           | FUNCTION type IDENTIFICADOR DO body
+  39           | FUNCTION type IDENTIFICADOR DONE
+  40           | FUNCTION VOID IDENTIFICADOR variables DO body
+  41           | FUNCTION VOID IDENTIFICADOR variables DONE
+  42           | FUNCTION VOID IDENTIFICADOR DO body
+  43           | FUNCTION VOID IDENTIFICADOR DONE
 
-  43  variable : type IDENTIFICADOR '[' LITERAL_I ']'
-  44           | type IDENTIFICADOR
+  44  qualifier : PUBLIC
+  45            | FORWARD
 
-  45  type : NUMBER
-  46       | STRING
-  47       | ARRAY
+  46  variables : variable
+  47            | variables ';' variable
 
-  48  body : variables ';' instructs
-  49       | variables ';'
-  50       | instructs
+  48  variable : type IDENTIFICADOR '[' LITERAL_I ']'
+  49           | type IDENTIFICADOR
 
-  51  instructs : instruct
-  52            | instructs instruct
+  50  type : NUMBER
+  51       | STRING
+  52       | ARRAY
 
-  53  instruct : IF expression THEN instructs elifs ELSE instructs FI
-  54           | IF expression THEN instructs ELSE instructs FI
-  55           | IF expression THEN instructs elifs FI
-  56           | IF expression THEN instructs FI
-  57           | IF expression THEN elifs FI
-  58           | IF expression THEN FI
-  59           | FOR expression UNTIL expression STEP expression DO instructs DONE
-  60           | expression '!'
-  61           | expression ';'
-  62           | REPEAT
-  63           | STOP
-  64           | RETURN expression
-  65           | RETURN
-  66           | expression '#' expression ';'
+  53  body : variables ';' instructs
+  54       | variables ';'
+  55       | instructs
 
-  67  elifs : elif
-  68        | elifs elif
+  56  instructs : instruct
+  57            | instructs instruct
 
-  69  elif : ELIF expression THEN instructs
+  58  instruct : IF expression THEN instructs elifs ELSE instructs FI
+  59           | IF expression THEN instructs ELSE instructs FI
+  60           | IF expression THEN instructs elifs FI
+  61           | IF expression THEN instructs FI
+  62           | IF expression THEN elifs FI
+  63           | IF expression THEN FI
+  64           | FOR expression UNTIL expression STEP expression DO instructs DONE
+  65           | expression '!'
+  66           | expression ';'
+  67           | literals '!'
+  68           | REPEAT
+  69           | STOP
+  70           | RETURN expression
+  71           | RETURN
+  72           | expression '#' expression ';'
 
-  70  args : expression
-  71       | args ',' expression
+  73  elifs : elif
+  74        | elifs elif
 
-  72  operator : '^'
-  73           | '&'
-  74           | '|'
-  75           | '+'
-  76           | '-'
-  77           | '*'
-  78           | '/'
-  79           | '%'
-  80           | '<'
-  81           | '>'
-  82           | '='
-  83           | GE
-  84           | LE
-  85           | NE
-  86           | ATTR
+  75  elif : ELIF expression THEN instructs
 
-  87  expression : IDENTIFICADOR
-  88             | literal
-  89             | '?' expression
-  90             | '-' expression
-  91             | '&' expression
-  92             | '~' expression
-  93             | '?'
-  94             | '(' expression ')'
-  95             | '[' expression ']'
-  96             | IDENTIFICADOR '(' args ')'
-  97             | expression literal
-  98             | expression '[' expression ']'
-  99             | expression operator expression
+  76  args : expression
+  77       | args ',' expression
 
- 100  module : MODULE declarations END
- 101         | MODULE END
+  78  expression : '?'
+  79             | '~' expression
+  80             | IDENTIFICADOR '(' args ')'
+  81             | IDENTIFICADOR
+  82             | literal
+  83             | '(' expression ')'
+  84             | expression '[' expression ']'
+  85             | expression '+' expression
+  86             | expression '-' expression
+  87             | '-' expression
+  88             | expression '*' expression
+  89             | expression '/' expression
+  90             | expression '%' expression
+  91             | expression '^' expression
+  92             | expression '>' expression
+  93             | expression '<' expression
+  94             | expression '=' expression
+  95             | expression '|' expression
+  96             | expression '&' expression
+  97             | '&' expression
+  98             | expression GE expression
+  99             | expression LE expression
+ 100             | expression NE expression
+ 101             | expression ATTR expression
 
 state 0
 	$accept : . file $end  (0)
@@ -137,7 +137,6 @@ state 1
 	program : PROGRAM . declarations START body END  (3)
 	program : PROGRAM . declarations START END  (4)
 	program : PROGRAM . START body END  (5)
-	program : PROGRAM . START END  (6)
 
 	START  shift 6
 	CONST  shift 7
@@ -158,8 +157,8 @@ state 1
 
 
 state 2
-	module : MODULE . declarations END  (100)
-	module : MODULE . END  (101)
+	module : MODULE . declarations END  (6)
+	module : MODULE . END  (7)
 
 	END  shift 20
 	CONST  shift 7
@@ -199,89 +198,88 @@ state 5
 
 state 6
 	program : PROGRAM START . body END  (5)
-	program : PROGRAM START . END  (6)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	END  shift 26
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 40
-	variable  goto 41
-	literal  goto 42
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 38
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
 	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	variables  goto 42
+	expression  goto 43
 
 
 state 7
-	declaration : CONST . variable ATTR literals  (13)
-	declaration : CONST . variable  (14)
+	declaration : CONST . variable ATTR literals  (15)
+	declaration : CONST . variable ATTR int_vec  (16)
+	declaration : CONST . variable  (17)
 
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
 	.  error
 
-	variable  goto 45
+	variable  goto 44
 	type  goto 19
 
 
 state 8
-	type : NUMBER .  (45)
+	type : NUMBER .  (50)
 
-	.  reduce 45
+	.  reduce 50
 
 
 state 9
-	type : ARRAY .  (47)
+	type : ARRAY .  (52)
 
-	.  reduce 47
+	.  reduce 52
 
 
 state 10
-	type : STRING .  (46)
+	type : STRING .  (51)
 
-	.  reduce 46
+	.  reduce 51
 
 
 state 11
-	function : FUNCTION . qualifier type IDENTIFICADOR variables DONE  (23)
-	function : FUNCTION . qualifier type IDENTIFICADOR variables DO body  (24)
-	function : FUNCTION . qualifier type IDENTIFICADOR DO body  (25)
-	function : FUNCTION . qualifier type IDENTIFICADOR DONE  (26)
-	function : FUNCTION . qualifier VOID IDENTIFICADOR variables DO body  (27)
-	function : FUNCTION . qualifier VOID IDENTIFICADOR variables DONE  (28)
-	function : FUNCTION . qualifier VOID IDENTIFICADOR DO body  (29)
-	function : FUNCTION . qualifier VOID IDENTIFICADOR DONE  (30)
-	function : FUNCTION . type IDENTIFICADOR variables DO body  (31)
-	function : FUNCTION . type IDENTIFICADOR variables DONE  (32)
-	function : FUNCTION . type IDENTIFICADOR DO body  (33)
-	function : FUNCTION . type IDENTIFICADOR DONE  (34)
-	function : FUNCTION . VOID IDENTIFICADOR variables DO body  (35)
-	function : FUNCTION . VOID IDENTIFICADOR variables DONE  (36)
-	function : FUNCTION . VOID IDENTIFICADOR DO body  (37)
-	function : FUNCTION . VOID IDENTIFICADOR DONE  (38)
+	function : FUNCTION . qualifier type IDENTIFICADOR variables DONE  (28)
+	function : FUNCTION . qualifier type IDENTIFICADOR variables DO body  (29)
+	function : FUNCTION . qualifier type IDENTIFICADOR DO body  (30)
+	function : FUNCTION . qualifier type IDENTIFICADOR DONE  (31)
+	function : FUNCTION . qualifier VOID IDENTIFICADOR variables DO body  (32)
+	function : FUNCTION . qualifier VOID IDENTIFICADOR variables DONE  (33)
+	function : FUNCTION . qualifier VOID IDENTIFICADOR DO body  (34)
+	function : FUNCTION . qualifier VOID IDENTIFICADOR DONE  (35)
+	function : FUNCTION . type IDENTIFICADOR variables DO body  (36)
+	function : FUNCTION . type IDENTIFICADOR variables DONE  (37)
+	function : FUNCTION . type IDENTIFICADOR DO body  (38)
+	function : FUNCTION . type IDENTIFICADOR DONE  (39)
+	function : FUNCTION . VOID IDENTIFICADOR variables DO body  (40)
+	function : FUNCTION . VOID IDENTIFICADOR variables DONE  (41)
+	function : FUNCTION . VOID IDENTIFICADOR DO body  (42)
+	function : FUNCTION . VOID IDENTIFICADOR DONE  (43)
 
-	VOID  shift 46
+	VOID  shift 45
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
@@ -289,116 +287,820 @@ state 11
 	FORWARD  shift 13
 	.  error
 
-	qualifier  goto 47
-	type  goto 48
+	qualifier  goto 46
+	type  goto 47
 
 
 state 12
-	qualifier : PUBLIC .  (39)
+	qualifier : PUBLIC .  (44)
 
-	.  reduce 39
+	.  reduce 44
 
 
 state 13
-	qualifier : FORWARD .  (40)
+	qualifier : FORWARD .  (45)
 
-	.  reduce 40
+	.  reduce 45
 
 
 state 14
 	program : PROGRAM declarations . START body END  (3)
 	program : PROGRAM declarations . START END  (4)
-	declarations : declarations . ';' declaration  (8)
+	declarations : declarations . ';' declaration  (9)
 
-	START  shift 49
-	';'  shift 50
+	START  shift 48
+	';'  shift 49
 	.  error
 
 
 state 15
-	declarations : declaration .  (7)
+	declarations : declaration .  (8)
 
-	.  reduce 7
+	.  reduce 8
 
 
 state 16
-	declaration : function .  (9)
+	declaration : function .  (10)
 
-	.  reduce 9
+	.  reduce 10
 
 
 state 17
-	declaration : qualifier . CONST variable ATTR literals  (10)
-	declaration : qualifier . CONST variable  (11)
-	declaration : qualifier . variable  (12)
+	declaration : qualifier . CONST variable ATTR literals  (11)
+	declaration : qualifier . CONST variable ATTR int_vec  (12)
+	declaration : qualifier . CONST variable  (13)
+	declaration : qualifier . variable  (14)
 
-	CONST  shift 51
+	CONST  shift 50
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
 	.  error
 
-	variable  goto 52
+	variable  goto 51
 	type  goto 19
 
 
 state 18
-	declaration : variable . ATTR literals  (15)
-	declaration : variable .  (16)
+	declaration : variable . ATTR literals  (18)
+	declaration : variable . ATTR int_vec  (19)
+	declaration : variable .  (20)
 
-	ATTR  shift 53
-	START  reduce 16
-	END  reduce 16
-	';'  reduce 16
+	ATTR  shift 52
+	START  reduce 20
+	END  reduce 20
+	';'  reduce 20
 
 
 state 19
-	variable : type . IDENTIFICADOR '[' LITERAL_I ']'  (43)
-	variable : type . IDENTIFICADOR  (44)
+	variable : type . IDENTIFICADOR '[' LITERAL_I ']'  (48)
+	variable : type . IDENTIFICADOR  (49)
 
-	IDENTIFICADOR  shift 54
+	IDENTIFICADOR  shift 53
 	.  error
 
 
 state 20
-	module : MODULE END .  (101)
+	module : MODULE END .  (7)
 
-	.  reduce 101
+	.  reduce 7
 
 
 state 21
-	declarations : declarations . ';' declaration  (8)
-	module : MODULE declarations . END  (100)
+	module : MODULE declarations . END  (6)
+	declarations : declarations . ';' declaration  (9)
 
-	END  shift 55
-	';'  shift 50
+	END  shift 54
+	';'  shift 49
 	.  error
 
 
 state 22
-	literal : LITERAL_I .  (20)
+	literal : LITERAL_I .  (25)
 
-	.  reduce 20
+	.  reduce 25
 
 
 state 23
-	literal : LITERAL_S .  (22)
+	literal : LITERAL_S .  (27)
 
-	.  reduce 22
+	.  reduce 27
 
 
 state 24
-	literal : LITERAL_C .  (21)
+	literal : LITERAL_C .  (26)
 
-	.  reduce 21
+	.  reduce 26
 
 
-25: shift/reduce conflict (shift 56, reduce 87) on '('
+25: shift/reduce conflict (shift 55, reduce 81) on '('
 state 25
-	expression : IDENTIFICADOR .  (87)
-	expression : IDENTIFICADOR . '(' args ')'  (96)
+	expression : IDENTIFICADOR . '(' args ')'  (80)
+	expression : IDENTIFICADOR .  (81)
 
-	'('  shift 56
+	'('  shift 55
+	LITERAL_I  reduce 81
+	LITERAL_S  reduce 81
+	LITERAL_C  reduce 81
+	IDENTIFICADOR  reduce 81
+	START  reduce 81
+	END  reduce 81
+	IF  reduce 81
+	THEN  reduce 81
+	ELSE  reduce 81
+	ELIF  reduce 81
+	FI  reduce 81
+	FOR  reduce 81
+	UNTIL  reduce 81
+	STEP  reduce 81
+	DO  reduce 81
+	DONE  reduce 81
+	REPEAT  reduce 81
+	STOP  reduce 81
+	RETURN  reduce 81
+	ATTR  reduce 81
+	'^'  reduce 81
+	GE  reduce 81
+	LE  reduce 81
+	NE  reduce 81
+	'>'  reduce 81
+	'<'  reduce 81
+	'+'  reduce 81
+	'-'  reduce 81
+	'*'  reduce 81
+	'/'  reduce 81
+	'%'  reduce 81
+	'&'  reduce 81
+	'|'  reduce 81
+	';'  reduce 81
+	','  reduce 81
+	'['  reduce 81
+	']'  reduce 81
+	'!'  reduce 81
+	'#'  reduce 81
+	'?'  reduce 81
+	'~'  reduce 81
+	')'  reduce 81
+	'='  reduce 81
+
+
+state 26
+	instruct : IF . expression THEN instructs elifs ELSE instructs FI  (58)
+	instruct : IF . expression THEN instructs ELSE instructs FI  (59)
+	instruct : IF . expression THEN instructs elifs FI  (60)
+	instruct : IF . expression THEN instructs FI  (61)
+	instruct : IF . expression THEN elifs FI  (62)
+	instruct : IF . expression THEN FI  (63)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 57
+
+
+state 27
+	instruct : FOR . expression UNTIL expression STEP expression DO instructs DONE  (64)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 58
+
+
+state 28
+	instruct : REPEAT .  (68)
+
+	.  reduce 68
+
+
+state 29
+	instruct : STOP .  (69)
+
+	.  reduce 69
+
+
+30: shift/reduce conflict (shift 22, reduce 71) on LITERAL_I
+30: shift/reduce conflict (shift 23, reduce 71) on LITERAL_S
+30: shift/reduce conflict (shift 24, reduce 71) on LITERAL_C
+30: shift/reduce conflict (shift 25, reduce 71) on IDENTIFICADOR
+30: shift/reduce conflict (shift 31, reduce 71) on '-'
+30: shift/reduce conflict (shift 32, reduce 71) on '&'
+30: shift/reduce conflict (shift 33, reduce 71) on '?'
+30: shift/reduce conflict (shift 34, reduce 71) on '~'
+30: shift/reduce conflict (shift 35, reduce 71) on '('
+state 30
+	instruct : RETURN . expression  (70)
+	instruct : RETURN .  (71)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	START  reduce 71
+	END  reduce 71
+	IF  reduce 71
+	ELSE  reduce 71
+	ELIF  reduce 71
+	FI  reduce 71
+	FOR  reduce 71
+	DONE  reduce 71
+	REPEAT  reduce 71
+	STOP  reduce 71
+	RETURN  reduce 71
+	';'  reduce 71
+
+	literal  goto 56
+	expression  goto 59
+
+
+state 31
+	expression : '-' . expression  (87)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 60
+
+
+state 32
+	expression : '&' . expression  (97)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 61
+
+
+state 33
+	expression : '?' .  (78)
+
+	.  reduce 78
+
+
+state 34
+	expression : '~' . expression  (79)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 62
+
+
+state 35
+	expression : '(' . expression ')'  (83)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 63
+
+
+state 36
+	body : instructs .  (55)
+	instructs : instructs . instruct  (57)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	START  reduce 55
+	END  reduce 55
+	';'  reduce 55
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 37
+	instructs : instruct .  (56)
+
+	.  reduce 56
+
+
+state 38
+	program : PROGRAM START body . END  (5)
+
+	END  shift 65
+	.  error
+
+
+state 39
+	variables : variable .  (46)
+
+	.  reduce 46
+
+
+state 40
+	literals : literals . literal  (22)
+	instruct : literals . '!'  (67)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	'!'  shift 66
+	.  error
+
+	literal  goto 67
+
+
+41: reduce/reduce conflict (reduce 21, reduce 82) on '!'
+state 41
+	literals : literal .  (21)
+	expression : literal .  (82)
+
+	LITERAL_I  reduce 21
+	LITERAL_S  reduce 21
+	LITERAL_C  reduce 21
+	ATTR  reduce 82
+	'^'  reduce 82
+	GE  reduce 82
+	LE  reduce 82
+	NE  reduce 82
+	'>'  reduce 82
+	'<'  reduce 82
+	'+'  reduce 82
+	'-'  reduce 82
+	'*'  reduce 82
+	'/'  reduce 82
+	'%'  reduce 82
+	'&'  reduce 82
+	'|'  reduce 82
+	';'  reduce 82
+	'['  reduce 82
+	'!'  reduce 21
+	'#'  reduce 82
+	'='  reduce 82
+
+
+state 42
+	variables : variables . ';' variable  (47)
+	body : variables . ';' instructs  (53)
+	body : variables . ';'  (54)
+
+	';'  shift 68
+	.  error
+
+
+state 43
+	instruct : expression . '!'  (65)
+	instruct : expression . ';'  (66)
+	instruct : expression . '#' expression ';'  (72)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	';'  shift 83
+	'['  shift 84
+	'!'  shift 85
+	'#'  shift 86
+	'='  shift 87
+	.  error
+
+
+state 44
+	declaration : CONST variable . ATTR literals  (15)
+	declaration : CONST variable . ATTR int_vec  (16)
+	declaration : CONST variable .  (17)
+
+	ATTR  shift 88
+	START  reduce 17
+	END  reduce 17
+	';'  reduce 17
+
+
+state 45
+	function : FUNCTION VOID . IDENTIFICADOR variables DO body  (40)
+	function : FUNCTION VOID . IDENTIFICADOR variables DONE  (41)
+	function : FUNCTION VOID . IDENTIFICADOR DO body  (42)
+	function : FUNCTION VOID . IDENTIFICADOR DONE  (43)
+
+	IDENTIFICADOR  shift 89
+	.  error
+
+
+state 46
+	function : FUNCTION qualifier . type IDENTIFICADOR variables DONE  (28)
+	function : FUNCTION qualifier . type IDENTIFICADOR variables DO body  (29)
+	function : FUNCTION qualifier . type IDENTIFICADOR DO body  (30)
+	function : FUNCTION qualifier . type IDENTIFICADOR DONE  (31)
+	function : FUNCTION qualifier . VOID IDENTIFICADOR variables DO body  (32)
+	function : FUNCTION qualifier . VOID IDENTIFICADOR variables DONE  (33)
+	function : FUNCTION qualifier . VOID IDENTIFICADOR DO body  (34)
+	function : FUNCTION qualifier . VOID IDENTIFICADOR DONE  (35)
+
+	VOID  shift 90
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
+
+	type  goto 91
+
+
+state 47
+	function : FUNCTION type . IDENTIFICADOR variables DO body  (36)
+	function : FUNCTION type . IDENTIFICADOR variables DONE  (37)
+	function : FUNCTION type . IDENTIFICADOR DO body  (38)
+	function : FUNCTION type . IDENTIFICADOR DONE  (39)
+
+	IDENTIFICADOR  shift 92
+	.  error
+
+
+state 48
+	program : PROGRAM declarations START . body END  (3)
+	program : PROGRAM declarations START . END  (4)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	END  shift 93
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 94
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	variables  goto 42
+	expression  goto 43
+
+
+state 49
+	declarations : declarations ';' . declaration  (9)
+
+	CONST  shift 7
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	FUNCTION  shift 11
+	PUBLIC  shift 12
+	FORWARD  shift 13
+	.  error
+
+	declaration  goto 95
+	function  goto 16
+	qualifier  goto 17
+	variable  goto 18
+	type  goto 19
+
+
+state 50
+	declaration : qualifier CONST . variable ATTR literals  (11)
+	declaration : qualifier CONST . variable ATTR int_vec  (12)
+	declaration : qualifier CONST . variable  (13)
+
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
+
+	variable  goto 96
+	type  goto 19
+
+
+state 51
+	declaration : qualifier variable .  (14)
+
+	.  reduce 14
+
+
+state 52
+	declaration : variable ATTR . literals  (18)
+	declaration : variable ATTR . int_vec  (19)
+
+	LITERAL_I  shift 97
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	.  error
+
+	literals  goto 98
+	int_vec  goto 99
+	literal  goto 100
+
+
+state 53
+	variable : type IDENTIFICADOR . '[' LITERAL_I ']'  (48)
+	variable : type IDENTIFICADOR .  (49)
+
+	'['  shift 101
+	START  reduce 49
+	END  reduce 49
+	DO  reduce 49
+	DONE  reduce 49
+	ATTR  reduce 49
+	';'  reduce 49
+
+
+state 54
+	module : MODULE declarations END .  (6)
+
+	.  reduce 6
+
+
+state 55
+	expression : IDENTIFICADOR '(' . args ')'  (80)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 102
+	args  goto 103
+
+
+state 56
+	expression : literal .  (82)
+
+	.  reduce 82
+
+
+state 57
+	instruct : IF expression . THEN instructs elifs ELSE instructs FI  (58)
+	instruct : IF expression . THEN instructs ELSE instructs FI  (59)
+	instruct : IF expression . THEN instructs elifs FI  (60)
+	instruct : IF expression . THEN instructs FI  (61)
+	instruct : IF expression . THEN elifs FI  (62)
+	instruct : IF expression . THEN FI  (63)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	THEN  shift 104
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	.  error
+
+
+state 58
+	instruct : FOR expression . UNTIL expression STEP expression DO instructs DONE  (64)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	UNTIL  shift 105
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	.  error
+
+
+59: shift/reduce conflict (shift 77, reduce 70) on '-'
+59: shift/reduce conflict (shift 81, reduce 70) on '&'
+state 59
+	instruct : RETURN expression .  (70)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 70
+	LITERAL_S  reduce 70
+	LITERAL_C  reduce 70
+	IDENTIFICADOR  reduce 70
+	START  reduce 70
+	END  reduce 70
+	IF  reduce 70
+	ELSE  reduce 70
+	ELIF  reduce 70
+	FI  reduce 70
+	FOR  reduce 70
+	DONE  reduce 70
+	REPEAT  reduce 70
+	STOP  reduce 70
+	RETURN  reduce 70
+	';'  reduce 70
+	'?'  reduce 70
+	'~'  reduce 70
+	'('  reduce 70
+
+
+60: shift/reduce conflict (shift 84, reduce 87) on '['
+60: shift/reduce conflict (shift 87, reduce 87) on '='
+state 60
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : '-' expression .  (87)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'['  shift 84
+	'='  shift 87
 	LITERAL_I  reduce 87
 	LITERAL_S  reduce 87
 	LITERAL_C  reduce 87
@@ -434,199 +1136,1295 @@ state 25
 	'|'  reduce 87
 	';'  reduce 87
 	','  reduce 87
-	'['  reduce 87
 	']'  reduce 87
 	'!'  reduce 87
 	'#'  reduce 87
-	'='  reduce 87
 	'?'  reduce 87
 	'~'  reduce 87
+	'('  reduce 87
 	')'  reduce 87
 
 
-state 26
-	program : PROGRAM START END .  (6)
+61: shift/reduce conflict (shift 84, reduce 97) on '['
+61: shift/reduce conflict (shift 87, reduce 97) on '='
+state 61
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : '&' expression .  (97)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-	.  reduce 6
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 97
+	LITERAL_S  reduce 97
+	LITERAL_C  reduce 97
+	IDENTIFICADOR  reduce 97
+	START  reduce 97
+	END  reduce 97
+	IF  reduce 97
+	THEN  reduce 97
+	ELSE  reduce 97
+	ELIF  reduce 97
+	FI  reduce 97
+	FOR  reduce 97
+	UNTIL  reduce 97
+	STEP  reduce 97
+	DO  reduce 97
+	DONE  reduce 97
+	REPEAT  reduce 97
+	STOP  reduce 97
+	RETURN  reduce 97
+	ATTR  reduce 97
+	'^'  reduce 97
+	GE  reduce 97
+	LE  reduce 97
+	NE  reduce 97
+	'>'  reduce 97
+	'<'  reduce 97
+	'+'  reduce 97
+	'-'  reduce 97
+	'*'  reduce 97
+	'/'  reduce 97
+	'%'  reduce 97
+	'&'  reduce 97
+	'|'  reduce 97
+	';'  reduce 97
+	','  reduce 97
+	']'  reduce 97
+	'!'  reduce 97
+	'#'  reduce 97
+	'?'  reduce 97
+	'~'  reduce 97
+	'('  reduce 97
+	')'  reduce 97
 
 
-state 27
-	instruct : IF . expression THEN instructs elifs ELSE instructs FI  (53)
-	instruct : IF . expression THEN instructs ELSE instructs FI  (54)
-	instruct : IF . expression THEN instructs elifs FI  (55)
-	instruct : IF . expression THEN instructs FI  (56)
-	instruct : IF . expression THEN elifs FI  (57)
-	instruct : IF . expression THEN FI  (58)
+62: shift/reduce conflict (shift 84, reduce 79) on '['
+62: shift/reduce conflict (shift 87, reduce 79) on '='
+state 62
+	expression : '~' expression .  (79)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 79
+	LITERAL_S  reduce 79
+	LITERAL_C  reduce 79
+	IDENTIFICADOR  reduce 79
+	START  reduce 79
+	END  reduce 79
+	IF  reduce 79
+	THEN  reduce 79
+	ELSE  reduce 79
+	ELIF  reduce 79
+	FI  reduce 79
+	FOR  reduce 79
+	UNTIL  reduce 79
+	STEP  reduce 79
+	DO  reduce 79
+	DONE  reduce 79
+	REPEAT  reduce 79
+	STOP  reduce 79
+	RETURN  reduce 79
+	ATTR  reduce 79
+	'^'  reduce 79
+	GE  reduce 79
+	LE  reduce 79
+	NE  reduce 79
+	'>'  reduce 79
+	'<'  reduce 79
+	'+'  reduce 79
+	'-'  reduce 79
+	'*'  reduce 79
+	'/'  reduce 79
+	'%'  reduce 79
+	'&'  reduce 79
+	'|'  reduce 79
+	';'  reduce 79
+	','  reduce 79
+	']'  reduce 79
+	'!'  reduce 79
+	'#'  reduce 79
+	'?'  reduce 79
+	'~'  reduce 79
+	'('  reduce 79
+	')'  reduce 79
+
+
+state 63
+	expression : '(' expression . ')'  (83)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	')'  shift 106
+	'='  shift 87
 	.  error
 
-	literal  goto 42
-	expression  goto 57
+
+state 64
+	instructs : instructs instruct .  (57)
+
+	.  reduce 57
 
 
-state 28
-	instruct : FOR . expression UNTIL expression STEP expression DO instructs DONE  (59)
+state 65
+	program : PROGRAM START body END .  (5)
+
+	.  reduce 5
+
+
+state 66
+	instruct : literals '!' .  (67)
+
+	.  reduce 67
+
+
+state 67
+	literals : literals literal .  (22)
+
+	.  reduce 22
+
+
+state 68
+	variables : variables ';' . variable  (47)
+	body : variables ';' . instructs  (53)
+	body : variables ';' .  (54)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	START  reduce 54
+	END  reduce 54
+	';'  reduce 54
+
+	instructs  goto 107
+	instruct  goto 37
+	variable  goto 108
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	expression  goto 43
+
+
+state 69
+	expression : expression ATTR . expression  (101)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	literal  goto 42
-	expression  goto 58
+	literal  goto 56
+	expression  goto 109
 
 
-state 29
-	instruct : REPEAT .  (62)
-
-	.  reduce 62
-
-
-state 30
-	instruct : STOP .  (63)
-
-	.  reduce 63
-
-
-31: shift/reduce conflict (shift 22, reduce 65) on LITERAL_I
-31: shift/reduce conflict (shift 23, reduce 65) on LITERAL_S
-31: shift/reduce conflict (shift 24, reduce 65) on LITERAL_C
-31: shift/reduce conflict (shift 25, reduce 65) on IDENTIFICADOR
-31: shift/reduce conflict (shift 32, reduce 65) on '-'
-31: shift/reduce conflict (shift 33, reduce 65) on '&'
-31: shift/reduce conflict (shift 34, reduce 65) on '['
-31: shift/reduce conflict (shift 35, reduce 65) on '?'
-31: shift/reduce conflict (shift 36, reduce 65) on '~'
-31: shift/reduce conflict (shift 37, reduce 65) on '('
-state 31
-	instruct : RETURN . expression  (64)
-	instruct : RETURN .  (65)
+state 70
+	expression : expression '^' . expression  (91)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	START  reduce 65
-	END  reduce 65
-	IF  reduce 65
-	ELSE  reduce 65
-	ELIF  reduce 65
-	FI  reduce 65
-	FOR  reduce 65
-	DONE  reduce 65
-	REPEAT  reduce 65
-	STOP  reduce 65
-	RETURN  reduce 65
-	';'  reduce 65
-
-	literal  goto 42
-	expression  goto 59
-
-
-state 32
-	expression : '-' . expression  (90)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	literal  goto 42
-	expression  goto 60
+	literal  goto 56
+	expression  goto 110
 
 
-state 33
-	expression : '&' . expression  (91)
+state 71
+	expression : expression GE . expression  (98)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	literal  goto 42
-	expression  goto 61
+	literal  goto 56
+	expression  goto 111
 
 
-state 34
-	expression : '[' . expression ']'  (95)
+state 72
+	expression : expression LE . expression  (99)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	literal  goto 42
-	expression  goto 62
+	literal  goto 56
+	expression  goto 112
 
 
-35: shift/reduce conflict (shift 22, reduce 93) on LITERAL_I
-35: shift/reduce conflict (shift 23, reduce 93) on LITERAL_S
-35: shift/reduce conflict (shift 24, reduce 93) on LITERAL_C
-35: shift/reduce conflict (shift 25, reduce 93) on IDENTIFICADOR
-35: shift/reduce conflict (shift 32, reduce 93) on '-'
-35: shift/reduce conflict (shift 33, reduce 93) on '&'
-35: shift/reduce conflict (shift 34, reduce 93) on '['
-35: shift/reduce conflict (shift 35, reduce 93) on '?'
-35: shift/reduce conflict (shift 36, reduce 93) on '~'
-35: shift/reduce conflict (shift 37, reduce 93) on '('
-state 35
-	expression : '?' . expression  (89)
-	expression : '?' .  (93)
+state 73
+	expression : expression NE . expression  (100)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 113
+
+
+state 74
+	expression : expression '>' . expression  (92)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 114
+
+
+state 75
+	expression : expression '<' . expression  (93)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 115
+
+
+state 76
+	expression : expression '+' . expression  (85)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 116
+
+
+state 77
+	expression : expression '-' . expression  (86)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 117
+
+
+state 78
+	expression : expression '*' . expression  (88)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 118
+
+
+state 79
+	expression : expression '/' . expression  (89)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 119
+
+
+state 80
+	expression : expression '%' . expression  (90)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 120
+
+
+state 81
+	expression : expression '&' . expression  (96)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 121
+
+
+state 82
+	expression : expression '|' . expression  (95)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 122
+
+
+state 83
+	instruct : expression ';' .  (66)
+
+	.  reduce 66
+
+
+state 84
+	expression : expression '[' . expression ']'  (84)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 123
+
+
+state 85
+	instruct : expression '!' .  (65)
+
+	.  reduce 65
+
+
+state 86
+	instruct : expression '#' . expression ';'  (72)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 124
+
+
+state 87
+	expression : expression '=' . expression  (94)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 125
+
+
+state 88
+	declaration : CONST variable ATTR . literals  (15)
+	declaration : CONST variable ATTR . int_vec  (16)
+
+	LITERAL_I  shift 97
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	.  error
+
+	literals  goto 126
+	int_vec  goto 127
+	literal  goto 100
+
+
+state 89
+	function : FUNCTION VOID IDENTIFICADOR . variables DO body  (40)
+	function : FUNCTION VOID IDENTIFICADOR . variables DONE  (41)
+	function : FUNCTION VOID IDENTIFICADOR . DO body  (42)
+	function : FUNCTION VOID IDENTIFICADOR . DONE  (43)
+
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	DO  shift 128
+	DONE  shift 129
+	.  error
+
+	variable  goto 39
+	type  goto 19
+	variables  goto 130
+
+
+state 90
+	function : FUNCTION qualifier VOID . IDENTIFICADOR variables DO body  (32)
+	function : FUNCTION qualifier VOID . IDENTIFICADOR variables DONE  (33)
+	function : FUNCTION qualifier VOID . IDENTIFICADOR DO body  (34)
+	function : FUNCTION qualifier VOID . IDENTIFICADOR DONE  (35)
+
+	IDENTIFICADOR  shift 131
+	.  error
+
+
+state 91
+	function : FUNCTION qualifier type . IDENTIFICADOR variables DONE  (28)
+	function : FUNCTION qualifier type . IDENTIFICADOR variables DO body  (29)
+	function : FUNCTION qualifier type . IDENTIFICADOR DO body  (30)
+	function : FUNCTION qualifier type . IDENTIFICADOR DONE  (31)
+
+	IDENTIFICADOR  shift 132
+	.  error
+
+
+state 92
+	function : FUNCTION type IDENTIFICADOR . variables DO body  (36)
+	function : FUNCTION type IDENTIFICADOR . variables DONE  (37)
+	function : FUNCTION type IDENTIFICADOR . DO body  (38)
+	function : FUNCTION type IDENTIFICADOR . DONE  (39)
+
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	DO  shift 133
+	DONE  shift 134
+	.  error
+
+	variable  goto 39
+	type  goto 19
+	variables  goto 135
+
+
+state 93
+	program : PROGRAM declarations START END .  (4)
+
+	.  reduce 4
+
+
+state 94
+	program : PROGRAM declarations START body . END  (3)
+
+	END  shift 136
+	.  error
+
+
+state 95
+	declarations : declarations ';' declaration .  (9)
+
+	.  reduce 9
+
+
+state 96
+	declaration : qualifier CONST variable . ATTR literals  (11)
+	declaration : qualifier CONST variable . ATTR int_vec  (12)
+	declaration : qualifier CONST variable .  (13)
+
+	ATTR  shift 137
+	START  reduce 13
+	END  reduce 13
+	';'  reduce 13
+
+
+97: reduce/reduce conflict (reduce 23, reduce 25) on START
+97: reduce/reduce conflict (reduce 23, reduce 25) on END
+97: reduce/reduce conflict (reduce 23, reduce 25) on ';'
+state 97
+	int_vec : LITERAL_I .  (23)
+	literal : LITERAL_I .  (25)
+
+	LITERAL_I  reduce 25
+	LITERAL_S  reduce 25
+	LITERAL_C  reduce 25
+	START  reduce 23
+	END  reduce 23
+	';'  reduce 23
+	','  reduce 23
+
+
+state 98
+	declaration : variable ATTR literals .  (18)
+	literals : literals . literal  (22)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	START  reduce 18
+	END  reduce 18
+	';'  reduce 18
+
+	literal  goto 67
+
+
+state 99
+	declaration : variable ATTR int_vec .  (19)
+	int_vec : int_vec . ',' LITERAL_I  (24)
+
+	','  shift 138
+	START  reduce 19
+	END  reduce 19
+	';'  reduce 19
+
+
+state 100
+	literals : literal .  (21)
+
+	.  reduce 21
+
+
+state 101
+	variable : type IDENTIFICADOR '[' . LITERAL_I ']'  (48)
+
+	LITERAL_I  shift 139
+	.  error
+
+
+state 102
+	args : expression .  (76)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	','  reduce 76
+	')'  reduce 76
+
+
+state 103
+	args : args . ',' expression  (77)
+	expression : IDENTIFICADOR '(' args . ')'  (80)
+
+	','  shift 140
+	')'  shift 141
+	.  error
+
+
+state 104
+	instruct : IF expression THEN . instructs elifs ELSE instructs FI  (58)
+	instruct : IF expression THEN . instructs ELSE instructs FI  (59)
+	instruct : IF expression THEN . instructs elifs FI  (60)
+	instruct : IF expression THEN . instructs FI  (61)
+	instruct : IF expression THEN . elifs FI  (62)
+	instruct : IF expression THEN . FI  (63)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	ELIF  shift 142
+	FI  shift 143
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 144
+	instruct  goto 37
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+	elifs  goto 145
+	elif  goto 146
+
+
+state 105
+	instruct : FOR expression UNTIL . expression STEP expression DO instructs DONE  (64)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 147
+
+
+state 106
+	expression : '(' expression ')' .  (83)
+
+	.  reduce 83
+
+
+state 107
+	body : variables ';' instructs .  (53)
+	instructs : instructs . instruct  (57)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	START  reduce 53
+	END  reduce 53
+	';'  reduce 53
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 108
+	variables : variables ';' variable .  (47)
+
+	.  reduce 47
+
+
+109: shift/reduce conflict (shift 84, reduce 101) on '['
+109: shift/reduce conflict (shift 87, reduce 101) on '='
+state 109
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+	expression : expression ATTR expression .  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 101
+	LITERAL_S  reduce 101
+	LITERAL_C  reduce 101
+	IDENTIFICADOR  reduce 101
+	START  reduce 101
+	END  reduce 101
+	IF  reduce 101
+	THEN  reduce 101
+	ELSE  reduce 101
+	ELIF  reduce 101
+	FI  reduce 101
+	FOR  reduce 101
+	UNTIL  reduce 101
+	STEP  reduce 101
+	DO  reduce 101
+	DONE  reduce 101
+	REPEAT  reduce 101
+	STOP  reduce 101
+	RETURN  reduce 101
+	';'  reduce 101
+	','  reduce 101
+	']'  reduce 101
+	'!'  reduce 101
+	'#'  reduce 101
+	'?'  reduce 101
+	'~'  reduce 101
+	'('  reduce 101
+	')'  reduce 101
+
+
+110: shift/reduce conflict (shift 84, reduce 91) on '['
+110: shift/reduce conflict (shift 87, reduce 91) on '='
+state 110
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression '^' expression .  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 91
+	LITERAL_S  reduce 91
+	LITERAL_C  reduce 91
+	IDENTIFICADOR  reduce 91
+	START  reduce 91
+	END  reduce 91
+	IF  reduce 91
+	THEN  reduce 91
+	ELSE  reduce 91
+	ELIF  reduce 91
+	FI  reduce 91
+	FOR  reduce 91
+	UNTIL  reduce 91
+	STEP  reduce 91
+	DO  reduce 91
+	DONE  reduce 91
+	REPEAT  reduce 91
+	STOP  reduce 91
+	RETURN  reduce 91
+	';'  reduce 91
+	','  reduce 91
+	']'  reduce 91
+	'!'  reduce 91
+	'#'  reduce 91
+	'?'  reduce 91
+	'~'  reduce 91
+	'('  reduce 91
+	')'  reduce 91
+
+
+111: shift/reduce conflict (shift 84, reduce 98) on '['
+111: shift/reduce conflict (shift 87, reduce 98) on '='
+state 111
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression GE expression .  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 98
+	LITERAL_S  reduce 98
+	LITERAL_C  reduce 98
+	IDENTIFICADOR  reduce 98
+	START  reduce 98
+	END  reduce 98
+	IF  reduce 98
+	THEN  reduce 98
+	ELSE  reduce 98
+	ELIF  reduce 98
+	FI  reduce 98
+	FOR  reduce 98
+	UNTIL  reduce 98
+	STEP  reduce 98
+	DO  reduce 98
+	DONE  reduce 98
+	REPEAT  reduce 98
+	STOP  reduce 98
+	RETURN  reduce 98
+	ATTR  reduce 98
+	'^'  reduce 98
+	GE  reduce 98
+	LE  reduce 98
+	NE  reduce 98
+	'>'  reduce 98
+	'<'  reduce 98
+	';'  reduce 98
+	','  reduce 98
+	']'  reduce 98
+	'!'  reduce 98
+	'#'  reduce 98
+	'?'  reduce 98
+	'~'  reduce 98
+	'('  reduce 98
+	')'  reduce 98
+
+
+112: shift/reduce conflict (shift 84, reduce 99) on '['
+112: shift/reduce conflict (shift 87, reduce 99) on '='
+state 112
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression LE expression .  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 99
+	LITERAL_S  reduce 99
+	LITERAL_C  reduce 99
+	IDENTIFICADOR  reduce 99
+	START  reduce 99
+	END  reduce 99
+	IF  reduce 99
+	THEN  reduce 99
+	ELSE  reduce 99
+	ELIF  reduce 99
+	FI  reduce 99
+	FOR  reduce 99
+	UNTIL  reduce 99
+	STEP  reduce 99
+	DO  reduce 99
+	DONE  reduce 99
+	REPEAT  reduce 99
+	STOP  reduce 99
+	RETURN  reduce 99
+	ATTR  reduce 99
+	'^'  reduce 99
+	GE  reduce 99
+	LE  reduce 99
+	NE  reduce 99
+	'>'  reduce 99
+	'<'  reduce 99
+	';'  reduce 99
+	','  reduce 99
+	']'  reduce 99
+	'!'  reduce 99
+	'#'  reduce 99
+	'?'  reduce 99
+	'~'  reduce 99
+	'('  reduce 99
+	')'  reduce 99
+
+
+113: shift/reduce conflict (shift 84, reduce 100) on '['
+113: shift/reduce conflict (shift 87, reduce 100) on '='
+state 113
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression NE expression .  (100)
+	expression : expression . ATTR expression  (101)
+
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 100
+	LITERAL_S  reduce 100
+	LITERAL_C  reduce 100
+	IDENTIFICADOR  reduce 100
+	START  reduce 100
+	END  reduce 100
+	IF  reduce 100
+	THEN  reduce 100
+	ELSE  reduce 100
+	ELIF  reduce 100
+	FI  reduce 100
+	FOR  reduce 100
+	UNTIL  reduce 100
+	STEP  reduce 100
+	DO  reduce 100
+	DONE  reduce 100
+	REPEAT  reduce 100
+	STOP  reduce 100
+	RETURN  reduce 100
+	ATTR  reduce 100
+	'^'  reduce 100
+	GE  reduce 100
+	LE  reduce 100
+	NE  reduce 100
+	'>'  reduce 100
+	'<'  reduce 100
+	';'  reduce 100
+	','  reduce 100
+	']'  reduce 100
+	'!'  reduce 100
+	'#'  reduce 100
+	'?'  reduce 100
+	'~'  reduce 100
+	'('  reduce 100
+	')'  reduce 100
+
+
+114: shift/reduce conflict (shift 84, reduce 92) on '['
+114: shift/reduce conflict (shift 87, reduce 92) on '='
+state 114
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression '>' expression .  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 92
+	LITERAL_S  reduce 92
+	LITERAL_C  reduce 92
+	IDENTIFICADOR  reduce 92
+	START  reduce 92
+	END  reduce 92
+	IF  reduce 92
+	THEN  reduce 92
+	ELSE  reduce 92
+	ELIF  reduce 92
+	FI  reduce 92
+	FOR  reduce 92
+	UNTIL  reduce 92
+	STEP  reduce 92
+	DO  reduce 92
+	DONE  reduce 92
+	REPEAT  reduce 92
+	STOP  reduce 92
+	RETURN  reduce 92
+	ATTR  reduce 92
+	'^'  reduce 92
+	GE  reduce 92
+	LE  reduce 92
+	NE  reduce 92
+	'>'  reduce 92
+	'<'  reduce 92
+	';'  reduce 92
+	','  reduce 92
+	']'  reduce 92
+	'!'  reduce 92
+	'#'  reduce 92
+	'?'  reduce 92
+	'~'  reduce 92
+	'('  reduce 92
+	')'  reduce 92
+
+
+115: shift/reduce conflict (shift 84, reduce 93) on '['
+115: shift/reduce conflict (shift 87, reduce 93) on '='
+state 115
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression '<' expression .  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 93
+	LITERAL_S  reduce 93
+	LITERAL_C  reduce 93
+	IDENTIFICADOR  reduce 93
 	START  reduce 93
 	END  reduce 93
 	IF  reduce 93
@@ -649,356 +2447,38 @@ state 35
 	NE  reduce 93
 	'>'  reduce 93
 	'<'  reduce 93
-	'+'  reduce 93
-	'*'  reduce 93
-	'/'  reduce 93
-	'%'  reduce 93
-	'|'  reduce 93
 	';'  reduce 93
 	','  reduce 93
 	']'  reduce 93
 	'!'  reduce 93
 	'#'  reduce 93
-	'='  reduce 93
+	'?'  reduce 93
+	'~'  reduce 93
+	'('  reduce 93
 	')'  reduce 93
 
-	literal  goto 42
-	expression  goto 63
 
+116: shift/reduce conflict (shift 84, reduce 85) on '['
+116: shift/reduce conflict (shift 87, reduce 85) on '='
+state 116
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression '+' expression .  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-state 36
-	expression : '~' . expression  (92)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 64
-
-
-state 37
-	expression : '(' . expression ')'  (94)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 65
-
-
-state 38
-	body : instructs .  (50)
-	instructs : instructs . instruct  (52)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	START  reduce 50
-	END  reduce 50
-	';'  reduce 50
-
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
-
-
-state 39
-	instructs : instruct .  (51)
-
-	.  reduce 51
-
-
-state 40
-	program : PROGRAM START body . END  (5)
-
-	END  shift 67
-	.  error
-
-
-state 41
-	variables : variable .  (41)
-
-	.  reduce 41
-
-
-state 42
-	expression : literal .  (88)
-
-	.  reduce 88
-
-
-state 43
-	variables : variables . ';' variable  (42)
-	body : variables . ';' instructs  (48)
-	body : variables . ';'  (49)
-
-	';'  shift 68
-	.  error
-
-
-state 44
-	instruct : expression . '!'  (60)
-	instruct : expression . ';'  (61)
-	instruct : expression . '#' expression ';'  (66)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	';'  shift 83
-	'['  shift 84
-	'!'  shift 85
-	'#'  shift 86
-	'='  shift 87
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 45
-	declaration : CONST variable . ATTR literals  (13)
-	declaration : CONST variable .  (14)
-
-	ATTR  shift 90
-	START  reduce 14
-	END  reduce 14
-	';'  reduce 14
-
-
-state 46
-	function : FUNCTION VOID . IDENTIFICADOR variables DO body  (35)
-	function : FUNCTION VOID . IDENTIFICADOR variables DONE  (36)
-	function : FUNCTION VOID . IDENTIFICADOR DO body  (37)
-	function : FUNCTION VOID . IDENTIFICADOR DONE  (38)
-
-	IDENTIFICADOR  shift 91
-	.  error
-
-
-state 47
-	function : FUNCTION qualifier . type IDENTIFICADOR variables DONE  (23)
-	function : FUNCTION qualifier . type IDENTIFICADOR variables DO body  (24)
-	function : FUNCTION qualifier . type IDENTIFICADOR DO body  (25)
-	function : FUNCTION qualifier . type IDENTIFICADOR DONE  (26)
-	function : FUNCTION qualifier . VOID IDENTIFICADOR variables DO body  (27)
-	function : FUNCTION qualifier . VOID IDENTIFICADOR variables DONE  (28)
-	function : FUNCTION qualifier . VOID IDENTIFICADOR DO body  (29)
-	function : FUNCTION qualifier . VOID IDENTIFICADOR DONE  (30)
-
-	VOID  shift 92
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	.  error
-
-	type  goto 93
-
-
-state 48
-	function : FUNCTION type . IDENTIFICADOR variables DO body  (31)
-	function : FUNCTION type . IDENTIFICADOR variables DONE  (32)
-	function : FUNCTION type . IDENTIFICADOR DO body  (33)
-	function : FUNCTION type . IDENTIFICADOR DONE  (34)
-
-	IDENTIFICADOR  shift 94
-	.  error
-
-
-state 49
-	program : PROGRAM declarations START . body END  (3)
-	program : PROGRAM declarations START . END  (4)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	END  shift 95
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 96
-	variable  goto 41
-	literal  goto 42
-	type  goto 19
-	variables  goto 43
-	expression  goto 44
-
-
-state 50
-	declarations : declarations ';' . declaration  (8)
-
-	CONST  shift 7
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	FUNCTION  shift 11
-	PUBLIC  shift 12
-	FORWARD  shift 13
-	.  error
-
-	declaration  goto 97
-	function  goto 16
-	qualifier  goto 17
-	variable  goto 18
-	type  goto 19
-
-
-state 51
-	declaration : qualifier CONST . variable ATTR literals  (10)
-	declaration : qualifier CONST . variable  (11)
-
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	.  error
-
-	variable  goto 98
-	type  goto 19
-
-
-state 52
-	declaration : qualifier variable .  (12)
-
-	.  reduce 12
-
-
-state 53
-	declaration : variable ATTR . literals  (15)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	.  error
-
-	literals  goto 99
-	literal  goto 100
-
-
-state 54
-	variable : type IDENTIFICADOR . '[' LITERAL_I ']'  (43)
-	variable : type IDENTIFICADOR .  (44)
-
-	'['  shift 101
-	START  reduce 44
-	END  reduce 44
-	DO  reduce 44
-	DONE  reduce 44
-	ATTR  reduce 44
-	';'  reduce 44
-
-
-state 55
-	module : MODULE declarations END .  (100)
-
-	.  reduce 100
-
-
-state 56
-	expression : IDENTIFICADOR '(' . args ')'  (96)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 102
-	args  goto 103
-
-
-state 57
-	instruct : IF expression . THEN instructs elifs ELSE instructs FI  (53)
-	instruct : IF expression . THEN instructs ELSE instructs FI  (54)
-	instruct : IF expression . THEN instructs elifs FI  (55)
-	instruct : IF expression . THEN instructs FI  (56)
-	instruct : IF expression . THEN elifs FI  (57)
-	instruct : IF expression . THEN FI  (58)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	THEN  shift 104
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
 	'*'  shift 78
 	'/'  shift 79
 	'%'  shift 80
@@ -1006,31 +2486,66 @@ state 57
 	'|'  shift 82
 	'['  shift 84
 	'='  shift 87
-	.  error
+	LITERAL_I  reduce 85
+	LITERAL_S  reduce 85
+	LITERAL_C  reduce 85
+	IDENTIFICADOR  reduce 85
+	START  reduce 85
+	END  reduce 85
+	IF  reduce 85
+	THEN  reduce 85
+	ELSE  reduce 85
+	ELIF  reduce 85
+	FI  reduce 85
+	FOR  reduce 85
+	UNTIL  reduce 85
+	STEP  reduce 85
+	DO  reduce 85
+	DONE  reduce 85
+	REPEAT  reduce 85
+	STOP  reduce 85
+	RETURN  reduce 85
+	ATTR  reduce 85
+	'^'  reduce 85
+	GE  reduce 85
+	LE  reduce 85
+	NE  reduce 85
+	'>'  reduce 85
+	'<'  reduce 85
+	'+'  reduce 85
+	'-'  reduce 85
+	';'  reduce 85
+	','  reduce 85
+	']'  reduce 85
+	'!'  reduce 85
+	'#'  reduce 85
+	'?'  reduce 85
+	'~'  reduce 85
+	'('  reduce 85
+	')'  reduce 85
 
-	literal  goto 88
-	operator  goto 89
 
+117: shift/reduce conflict (shift 84, reduce 86) on '['
+117: shift/reduce conflict (shift 87, reduce 86) on '='
+state 117
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression '-' expression .  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-state 58
-	instruct : FOR expression . UNTIL expression STEP expression DO instructs DONE  (59)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	UNTIL  shift 105
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
 	'*'  shift 78
 	'/'  shift 79
 	'%'  shift 80
@@ -1038,232 +2553,138 @@ state 58
 	'|'  shift 82
 	'['  shift 84
 	'='  shift 87
-	.  error
+	LITERAL_I  reduce 86
+	LITERAL_S  reduce 86
+	LITERAL_C  reduce 86
+	IDENTIFICADOR  reduce 86
+	START  reduce 86
+	END  reduce 86
+	IF  reduce 86
+	THEN  reduce 86
+	ELSE  reduce 86
+	ELIF  reduce 86
+	FI  reduce 86
+	FOR  reduce 86
+	UNTIL  reduce 86
+	STEP  reduce 86
+	DO  reduce 86
+	DONE  reduce 86
+	REPEAT  reduce 86
+	STOP  reduce 86
+	RETURN  reduce 86
+	ATTR  reduce 86
+	'^'  reduce 86
+	GE  reduce 86
+	LE  reduce 86
+	NE  reduce 86
+	'>'  reduce 86
+	'<'  reduce 86
+	'+'  reduce 86
+	'-'  reduce 86
+	';'  reduce 86
+	','  reduce 86
+	']'  reduce 86
+	'!'  reduce 86
+	'#'  reduce 86
+	'?'  reduce 86
+	'~'  reduce 86
+	'('  reduce 86
+	')'  reduce 86
 
-	literal  goto 88
-	operator  goto 89
 
+118: shift/reduce conflict (shift 84, reduce 88) on '['
+118: shift/reduce conflict (shift 87, reduce 88) on '='
+state 118
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression '*' expression .  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-59: shift/reduce conflict (shift 22, reduce 64) on LITERAL_I
-59: shift/reduce conflict (shift 23, reduce 64) on LITERAL_S
-59: shift/reduce conflict (shift 24, reduce 64) on LITERAL_C
-59: shift/reduce conflict (shift 77, reduce 64) on '-'
-59: shift/reduce conflict (shift 81, reduce 64) on '&'
-59: shift/reduce conflict (shift 84, reduce 64) on '['
-state 59
-	instruct : RETURN expression .  (64)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
 	'['  shift 84
 	'='  shift 87
-	IDENTIFICADOR  reduce 64
-	START  reduce 64
-	END  reduce 64
-	IF  reduce 64
-	ELSE  reduce 64
-	ELIF  reduce 64
-	FI  reduce 64
-	FOR  reduce 64
-	DONE  reduce 64
-	REPEAT  reduce 64
-	STOP  reduce 64
-	RETURN  reduce 64
-	';'  reduce 64
-	'?'  reduce 64
-	'~'  reduce 64
-	'('  reduce 64
+	LITERAL_I  reduce 88
+	LITERAL_S  reduce 88
+	LITERAL_C  reduce 88
+	IDENTIFICADOR  reduce 88
+	START  reduce 88
+	END  reduce 88
+	IF  reduce 88
+	THEN  reduce 88
+	ELSE  reduce 88
+	ELIF  reduce 88
+	FI  reduce 88
+	FOR  reduce 88
+	UNTIL  reduce 88
+	STEP  reduce 88
+	DO  reduce 88
+	DONE  reduce 88
+	REPEAT  reduce 88
+	STOP  reduce 88
+	RETURN  reduce 88
+	ATTR  reduce 88
+	'^'  reduce 88
+	GE  reduce 88
+	LE  reduce 88
+	NE  reduce 88
+	'>'  reduce 88
+	'<'  reduce 88
+	'+'  reduce 88
+	'-'  reduce 88
+	'*'  reduce 88
+	'/'  reduce 88
+	'%'  reduce 88
+	'&'  reduce 88
+	'|'  reduce 88
+	';'  reduce 88
+	','  reduce 88
+	']'  reduce 88
+	'!'  reduce 88
+	'#'  reduce 88
+	'?'  reduce 88
+	'~'  reduce 88
+	'('  reduce 88
+	')'  reduce 88
 
-	literal  goto 88
-	operator  goto 89
 
+119: shift/reduce conflict (shift 84, reduce 89) on '['
+119: shift/reduce conflict (shift 87, reduce 89) on '='
+state 119
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression '/' expression .  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-60: shift/reduce conflict (shift 22, reduce 90) on LITERAL_I
-60: shift/reduce conflict (shift 23, reduce 90) on LITERAL_S
-60: shift/reduce conflict (shift 24, reduce 90) on LITERAL_C
-60: shift/reduce conflict (shift 84, reduce 90) on '['
-60: shift/reduce conflict (shift 87, reduce 90) on '='
-state 60
-	expression : '-' expression .  (90)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
 	'['  shift 84
 	'='  shift 87
-	IDENTIFICADOR  reduce 90
-	START  reduce 90
-	END  reduce 90
-	IF  reduce 90
-	THEN  reduce 90
-	ELSE  reduce 90
-	ELIF  reduce 90
-	FI  reduce 90
-	FOR  reduce 90
-	UNTIL  reduce 90
-	STEP  reduce 90
-	DO  reduce 90
-	DONE  reduce 90
-	REPEAT  reduce 90
-	STOP  reduce 90
-	RETURN  reduce 90
-	ATTR  reduce 90
-	'^'  reduce 90
-	GE  reduce 90
-	LE  reduce 90
-	NE  reduce 90
-	'>'  reduce 90
-	'<'  reduce 90
-	'+'  reduce 90
-	'-'  reduce 90
-	'*'  reduce 90
-	'/'  reduce 90
-	'%'  reduce 90
-	'&'  reduce 90
-	'|'  reduce 90
-	';'  reduce 90
-	','  reduce 90
-	']'  reduce 90
-	'!'  reduce 90
-	'#'  reduce 90
-	'?'  reduce 90
-	'~'  reduce 90
-	'('  reduce 90
-	')'  reduce 90
-
-	literal  goto 88
-	operator  goto 89
-
-
-61: shift/reduce conflict (shift 22, reduce 91) on LITERAL_I
-61: shift/reduce conflict (shift 23, reduce 91) on LITERAL_S
-61: shift/reduce conflict (shift 24, reduce 91) on LITERAL_C
-61: shift/reduce conflict (shift 84, reduce 91) on '['
-61: shift/reduce conflict (shift 87, reduce 91) on '='
-state 61
-	expression : '&' expression .  (91)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	'['  shift 84
-	'='  shift 87
-	IDENTIFICADOR  reduce 91
-	START  reduce 91
-	END  reduce 91
-	IF  reduce 91
-	THEN  reduce 91
-	ELSE  reduce 91
-	ELIF  reduce 91
-	FI  reduce 91
-	FOR  reduce 91
-	UNTIL  reduce 91
-	STEP  reduce 91
-	DO  reduce 91
-	DONE  reduce 91
-	REPEAT  reduce 91
-	STOP  reduce 91
-	RETURN  reduce 91
-	ATTR  reduce 91
-	'^'  reduce 91
-	GE  reduce 91
-	LE  reduce 91
-	NE  reduce 91
-	'>'  reduce 91
-	'<'  reduce 91
-	'+'  reduce 91
-	'-'  reduce 91
-	'*'  reduce 91
-	'/'  reduce 91
-	'%'  reduce 91
-	'&'  reduce 91
-	'|'  reduce 91
-	';'  reduce 91
-	','  reduce 91
-	']'  reduce 91
-	'!'  reduce 91
-	'#'  reduce 91
-	'?'  reduce 91
-	'~'  reduce 91
-	'('  reduce 91
-	')'  reduce 91
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 62
-	expression : '[' expression . ']'  (95)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	']'  shift 106
-	'='  shift 87
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-63: shift/reduce conflict (shift 22, reduce 89) on LITERAL_I
-63: shift/reduce conflict (shift 23, reduce 89) on LITERAL_S
-63: shift/reduce conflict (shift 24, reduce 89) on LITERAL_C
-63: shift/reduce conflict (shift 84, reduce 89) on '['
-63: shift/reduce conflict (shift 87, reduce 89) on '='
-state 63
-	expression : '?' expression .  (89)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	'['  shift 84
-	'='  shift 87
+	LITERAL_I  reduce 89
+	LITERAL_S  reduce 89
+	LITERAL_C  reduce 89
 	IDENTIFICADOR  reduce 89
 	START  reduce 89
 	END  reduce 89
@@ -1304,79 +2725,321 @@ state 63
 	'('  reduce 89
 	')'  reduce 89
 
-	literal  goto 88
-	operator  goto 89
 
+120: shift/reduce conflict (shift 84, reduce 90) on '['
+120: shift/reduce conflict (shift 87, reduce 90) on '='
+state 120
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression '%' expression .  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-64: shift/reduce conflict (shift 22, reduce 92) on LITERAL_I
-64: shift/reduce conflict (shift 23, reduce 92) on LITERAL_S
-64: shift/reduce conflict (shift 24, reduce 92) on LITERAL_C
-64: shift/reduce conflict (shift 84, reduce 92) on '['
-64: shift/reduce conflict (shift 87, reduce 92) on '='
-state 64
-	expression : '~' expression .  (92)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
 	'['  shift 84
 	'='  shift 87
-	IDENTIFICADOR  reduce 92
-	START  reduce 92
-	END  reduce 92
-	IF  reduce 92
-	THEN  reduce 92
-	ELSE  reduce 92
-	ELIF  reduce 92
-	FI  reduce 92
-	FOR  reduce 92
-	UNTIL  reduce 92
-	STEP  reduce 92
-	DO  reduce 92
-	DONE  reduce 92
-	REPEAT  reduce 92
-	STOP  reduce 92
-	RETURN  reduce 92
-	ATTR  reduce 92
-	'^'  reduce 92
-	GE  reduce 92
-	LE  reduce 92
-	NE  reduce 92
-	'>'  reduce 92
-	'<'  reduce 92
-	'+'  reduce 92
-	'-'  reduce 92
-	'*'  reduce 92
-	'/'  reduce 92
-	'%'  reduce 92
-	'&'  reduce 92
-	'|'  reduce 92
-	';'  reduce 92
-	','  reduce 92
-	']'  reduce 92
-	'!'  reduce 92
-	'#'  reduce 92
-	'?'  reduce 92
-	'~'  reduce 92
-	'('  reduce 92
-	')'  reduce 92
+	LITERAL_I  reduce 90
+	LITERAL_S  reduce 90
+	LITERAL_C  reduce 90
+	IDENTIFICADOR  reduce 90
+	START  reduce 90
+	END  reduce 90
+	IF  reduce 90
+	THEN  reduce 90
+	ELSE  reduce 90
+	ELIF  reduce 90
+	FI  reduce 90
+	FOR  reduce 90
+	UNTIL  reduce 90
+	STEP  reduce 90
+	DO  reduce 90
+	DONE  reduce 90
+	REPEAT  reduce 90
+	STOP  reduce 90
+	RETURN  reduce 90
+	ATTR  reduce 90
+	'^'  reduce 90
+	GE  reduce 90
+	LE  reduce 90
+	NE  reduce 90
+	'>'  reduce 90
+	'<'  reduce 90
+	'+'  reduce 90
+	'-'  reduce 90
+	'*'  reduce 90
+	'/'  reduce 90
+	'%'  reduce 90
+	'&'  reduce 90
+	'|'  reduce 90
+	';'  reduce 90
+	','  reduce 90
+	']'  reduce 90
+	'!'  reduce 90
+	'#'  reduce 90
+	'?'  reduce 90
+	'~'  reduce 90
+	'('  reduce 90
+	')'  reduce 90
 
-	literal  goto 88
-	operator  goto 89
+
+121: shift/reduce conflict (shift 84, reduce 96) on '['
+121: shift/reduce conflict (shift 87, reduce 96) on '='
+state 121
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression '&' expression .  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 96
+	LITERAL_S  reduce 96
+	LITERAL_C  reduce 96
+	IDENTIFICADOR  reduce 96
+	START  reduce 96
+	END  reduce 96
+	IF  reduce 96
+	THEN  reduce 96
+	ELSE  reduce 96
+	ELIF  reduce 96
+	FI  reduce 96
+	FOR  reduce 96
+	UNTIL  reduce 96
+	STEP  reduce 96
+	DO  reduce 96
+	DONE  reduce 96
+	REPEAT  reduce 96
+	STOP  reduce 96
+	RETURN  reduce 96
+	ATTR  reduce 96
+	'^'  reduce 96
+	GE  reduce 96
+	LE  reduce 96
+	NE  reduce 96
+	'>'  reduce 96
+	'<'  reduce 96
+	'+'  reduce 96
+	'-'  reduce 96
+	'*'  reduce 96
+	'/'  reduce 96
+	'%'  reduce 96
+	'&'  reduce 96
+	'|'  reduce 96
+	';'  reduce 96
+	','  reduce 96
+	']'  reduce 96
+	'!'  reduce 96
+	'#'  reduce 96
+	'?'  reduce 96
+	'~'  reduce 96
+	'('  reduce 96
+	')'  reduce 96
 
 
-state 65
-	expression : '(' expression . ')'  (94)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
+122: shift/reduce conflict (shift 84, reduce 95) on '['
+122: shift/reduce conflict (shift 87, reduce 95) on '='
+state 122
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression '|' expression .  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
+	'['  shift 84
+	'='  shift 87
+	LITERAL_I  reduce 95
+	LITERAL_S  reduce 95
+	LITERAL_C  reduce 95
+	IDENTIFICADOR  reduce 95
+	START  reduce 95
+	END  reduce 95
+	IF  reduce 95
+	THEN  reduce 95
+	ELSE  reduce 95
+	ELIF  reduce 95
+	FI  reduce 95
+	FOR  reduce 95
+	UNTIL  reduce 95
+	STEP  reduce 95
+	DO  reduce 95
+	DONE  reduce 95
+	REPEAT  reduce 95
+	STOP  reduce 95
+	RETURN  reduce 95
+	ATTR  reduce 95
+	'^'  reduce 95
+	GE  reduce 95
+	LE  reduce 95
+	NE  reduce 95
+	'>'  reduce 95
+	'<'  reduce 95
+	'+'  reduce 95
+	'-'  reduce 95
+	'*'  reduce 95
+	'/'  reduce 95
+	'%'  reduce 95
+	'&'  reduce 95
+	'|'  reduce 95
+	';'  reduce 95
+	','  reduce 95
+	']'  reduce 95
+	'!'  reduce 95
+	'#'  reduce 95
+	'?'  reduce 95
+	'~'  reduce 95
+	'('  reduce 95
+	')'  reduce 95
+
+
+state 123
+	expression : expression . '[' expression ']'  (84)
+	expression : expression '[' expression . ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	']'  shift 148
+	'='  shift 87
+	.  error
+
+
+state 124
+	instruct : expression '#' expression . ';'  (72)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	';'  shift 149
+	'['  shift 84
+	'='  shift 87
+	.  error
+
+
+125: shift/reduce conflict (shift 69, reduce 94) on ATTR
+125: shift/reduce conflict (shift 70, reduce 94) on '^'
+125: shift/reduce conflict (shift 71, reduce 94) on GE
+125: shift/reduce conflict (shift 72, reduce 94) on LE
+125: shift/reduce conflict (shift 73, reduce 94) on NE
+125: shift/reduce conflict (shift 74, reduce 94) on '>'
+125: shift/reduce conflict (shift 75, reduce 94) on '<'
+125: shift/reduce conflict (shift 76, reduce 94) on '+'
+125: shift/reduce conflict (shift 77, reduce 94) on '-'
+125: shift/reduce conflict (shift 78, reduce 94) on '*'
+125: shift/reduce conflict (shift 79, reduce 94) on '/'
+125: shift/reduce conflict (shift 80, reduce 94) on '%'
+125: shift/reduce conflict (shift 81, reduce 94) on '&'
+125: shift/reduce conflict (shift 82, reduce 94) on '|'
+125: shift/reduce conflict (shift 84, reduce 94) on '['
+125: shift/reduce conflict (shift 87, reduce 94) on '='
+state 125
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression '=' expression .  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
 	ATTR  shift 69
 	'^'  shift 70
 	GE  shift 71
@@ -1393,648 +3056,62 @@ state 65
 	'|'  shift 82
 	'['  shift 84
 	'='  shift 87
-	')'  shift 107
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 66
-	instructs : instructs instruct .  (52)
-
-	.  reduce 52
-
-
-state 67
-	program : PROGRAM START body END .  (5)
-
-	.  reduce 5
-
-
-state 68
-	variables : variables ';' . variable  (42)
-	body : variables ';' . instructs  (48)
-	body : variables ';' .  (49)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	START  reduce 49
-	END  reduce 49
-	';'  reduce 49
-
-	instructs  goto 108
-	instruct  goto 39
-	variable  goto 109
-	literal  goto 42
-	type  goto 19
-	expression  goto 44
+	LITERAL_I  reduce 94
+	LITERAL_S  reduce 94
+	LITERAL_C  reduce 94
+	IDENTIFICADOR  reduce 94
+	START  reduce 94
+	END  reduce 94
+	IF  reduce 94
+	THEN  reduce 94
+	ELSE  reduce 94
+	ELIF  reduce 94
+	FI  reduce 94
+	FOR  reduce 94
+	UNTIL  reduce 94
+	STEP  reduce 94
+	DO  reduce 94
+	DONE  reduce 94
+	REPEAT  reduce 94
+	STOP  reduce 94
+	RETURN  reduce 94
+	';'  reduce 94
+	','  reduce 94
+	']'  reduce 94
+	'!'  reduce 94
+	'#'  reduce 94
+	'?'  reduce 94
+	'~'  reduce 94
+	'('  reduce 94
+	')'  reduce 94
 
 
-state 69
-	operator : ATTR .  (86)
-
-	.  reduce 86
-
-
-state 70
-	operator : '^' .  (72)
-
-	.  reduce 72
-
-
-state 71
-	operator : GE .  (83)
-
-	.  reduce 83
-
-
-state 72
-	operator : LE .  (84)
-
-	.  reduce 84
-
-
-state 73
-	operator : NE .  (85)
-
-	.  reduce 85
-
-
-state 74
-	operator : '>' .  (81)
-
-	.  reduce 81
-
-
-state 75
-	operator : '<' .  (80)
-
-	.  reduce 80
-
-
-state 76
-	operator : '+' .  (75)
-
-	.  reduce 75
-
-
-state 77
-	operator : '-' .  (76)
-
-	.  reduce 76
-
-
-state 78
-	operator : '*' .  (77)
-
-	.  reduce 77
-
-
-state 79
-	operator : '/' .  (78)
-
-	.  reduce 78
-
-
-state 80
-	operator : '%' .  (79)
-
-	.  reduce 79
-
-
-state 81
-	operator : '&' .  (73)
-
-	.  reduce 73
-
-
-state 82
-	operator : '|' .  (74)
-
-	.  reduce 74
-
-
-state 83
-	instruct : expression ';' .  (61)
-
-	.  reduce 61
-
-
-state 84
-	expression : expression '[' . expression ']'  (98)
+state 126
+	declaration : CONST variable ATTR literals .  (15)
+	literals : literals . literal  (22)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 110
-
-
-state 85
-	instruct : expression '!' .  (60)
-
-	.  reduce 60
-
-
-state 86
-	instruct : expression '#' . expression ';'  (66)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 111
-
-
-state 87
-	operator : '=' .  (82)
-
-	.  reduce 82
-
-
-state 88
-	expression : expression literal .  (97)
-
-	.  reduce 97
-
-
-state 89
-	expression : expression operator . expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 112
-
-
-state 90
-	declaration : CONST variable ATTR . literals  (13)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	.  error
-
-	literals  goto 113
-	literal  goto 100
-
-
-state 91
-	function : FUNCTION VOID IDENTIFICADOR . variables DO body  (35)
-	function : FUNCTION VOID IDENTIFICADOR . variables DONE  (36)
-	function : FUNCTION VOID IDENTIFICADOR . DO body  (37)
-	function : FUNCTION VOID IDENTIFICADOR . DONE  (38)
-
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	DO  shift 114
-	DONE  shift 115
-	.  error
-
-	variable  goto 41
-	type  goto 19
-	variables  goto 116
-
-
-state 92
-	function : FUNCTION qualifier VOID . IDENTIFICADOR variables DO body  (27)
-	function : FUNCTION qualifier VOID . IDENTIFICADOR variables DONE  (28)
-	function : FUNCTION qualifier VOID . IDENTIFICADOR DO body  (29)
-	function : FUNCTION qualifier VOID . IDENTIFICADOR DONE  (30)
-
-	IDENTIFICADOR  shift 117
-	.  error
-
-
-state 93
-	function : FUNCTION qualifier type . IDENTIFICADOR variables DONE  (23)
-	function : FUNCTION qualifier type . IDENTIFICADOR variables DO body  (24)
-	function : FUNCTION qualifier type . IDENTIFICADOR DO body  (25)
-	function : FUNCTION qualifier type . IDENTIFICADOR DONE  (26)
-
-	IDENTIFICADOR  shift 118
-	.  error
-
-
-state 94
-	function : FUNCTION type IDENTIFICADOR . variables DO body  (31)
-	function : FUNCTION type IDENTIFICADOR . variables DONE  (32)
-	function : FUNCTION type IDENTIFICADOR . DO body  (33)
-	function : FUNCTION type IDENTIFICADOR . DONE  (34)
-
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	DO  shift 119
-	DONE  shift 120
-	.  error
-
-	variable  goto 41
-	type  goto 19
-	variables  goto 121
-
-
-state 95
-	program : PROGRAM declarations START END .  (4)
-
-	.  reduce 4
-
-
-state 96
-	program : PROGRAM declarations START body . END  (3)
-
-	END  shift 122
-	.  error
-
-
-state 97
-	declarations : declarations ';' declaration .  (8)
-
-	.  reduce 8
-
-
-state 98
-	declaration : qualifier CONST variable . ATTR literals  (10)
-	declaration : qualifier CONST variable .  (11)
-
-	ATTR  shift 123
-	START  reduce 11
-	END  reduce 11
-	';'  reduce 11
-
-
-state 99
-	declaration : variable ATTR literals .  (15)
-	literals : literals . literal  (18)
-	literals : literals . ',' literal  (19)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	','  shift 124
 	START  reduce 15
 	END  reduce 15
 	';'  reduce 15
 
-	literal  goto 125
+	literal  goto 67
 
 
-state 100
-	literals : literal .  (17)
+state 127
+	declaration : CONST variable ATTR int_vec .  (16)
+	int_vec : int_vec . ',' LITERAL_I  (24)
 
-	.  reduce 17
-
-
-state 101
-	variable : type IDENTIFICADOR '[' . LITERAL_I ']'  (43)
-
-	LITERAL_I  shift 126
-	.  error
+	','  shift 138
+	START  reduce 16
+	END  reduce 16
+	';'  reduce 16
 
 
-state 102
-	args : expression .  (70)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	'='  shift 87
-	','  reduce 70
-	')'  reduce 70
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 103
-	args : args . ',' expression  (71)
-	expression : IDENTIFICADOR '(' args . ')'  (96)
-
-	','  shift 127
-	')'  shift 128
-	.  error
-
-
-state 104
-	instruct : IF expression THEN . instructs elifs ELSE instructs FI  (53)
-	instruct : IF expression THEN . instructs ELSE instructs FI  (54)
-	instruct : IF expression THEN . instructs elifs FI  (55)
-	instruct : IF expression THEN . instructs FI  (56)
-	instruct : IF expression THEN . elifs FI  (57)
-	instruct : IF expression THEN . FI  (58)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	ELIF  shift 129
-	FI  shift 130
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 131
-	instruct  goto 39
-	literal  goto 42
-	expression  goto 44
-	elifs  goto 132
-	elif  goto 133
-
-
-state 105
-	instruct : FOR expression UNTIL . expression STEP expression DO instructs DONE  (59)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 134
-
-
-state 106
-	expression : '[' expression ']' .  (95)
-
-	.  reduce 95
-
-
-state 107
-	expression : '(' expression ')' .  (94)
-
-	.  reduce 94
-
-
-state 108
-	body : variables ';' instructs .  (48)
-	instructs : instructs . instruct  (52)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	START  reduce 48
-	END  reduce 48
-	';'  reduce 48
-
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
-
-
-state 109
-	variables : variables ';' variable .  (42)
-
-	.  reduce 42
-
-
-state 110
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression '[' expression . ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	']'  shift 135
-	'='  shift 87
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 111
-	instruct : expression '#' expression . ';'  (66)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	';'  shift 136
-	'['  shift 84
-	'='  shift 87
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-112: shift/reduce conflict (shift 22, reduce 99) on LITERAL_I
-112: shift/reduce conflict (shift 23, reduce 99) on LITERAL_S
-112: shift/reduce conflict (shift 24, reduce 99) on LITERAL_C
-112: shift/reduce conflict (shift 69, reduce 99) on ATTR
-112: shift/reduce conflict (shift 70, reduce 99) on '^'
-112: shift/reduce conflict (shift 71, reduce 99) on GE
-112: shift/reduce conflict (shift 72, reduce 99) on LE
-112: shift/reduce conflict (shift 73, reduce 99) on NE
-112: shift/reduce conflict (shift 74, reduce 99) on '>'
-112: shift/reduce conflict (shift 75, reduce 99) on '<'
-112: shift/reduce conflict (shift 76, reduce 99) on '+'
-112: shift/reduce conflict (shift 77, reduce 99) on '-'
-112: shift/reduce conflict (shift 78, reduce 99) on '*'
-112: shift/reduce conflict (shift 79, reduce 99) on '/'
-112: shift/reduce conflict (shift 80, reduce 99) on '%'
-112: shift/reduce conflict (shift 81, reduce 99) on '&'
-112: shift/reduce conflict (shift 82, reduce 99) on '|'
-112: shift/reduce conflict (shift 84, reduce 99) on '['
-112: shift/reduce conflict (shift 87, reduce 99) on '='
-state 112
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-	expression : expression operator expression .  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	'='  shift 87
-	IDENTIFICADOR  reduce 99
-	START  reduce 99
-	END  reduce 99
-	IF  reduce 99
-	THEN  reduce 99
-	ELSE  reduce 99
-	ELIF  reduce 99
-	FI  reduce 99
-	FOR  reduce 99
-	UNTIL  reduce 99
-	STEP  reduce 99
-	DO  reduce 99
-	DONE  reduce 99
-	REPEAT  reduce 99
-	STOP  reduce 99
-	RETURN  reduce 99
-	';'  reduce 99
-	','  reduce 99
-	']'  reduce 99
-	'!'  reduce 99
-	'#'  reduce 99
-	'?'  reduce 99
-	'~'  reduce 99
-	'('  reduce 99
-	')'  reduce 99
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 113
-	declaration : CONST variable ATTR literals .  (13)
-	literals : literals . literal  (18)
-	literals : literals . ',' literal  (19)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	','  shift 124
-	START  reduce 13
-	END  reduce 13
-	';'  reduce 13
-
-	literal  goto 125
-
-
-state 114
-	function : FUNCTION VOID IDENTIFICADOR DO . body  (37)
+state 128
+	function : FUNCTION VOID IDENTIFICADOR DO . body  (42)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -2043,84 +3120,84 @@ state 114
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 137
-	variable  goto 41
-	literal  goto 42
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 150
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
 	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	variables  goto 42
+	expression  goto 43
 
 
-state 115
-	function : FUNCTION VOID IDENTIFICADOR DONE .  (38)
+state 129
+	function : FUNCTION VOID IDENTIFICADOR DONE .  (43)
 
-	.  reduce 38
+	.  reduce 43
 
 
-state 116
-	function : FUNCTION VOID IDENTIFICADOR variables . DO body  (35)
-	function : FUNCTION VOID IDENTIFICADOR variables . DONE  (36)
-	variables : variables . ';' variable  (42)
+state 130
+	function : FUNCTION VOID IDENTIFICADOR variables . DO body  (40)
+	function : FUNCTION VOID IDENTIFICADOR variables . DONE  (41)
+	variables : variables . ';' variable  (47)
 
-	DO  shift 138
-	DONE  shift 139
-	';'  shift 140
+	DO  shift 151
+	DONE  shift 152
+	';'  shift 153
 	.  error
 
 
-state 117
-	function : FUNCTION qualifier VOID IDENTIFICADOR . variables DO body  (27)
-	function : FUNCTION qualifier VOID IDENTIFICADOR . variables DONE  (28)
-	function : FUNCTION qualifier VOID IDENTIFICADOR . DO body  (29)
-	function : FUNCTION qualifier VOID IDENTIFICADOR . DONE  (30)
+state 131
+	function : FUNCTION qualifier VOID IDENTIFICADOR . variables DO body  (32)
+	function : FUNCTION qualifier VOID IDENTIFICADOR . variables DONE  (33)
+	function : FUNCTION qualifier VOID IDENTIFICADOR . DO body  (34)
+	function : FUNCTION qualifier VOID IDENTIFICADOR . DONE  (35)
 
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	DO  shift 141
-	DONE  shift 142
+	DO  shift 154
+	DONE  shift 155
 	.  error
 
-	variable  goto 41
+	variable  goto 39
 	type  goto 19
-	variables  goto 143
+	variables  goto 156
 
 
-state 118
-	function : FUNCTION qualifier type IDENTIFICADOR . variables DONE  (23)
-	function : FUNCTION qualifier type IDENTIFICADOR . variables DO body  (24)
-	function : FUNCTION qualifier type IDENTIFICADOR . DO body  (25)
-	function : FUNCTION qualifier type IDENTIFICADOR . DONE  (26)
+state 132
+	function : FUNCTION qualifier type IDENTIFICADOR . variables DONE  (28)
+	function : FUNCTION qualifier type IDENTIFICADOR . variables DO body  (29)
+	function : FUNCTION qualifier type IDENTIFICADOR . DO body  (30)
+	function : FUNCTION qualifier type IDENTIFICADOR . DONE  (31)
 
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	DO  shift 144
-	DONE  shift 145
+	DO  shift 157
+	DONE  shift 158
 	.  error
 
-	variable  goto 41
+	variable  goto 39
 	type  goto 19
-	variables  goto 146
+	variables  goto 159
 
 
-state 119
-	function : FUNCTION type IDENTIFICADOR DO . body  (33)
+state 133
+	function : FUNCTION type IDENTIFICADOR DO . body  (38)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -2129,398 +3206,238 @@ state 119
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 147
-	variable  goto 41
-	literal  goto 42
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 160
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
 	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	variables  goto 42
+	expression  goto 43
 
 
-state 120
-	function : FUNCTION type IDENTIFICADOR DONE .  (34)
+state 134
+	function : FUNCTION type IDENTIFICADOR DONE .  (39)
 
-	.  reduce 34
+	.  reduce 39
 
 
-state 121
-	function : FUNCTION type IDENTIFICADOR variables . DO body  (31)
-	function : FUNCTION type IDENTIFICADOR variables . DONE  (32)
-	variables : variables . ';' variable  (42)
+state 135
+	function : FUNCTION type IDENTIFICADOR variables . DO body  (36)
+	function : FUNCTION type IDENTIFICADOR variables . DONE  (37)
+	variables : variables . ';' variable  (47)
 
-	DO  shift 148
-	DONE  shift 149
-	';'  shift 140
+	DO  shift 161
+	DONE  shift 162
+	';'  shift 153
 	.  error
 
 
-state 122
+state 136
 	program : PROGRAM declarations START body END .  (3)
 
 	.  reduce 3
 
 
-state 123
-	declaration : qualifier CONST variable ATTR . literals  (10)
+state 137
+	declaration : qualifier CONST variable ATTR . literals  (11)
+	declaration : qualifier CONST variable ATTR . int_vec  (12)
 
-	LITERAL_I  shift 22
+	LITERAL_I  shift 97
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	.  error
 
-	literals  goto 150
+	literals  goto 163
+	int_vec  goto 164
 	literal  goto 100
 
 
-state 124
-	literals : literals ',' . literal  (19)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	.  error
-
-	literal  goto 151
-
-
-state 125
-	literals : literals literal .  (18)
-
-	.  reduce 18
-
-
-state 126
-	variable : type IDENTIFICADOR '[' LITERAL_I . ']'  (43)
-
-	']'  shift 152
-	.  error
-
-
-state 127
-	args : args ',' . expression  (71)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 153
-
-
-state 128
-	expression : IDENTIFICADOR '(' args ')' .  (96)
-
-	.  reduce 96
-
-
-state 129
-	elif : ELIF . expression THEN instructs  (69)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 154
-
-
-state 130
-	instruct : IF expression THEN FI .  (58)
-
-	.  reduce 58
-
-
-state 131
-	instructs : instructs . instruct  (52)
-	instruct : IF expression THEN instructs . elifs ELSE instructs FI  (53)
-	instruct : IF expression THEN instructs . ELSE instructs FI  (54)
-	instruct : IF expression THEN instructs . elifs FI  (55)
-	instruct : IF expression THEN instructs . FI  (56)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	ELSE  shift 155
-	ELIF  shift 129
-	FI  shift 156
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
-	elifs  goto 157
-	elif  goto 133
-
-
-state 132
-	instruct : IF expression THEN elifs . FI  (57)
-	elifs : elifs . elif  (68)
-
-	ELIF  shift 129
-	FI  shift 158
-	.  error
-
-	elif  goto 159
-
-
-state 133
-	elifs : elif .  (67)
-
-	.  reduce 67
-
-
-state 134
-	instruct : FOR expression UNTIL expression . STEP expression DO instructs DONE  (59)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	STEP  shift 160
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	'='  shift 87
-	.  error
-
-	literal  goto 88
-	operator  goto 89
-
-
-state 135
-	expression : expression '[' expression ']' .  (98)
-
-	.  reduce 98
-
-
-state 136
-	instruct : expression '#' expression ';' .  (66)
-
-	.  reduce 66
-
-
-state 137
-	function : FUNCTION VOID IDENTIFICADOR DO body .  (37)
-
-	.  reduce 37
-
-
 state 138
-	function : FUNCTION VOID IDENTIFICADOR variables DO . body  (35)
+	int_vec : int_vec ',' . LITERAL_I  (24)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	LITERAL_I  shift 165
 	.  error
-
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 161
-	variable  goto 41
-	literal  goto 42
-	type  goto 19
-	variables  goto 43
-	expression  goto 44
 
 
 state 139
-	function : FUNCTION VOID IDENTIFICADOR variables DONE .  (36)
+	variable : type IDENTIFICADOR '[' LITERAL_I . ']'  (48)
 
-	.  reduce 36
+	']'  shift 166
+	.  error
 
 
 state 140
-	variables : variables ';' . variable  (42)
+	args : args ',' . expression  (77)
 
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	variable  goto 109
-	type  goto 19
+	literal  goto 56
+	expression  goto 167
 
 
 state 141
-	function : FUNCTION qualifier VOID IDENTIFICADOR DO . body  (29)
+	expression : IDENTIFICADOR '(' args ')' .  (80)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 162
-	variable  goto 41
-	literal  goto 42
-	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	.  reduce 80
 
 
 state 142
-	function : FUNCTION qualifier VOID IDENTIFICADOR DONE .  (30)
+	elif : ELIF . expression THEN instructs  (75)
 
-	.  reduce 30
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 168
 
 
 state 143
-	function : FUNCTION qualifier VOID IDENTIFICADOR variables . DO body  (27)
-	function : FUNCTION qualifier VOID IDENTIFICADOR variables . DONE  (28)
-	variables : variables . ';' variable  (42)
+	instruct : IF expression THEN FI .  (63)
 
-	DO  shift 163
-	DONE  shift 164
-	';'  shift 140
-	.  error
+	.  reduce 63
 
 
 state 144
-	function : FUNCTION qualifier type IDENTIFICADOR DO . body  (25)
+	instructs : instructs . instruct  (57)
+	instruct : IF expression THEN instructs . elifs ELSE instructs FI  (58)
+	instruct : IF expression THEN instructs . ELSE instructs FI  (59)
+	instruct : IF expression THEN instructs . elifs FI  (60)
+	instruct : IF expression THEN instructs . FI  (61)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	ELSE  shift 169
+	ELIF  shift 142
+	FI  shift 170
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 165
-	variable  goto 41
-	literal  goto 42
-	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+	elifs  goto 171
+	elif  goto 146
 
 
 state 145
-	function : FUNCTION qualifier type IDENTIFICADOR DONE .  (26)
+	instruct : IF expression THEN elifs . FI  (62)
+	elifs : elifs . elif  (74)
 
-	.  reduce 26
+	ELIF  shift 142
+	FI  shift 172
+	.  error
+
+	elif  goto 173
 
 
 state 146
-	function : FUNCTION qualifier type IDENTIFICADOR variables . DONE  (23)
-	function : FUNCTION qualifier type IDENTIFICADOR variables . DO body  (24)
-	variables : variables . ';' variable  (42)
+	elifs : elif .  (73)
 
-	DO  shift 166
-	DONE  shift 167
-	';'  shift 140
-	.  error
+	.  reduce 73
 
 
 state 147
-	function : FUNCTION type IDENTIFICADOR DO body .  (33)
+	instruct : FOR expression UNTIL expression . STEP expression DO instructs DONE  (64)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
 
-	.  reduce 33
+	STEP  shift 174
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	.  error
 
 
 state 148
-	function : FUNCTION type IDENTIFICADOR variables DO . body  (31)
+	expression : expression '[' expression ']' .  (84)
+
+	.  reduce 84
+
+
+state 149
+	instruct : expression '#' expression ';' .  (72)
+
+	.  reduce 72
+
+
+state 150
+	function : FUNCTION VOID IDENTIFICADOR DO body .  (42)
+
+	.  reduce 42
+
+
+state 151
+	function : FUNCTION VOID IDENTIFICADOR variables DO . body  (40)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -2529,217 +3446,99 @@ state 148
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 168
-	variable  goto 41
-	literal  goto 42
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 175
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
 	type  goto 19
-	variables  goto 43
-	expression  goto 44
-
-
-state 149
-	function : FUNCTION type IDENTIFICADOR variables DONE .  (32)
-
-	.  reduce 32
-
-
-state 150
-	declaration : qualifier CONST variable ATTR literals .  (10)
-	literals : literals . literal  (18)
-	literals : literals . ',' literal  (19)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	','  shift 124
-	START  reduce 10
-	END  reduce 10
-	';'  reduce 10
-
-	literal  goto 125
-
-
-state 151
-	literals : literals ',' literal .  (19)
-
-	.  reduce 19
+	variables  goto 42
+	expression  goto 43
 
 
 state 152
-	variable : type IDENTIFICADOR '[' LITERAL_I ']' .  (43)
+	function : FUNCTION VOID IDENTIFICADOR variables DONE .  (41)
 
-	.  reduce 43
+	.  reduce 41
 
 
 state 153
-	args : args ',' expression .  (71)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
+	variables : variables ';' . variable  (47)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	'='  shift 87
-	','  reduce 71
-	')'  reduce 71
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	.  error
 
-	literal  goto 88
-	operator  goto 89
+	variable  goto 108
+	type  goto 19
 
 
 state 154
-	elif : ELIF expression . THEN instructs  (69)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
+	function : FUNCTION qualifier VOID IDENTIFICADOR DO . body  (34)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
-	THEN  shift 169
-	ATTR  shift 69
-	'^'  shift 70
-	GE  shift 71
-	LE  shift 72
-	NE  shift 73
-	'>'  shift 74
-	'<'  shift 75
-	'+'  shift 76
-	'-'  shift 77
-	'*'  shift 78
-	'/'  shift 79
-	'%'  shift 80
-	'&'  shift 81
-	'|'  shift 82
-	'['  shift 84
-	'='  shift 87
+	IDENTIFICADOR  shift 25
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	literal  goto 88
-	operator  goto 89
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 176
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	variables  goto 42
+	expression  goto 43
 
 
 state 155
-	instruct : IF expression THEN instructs ELSE . instructs FI  (54)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 170
-	instruct  goto 39
-	literal  goto 42
-	expression  goto 44
-
-
-state 156
-	instruct : IF expression THEN instructs FI .  (56)
-
-	.  reduce 56
-
-
-state 157
-	instruct : IF expression THEN instructs elifs . ELSE instructs FI  (53)
-	instruct : IF expression THEN instructs elifs . FI  (55)
-	elifs : elifs . elif  (68)
-
-	ELSE  shift 171
-	ELIF  shift 129
-	FI  shift 172
-	.  error
-
-	elif  goto 159
-
-
-state 158
-	instruct : IF expression THEN elifs FI .  (57)
-
-	.  reduce 57
-
-
-state 159
-	elifs : elifs elif .  (68)
-
-	.  reduce 68
-
-
-state 160
-	instruct : FOR expression UNTIL expression STEP . expression DO instructs DONE  (59)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	literal  goto 42
-	expression  goto 173
-
-
-state 161
-	function : FUNCTION VOID IDENTIFICADOR variables DO body .  (35)
+	function : FUNCTION qualifier VOID IDENTIFICADOR DONE .  (35)
 
 	.  reduce 35
 
 
-state 162
-	function : FUNCTION qualifier VOID IDENTIFICADOR DO body .  (29)
+state 156
+	function : FUNCTION qualifier VOID IDENTIFICADOR variables . DO body  (32)
+	function : FUNCTION qualifier VOID IDENTIFICADOR variables . DONE  (33)
+	variables : variables . ';' variable  (47)
 
-	.  reduce 29
+	DO  shift 177
+	DONE  shift 178
+	';'  shift 153
+	.  error
 
 
-state 163
-	function : FUNCTION qualifier VOID IDENTIFICADOR variables DO . body  (27)
+state 157
+	function : FUNCTION qualifier type IDENTIFICADOR DO . body  (30)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -2748,181 +3547,186 @@ state 163
 	NUMBER  shift 8
 	ARRAY  shift 9
 	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 174
-	variable  goto 41
-	literal  goto 42
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 179
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
 	type  goto 19
-	variables  goto 43
-	expression  goto 44
+	variables  goto 42
+	expression  goto 43
 
 
-state 164
-	function : FUNCTION qualifier VOID IDENTIFICADOR variables DONE .  (28)
-
-	.  reduce 28
-
-
-state 165
-	function : FUNCTION qualifier type IDENTIFICADOR DO body .  (25)
-
-	.  reduce 25
-
-
-state 166
-	function : FUNCTION qualifier type IDENTIFICADOR variables DO . body  (24)
-
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	NUMBER  shift 8
-	ARRAY  shift 9
-	STRING  shift 10
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 38
-	instruct  goto 39
-	body  goto 175
-	variable  goto 41
-	literal  goto 42
-	type  goto 19
-	variables  goto 43
-	expression  goto 44
-
-
-state 167
-	function : FUNCTION qualifier type IDENTIFICADOR variables DONE .  (23)
-
-	.  reduce 23
-
-
-state 168
-	function : FUNCTION type IDENTIFICADOR variables DO body .  (31)
+state 158
+	function : FUNCTION qualifier type IDENTIFICADOR DONE .  (31)
 
 	.  reduce 31
 
 
-state 169
-	elif : ELIF expression THEN . instructs  (69)
+state 159
+	function : FUNCTION qualifier type IDENTIFICADOR variables . DONE  (28)
+	function : FUNCTION qualifier type IDENTIFICADOR variables . DO body  (29)
+	variables : variables . ';' variable  (47)
+
+	DO  shift 180
+	DONE  shift 181
+	';'  shift 153
+	.  error
+
+
+state 160
+	function : FUNCTION type IDENTIFICADOR DO body .  (38)
+
+	.  reduce 38
+
+
+state 161
+	function : FUNCTION type IDENTIFICADOR variables DO . body  (36)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instructs  goto 176
-	instruct  goto 39
-	literal  goto 42
-	expression  goto 44
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 182
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	variables  goto 42
+	expression  goto 43
 
 
-state 170
-	instructs : instructs . instruct  (52)
-	instruct : IF expression THEN instructs ELSE instructs . FI  (54)
+state 162
+	function : FUNCTION type IDENTIFICADOR variables DONE .  (37)
+
+	.  reduce 37
+
+
+state 163
+	declaration : qualifier CONST variable ATTR literals .  (11)
+	literals : literals . literal  (22)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FI  shift 177
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
+	START  reduce 11
+	END  reduce 11
+	';'  reduce 11
 
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
+	literal  goto 67
 
 
-state 171
-	instruct : IF expression THEN instructs elifs ELSE . instructs FI  (53)
+state 164
+	declaration : qualifier CONST variable ATTR int_vec .  (12)
+	int_vec : int_vec . ',' LITERAL_I  (24)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 178
-	instruct  goto 39
-	literal  goto 42
-	expression  goto 44
+	','  shift 138
+	START  reduce 12
+	END  reduce 12
+	';'  reduce 12
 
 
-state 172
-	instruct : IF expression THEN instructs elifs FI .  (55)
+state 165
+	int_vec : int_vec ',' LITERAL_I .  (24)
 
-	.  reduce 55
+	.  reduce 24
 
 
-state 173
-	instruct : FOR expression UNTIL expression STEP expression . DO instructs DONE  (59)
-	expression : expression . literal  (97)
-	expression : expression . '[' expression ']'  (98)
-	expression : expression . operator expression  (99)
+state 166
+	variable : type IDENTIFICADOR '[' LITERAL_I ']' .  (48)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	DO  shift 179
+	.  reduce 48
+
+
+state 167
+	args : args ',' expression .  (77)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	','  reduce 77
+	')'  reduce 77
+
+
+state 168
+	elif : ELIF expression . THEN instructs  (75)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	THEN  shift 183
 	ATTR  shift 69
 	'^'  shift 70
 	GE  shift 71
@@ -2941,158 +3745,470 @@ state 173
 	'='  shift 87
 	.  error
 
-	literal  goto 88
-	operator  goto 89
+
+state 169
+	instruct : IF expression THEN instructs ELSE . instructs FI  (59)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 184
+	instruct  goto 37
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 170
+	instruct : IF expression THEN instructs FI .  (61)
+
+	.  reduce 61
+
+
+state 171
+	instruct : IF expression THEN instructs elifs . ELSE instructs FI  (58)
+	instruct : IF expression THEN instructs elifs . FI  (60)
+	elifs : elifs . elif  (74)
+
+	ELSE  shift 185
+	ELIF  shift 142
+	FI  shift 186
+	.  error
+
+	elif  goto 173
+
+
+state 172
+	instruct : IF expression THEN elifs FI .  (62)
+
+	.  reduce 62
+
+
+state 173
+	elifs : elifs elif .  (74)
+
+	.  reduce 74
 
 
 state 174
-	function : FUNCTION qualifier VOID IDENTIFICADOR variables DO body .  (27)
+	instruct : FOR expression UNTIL expression STEP . expression DO instructs DONE  (64)
 
-	.  reduce 27
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	literal  goto 56
+	expression  goto 187
 
 
 state 175
-	function : FUNCTION qualifier type IDENTIFICADOR variables DO body .  (24)
+	function : FUNCTION VOID IDENTIFICADOR variables DO body .  (40)
 
-	.  reduce 24
+	.  reduce 40
 
 
 state 176
-	instructs : instructs . instruct  (52)
-	elif : ELIF expression THEN instructs .  (69)
+	function : FUNCTION qualifier VOID IDENTIFICADOR DO body .  (34)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	ELSE  reduce 69
-	ELIF  reduce 69
-	FI  reduce 69
-
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
+	.  reduce 34
 
 
 state 177
-	instruct : IF expression THEN instructs ELSE instructs FI .  (54)
+	function : FUNCTION qualifier VOID IDENTIFICADOR variables DO . body  (32)
 
-	.  reduce 54
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 188
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	variables  goto 42
+	expression  goto 43
 
 
 state 178
-	instructs : instructs . instruct  (52)
-	instruct : IF expression THEN instructs elifs ELSE instructs . FI  (53)
+	function : FUNCTION qualifier VOID IDENTIFICADOR variables DONE .  (33)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FI  shift 180
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
+	.  reduce 33
 
 
 state 179
-	instruct : FOR expression UNTIL expression STEP expression DO . instructs DONE  (59)
+	function : FUNCTION qualifier type IDENTIFICADOR DO body .  (30)
 
-	LITERAL_I  shift 22
-	LITERAL_S  shift 23
-	LITERAL_C  shift 24
-	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
-	.  error
-
-	instructs  goto 181
-	instruct  goto 39
-	literal  goto 42
-	expression  goto 44
+	.  reduce 30
 
 
 state 180
-	instruct : IF expression THEN instructs elifs ELSE instructs FI .  (53)
-
-	.  reduce 53
-
-
-state 181
-	instructs : instructs . instruct  (52)
-	instruct : FOR expression UNTIL expression STEP expression DO instructs . DONE  (59)
+	function : FUNCTION qualifier type IDENTIFICADOR variables DO . body  (29)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	IDENTIFICADOR  shift 25
-	IF  shift 27
-	FOR  shift 28
-	DONE  shift 182
-	REPEAT  shift 29
-	STOP  shift 30
-	RETURN  shift 31
-	'-'  shift 32
-	'&'  shift 33
-	'['  shift 34
-	'?'  shift 35
-	'~'  shift 36
-	'('  shift 37
+	NUMBER  shift 8
+	ARRAY  shift 9
+	STRING  shift 10
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
 	.  error
 
-	instruct  goto 66
-	literal  goto 42
-	expression  goto 44
+	instructs  goto 36
+	instruct  goto 37
+	body  goto 189
+	variable  goto 39
+	literals  goto 40
+	literal  goto 41
+	type  goto 19
+	variables  goto 42
+	expression  goto 43
+
+
+state 181
+	function : FUNCTION qualifier type IDENTIFICADOR variables DONE .  (28)
+
+	.  reduce 28
 
 
 state 182
-	instruct : FOR expression UNTIL expression STEP expression DO instructs DONE .  (59)
+	function : FUNCTION type IDENTIFICADOR variables DO body .  (36)
+
+	.  reduce 36
+
+
+state 183
+	elif : ELIF expression THEN . instructs  (75)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 190
+	instruct  goto 37
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 184
+	instructs : instructs . instruct  (57)
+	instruct : IF expression THEN instructs ELSE instructs . FI  (59)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FI  shift 191
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 185
+	instruct : IF expression THEN instructs elifs ELSE . instructs FI  (58)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 192
+	instruct  goto 37
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 186
+	instruct : IF expression THEN instructs elifs FI .  (60)
+
+	.  reduce 60
+
+
+state 187
+	instruct : FOR expression UNTIL expression STEP expression . DO instructs DONE  (64)
+	expression : expression . '[' expression ']'  (84)
+	expression : expression . '+' expression  (85)
+	expression : expression . '-' expression  (86)
+	expression : expression . '*' expression  (88)
+	expression : expression . '/' expression  (89)
+	expression : expression . '%' expression  (90)
+	expression : expression . '^' expression  (91)
+	expression : expression . '>' expression  (92)
+	expression : expression . '<' expression  (93)
+	expression : expression . '=' expression  (94)
+	expression : expression . '|' expression  (95)
+	expression : expression . '&' expression  (96)
+	expression : expression . GE expression  (98)
+	expression : expression . LE expression  (99)
+	expression : expression . NE expression  (100)
+	expression : expression . ATTR expression  (101)
+
+	DO  shift 193
+	ATTR  shift 69
+	'^'  shift 70
+	GE  shift 71
+	LE  shift 72
+	NE  shift 73
+	'>'  shift 74
+	'<'  shift 75
+	'+'  shift 76
+	'-'  shift 77
+	'*'  shift 78
+	'/'  shift 79
+	'%'  shift 80
+	'&'  shift 81
+	'|'  shift 82
+	'['  shift 84
+	'='  shift 87
+	.  error
+
+
+state 188
+	function : FUNCTION qualifier VOID IDENTIFICADOR variables DO body .  (32)
+
+	.  reduce 32
+
+
+state 189
+	function : FUNCTION qualifier type IDENTIFICADOR variables DO body .  (29)
+
+	.  reduce 29
+
+
+state 190
+	instructs : instructs . instruct  (57)
+	elif : ELIF expression THEN instructs .  (75)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	ELSE  reduce 75
+	ELIF  reduce 75
+	FI  reduce 75
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 191
+	instruct : IF expression THEN instructs ELSE instructs FI .  (59)
 
 	.  reduce 59
 
 
+state 192
+	instructs : instructs . instruct  (57)
+	instruct : IF expression THEN instructs elifs ELSE instructs . FI  (58)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FI  shift 194
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 193
+	instruct : FOR expression UNTIL expression STEP expression DO . instructs DONE  (64)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instructs  goto 195
+	instruct  goto 37
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 194
+	instruct : IF expression THEN instructs elifs ELSE instructs FI .  (58)
+
+	.  reduce 58
+
+
+state 195
+	instructs : instructs . instruct  (57)
+	instruct : FOR expression UNTIL expression STEP expression DO instructs . DONE  (64)
+
+	LITERAL_I  shift 22
+	LITERAL_S  shift 23
+	LITERAL_C  shift 24
+	IDENTIFICADOR  shift 25
+	IF  shift 26
+	FOR  shift 27
+	DONE  shift 196
+	REPEAT  shift 28
+	STOP  shift 29
+	RETURN  shift 30
+	'-'  shift 31
+	'&'  shift 32
+	'?'  shift 33
+	'~'  shift 34
+	'('  shift 35
+	.  error
+
+	instruct  goto 64
+	literals  goto 40
+	literal  goto 41
+	expression  goto 43
+
+
+state 196
+	instruct : FOR expression UNTIL expression STEP expression DO instructs DONE .  (64)
+
+	.  reduce 64
+
+
 State 25 contains 1 shift/reduce conflict.
-State 31 contains 10 shift/reduce conflicts.
-State 35 contains 10 shift/reduce conflicts.
-State 59 contains 6 shift/reduce conflicts.
-State 60 contains 5 shift/reduce conflicts.
-State 61 contains 5 shift/reduce conflicts.
-State 63 contains 5 shift/reduce conflicts.
-State 64 contains 5 shift/reduce conflicts.
-State 112 contains 19 shift/reduce conflicts.
+State 30 contains 9 shift/reduce conflicts.
+State 41 contains 1 reduce/reduce conflict.
+State 59 contains 2 shift/reduce conflicts.
+State 60 contains 2 shift/reduce conflicts.
+State 61 contains 2 shift/reduce conflicts.
+State 62 contains 2 shift/reduce conflicts.
+State 97 contains 3 reduce/reduce conflicts.
+State 109 contains 2 shift/reduce conflicts.
+State 110 contains 2 shift/reduce conflicts.
+State 111 contains 2 shift/reduce conflicts.
+State 112 contains 2 shift/reduce conflicts.
+State 113 contains 2 shift/reduce conflicts.
+State 114 contains 2 shift/reduce conflicts.
+State 115 contains 2 shift/reduce conflicts.
+State 116 contains 2 shift/reduce conflicts.
+State 117 contains 2 shift/reduce conflicts.
+State 118 contains 2 shift/reduce conflicts.
+State 119 contains 2 shift/reduce conflicts.
+State 120 contains 2 shift/reduce conflicts.
+State 121 contains 2 shift/reduce conflicts.
+State 122 contains 2 shift/reduce conflicts.
+State 125 contains 16 shift/reduce conflicts.
 
 
-61 terminals, 21 nonterminals
-102 grammar rules, 183 states
+62 terminals, 21 nonterminals
+102 grammar rules, 197 states

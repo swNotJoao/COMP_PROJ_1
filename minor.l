@@ -59,9 +59,11 @@ int trash = 1;
 [A-Za-z][A-Za-z0-9_]*	{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return IDENTIFICADOR;}
 \"(\\[A-Za-z0-9\\\"][A-Za-z0-9]?|[^"\\])*\"		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_S;}
 \'(\\[A-Za-z0-9\\\'][A-Za-z0-9]?|[^'\\])\'		{yytext[yyleng-1] = 0; yylval.s = dupstr(yytext+1); return LITERAL_C;}
-[0-9]+			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
+[1-9][0-9]*			{yylval.i = strtol(yytext, 0, 10); return LITERAL_I;}
 0b[01]+ {yylval.i =  strtol(yytext, NULL, 2); return LITERAL_I;}
 0x[0-9a-fA-F]+ {yylval.i =  strtol(yytext, NULL, 16); return LITERAL_I;}
+0[0-7]+ {yylval.i =  strtol(yytext, NULL, 8); return LITERAL_I;}
+0 {yylval.i = 0; return LITERAL_I;}
 [-()<>=+*/%^;{}.,!?|&~\[\]#]	return *yytext;
 
 [ \t\n\r]+		;

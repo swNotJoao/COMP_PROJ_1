@@ -37,8 +37,8 @@ int lbl;
 %right ATTR '^'
 %left GE LE EQ NE '>' '<'
 %left '+' '-'
-%left '*' '/' '%' '&' '|'
-%nonassoc UMINUS  UINPUT UNEG UAND
+%left '*' '/' '%' '&' '|' ULOCATION
+%nonassoc UMINUS UINPUT UNEG UAND
 
 %type <n> file program module declarations declaration instructs instruct
 
@@ -51,7 +51,10 @@ file : program {;}
 program : PROGRAM declarations START body END {;}
 	| PROGRAM declarations START END {;}
 	| PROGRAM START body END {;}
-	| PROGRAM START END {;}
+	;
+
+module : MODULE declarations END {;}
+	| MODULE END {;}
 	;
 
 declarations : declaration {;}
@@ -60,17 +63,23 @@ declarations : declaration {;}
 
 declaration : function {;}
 	| qualifier CONST variable ATTR literals {;}
+	| qualifier CONST variable ATTR int_vec {;}
 	| qualifier CONST variable {;}
 	| qualifier variable{;}
 	| CONST variable ATTR literals {;}
+	| CONST variable ATTR int_vec {;}
 	| CONST variable {;}
 	| variable ATTR literals {;}
+	| variable ATTR int_vec {;}
 	| variable {;}
 	;
 
 literals : literal {;}
 	| literals literal {;}
-	| literals ',' literal {;}
+	;
+
+int_vec : LITERAL_I {;}
+	| int_vec ',' LITERAL_I {;}
 	;
 
 literal : LITERAL_I {;}
@@ -131,6 +140,7 @@ instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
 	| FOR expression UNTIL expression STEP expression DO instructs DONE {;}
 	| expression '!' {;}
 	| expression ';' {;}
+	| literals '!' {;}
 	| REPEAT {;}
 	| STOP {;}
 	| RETURN expression {;}
@@ -149,40 +159,30 @@ args : expression {;}
 	| args ',' expression {;}
 	;
 
-operator : '^' {;}
-	|  '&' 	{;}
-	|  '|' 	{;}
-	|  '+' 	{;}
-	|  '-' 	{;}
-	|  '*' 	{;}
-	|  '/' 	{;}
-	|  '%' 	{;}
-	|  '<' 	{;}
-	|  '>' 	{;}
-	|  '=' 	{;}
-	|  GE 	{;}
-	|  LE 	{;}
-	|  NE 	{;}
-	| ATTR {;}
-
-expression	: IDENTIFICADOR {;}
-	| literal {;}
-	| '?' expression %prec UINPUT {;}
-	| '-' expression %prec UMINUS {;}
-	| '&' expression %prec UINPUT {;}
+expression	: '?' {;}
 	| '~' expression %prec UNEG {;}
-	| '?' {;}
-	| '(' expression ')'			  {;}
-	| '[' expression ']' {;}
-	| IDENTIFICADOR '(' args ')' {;}
-	| expression literal {;}
+	|	IDENTIFICADOR '(' args ')' {;}
+	| IDENTIFICADOR {;}
+	|	literal {;}
+	| '(' expression ')' {;}
 	| expression '[' expression ']' {;}
-	| expression operator expression {;}
-	;
-
-
-module : MODULE declarations END {;}
-	| MODULE END {;}
+	| expression '+' expression {;}
+	| expression '-' expression {;}
+	| '-' expression %prec UMINUS {;}
+	| expression '*' expression {;}
+	| expression '/' expression {;}
+	| expression '%' expression {;}
+	| expression '^' expression {;}
+	| expression '>' expression {;}
+	| expression '<' expression {;}
+	| expression '=' expression {;}
+	| expression '|' expression {;}
+	| expression '&' expression {;}
+	| '&' expression %prec ULOCATION {;}
+	| expression GE expression {;}
+	| expression LE expression {;}
+	| expression NE expression {;}
+	| expression ATTR expression {;}
 	;
 
 %%
