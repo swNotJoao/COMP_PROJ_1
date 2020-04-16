@@ -33,7 +33,6 @@ int lbl;
 %token IF THEN ELSE ELIF FI FOR UNTIL STEP DO DONE REPEAT STOP
 %token RETURN
 
-%nonassoc IFX
 %nonassoc ELSE
 %right ATTR '^'
 %left GE LE EQ NE '>' '<'
@@ -62,8 +61,8 @@ declaration : function {;}
 	| qualifier CONST variable ATTR literals {;}
 	| qualifier CONST variable {;}
 	| qualifier variable{;}
-	| CONST variable {;}
 	| CONST variable ATTR literals {;}
+	| CONST variable {;}
 	| variable ATTR literals {;}
 	| variable {;}
 	;
@@ -175,8 +174,8 @@ expression	: IDENTIFICADOR {;}
 	| '(' expression ')'			  {;}
 	| '[' expression ']' {;}
 	| IDENTIFICADOR '(' args ')' {;}
-	| expression operator expression {;}
 	| expression '[' expression ']' {;}
+	| expression operator expression {;}
 	;
 
 

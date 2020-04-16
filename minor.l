@@ -71,7 +71,7 @@ int trash = 1;
 
 <TRASH>{
 "program" {trash = 0; if(has_program == 1){} return PROGRAM;};
-"module" {trash = 0; if(has_program == 1){} return PROGRAM;};
+"module" {trash = 0; if(has_program == 1){} return MODULE;};
 
 .|\n ;
 }

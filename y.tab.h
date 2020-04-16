@@ -27,16 +27,15 @@
 #define REPEAT 283
 #define STOP 284
 #define RETURN 285
-#define IFX 286
-#define ATTR 287
-#define GE 288
-#define LE 289
-#define EQ 290
-#define NE 291
-#define UMINUS 292
-#define UINPUT 293
-#define UNEG 294
-#define UAND 295
+#define ATTR 286
+#define GE 287
+#define LE 288
+#define EQ 289
+#define NE 290
+#define UMINUS 291
+#define UINPUT 292
+#define UNEG 293
+#define UAND 294
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

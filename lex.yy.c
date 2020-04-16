@@ -1293,7 +1293,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 75 "minor.l"
-{trash = 0; if(has_program == 1){} return PROGRAM;};
+{trash = 0; if(has_program == 1){} return MODULE;};
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */

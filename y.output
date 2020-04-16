@@ -14,8 +14,8 @@
    9              | qualifier CONST variable ATTR literals
   10              | qualifier CONST variable
   11              | qualifier variable
-  12              | CONST variable
-  13              | CONST variable ATTR literals
+  12              | CONST variable ATTR literals
+  13              | CONST variable
   14              | variable ATTR literals
   15              | variable
 
@@ -113,8 +113,8 @@
   93             | '(' expression ')'
   94             | '[' expression ']'
   95             | IDENTIFICADOR '(' args ')'
-  96             | expression operator expression
-  97             | expression '[' expression ']'
+  96             | expression '[' expression ']'
+  97             | expression operator expression
 
   98  module : MODULE declarations END
   99         | MODULE END
@@ -228,8 +228,8 @@ state 6
 
 
 state 7
-	declaration : CONST . variable  (12)
-	declaration : CONST . variable ATTR literals  (13)
+	declaration : CONST . variable ATTR literals  (12)
+	declaration : CONST . variable  (13)
 
 	NUMBER  shift 8
 	ARRAY  shift 9
@@ -759,8 +759,8 @@ state 43
 	instruct : expression . '!'  (59)
 	instruct : expression . ';'  (60)
 	instruct : expression . '#' expression ';'  (65)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -787,13 +787,13 @@ state 43
 
 
 state 44
-	declaration : CONST variable .  (12)
-	declaration : CONST variable . ATTR literals  (13)
+	declaration : CONST variable . ATTR literals  (12)
+	declaration : CONST variable .  (13)
 
 	ATTR  shift 88
-	START  reduce 12
-	END  reduce 12
-	';'  reduce 12
+	START  reduce 13
+	END  reduce 13
+	';'  reduce 13
 
 
 state 45
@@ -966,8 +966,8 @@ state 56
 	instruct : IF expression . THEN instructs FI  (55)
 	instruct : IF expression . THEN elifs FI  (56)
 	instruct : IF expression . THEN FI  (57)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	THEN  shift 102
 	ATTR  shift 68
@@ -993,8 +993,8 @@ state 56
 
 state 57
 	instruct : FOR expression . UNTIL expression STEP expression DO instructs DONE  (58)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	UNTIL  shift 103
 	ATTR  shift 68
@@ -1023,8 +1023,8 @@ state 57
 58: shift/reduce conflict (shift 83, reduce 63) on '['
 state 58
 	instruct : RETURN expression .  (63)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1069,8 +1069,8 @@ state 58
 59: shift/reduce conflict (shift 86, reduce 89) on '='
 state 59
 	expression : '-' expression .  (89)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	'['  shift 83
 	'='  shift 86
@@ -1124,8 +1124,8 @@ state 59
 60: shift/reduce conflict (shift 86, reduce 90) on '='
 state 60
 	expression : '&' expression .  (90)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	'['  shift 83
 	'='  shift 86
@@ -1177,8 +1177,8 @@ state 60
 
 state 61
 	expression : '[' expression . ']'  (94)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1206,8 +1206,8 @@ state 61
 62: shift/reduce conflict (shift 86, reduce 88) on '='
 state 62
 	expression : '?' expression .  (88)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	'['  shift 83
 	'='  shift 86
@@ -1261,8 +1261,8 @@ state 62
 63: shift/reduce conflict (shift 86, reduce 91) on '='
 state 63
 	expression : '~' expression .  (91)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	'['  shift 83
 	'='  shift 86
@@ -1314,8 +1314,8 @@ state 63
 
 state 64
 	expression : '(' expression . ')'  (93)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1477,7 +1477,7 @@ state 82
 
 
 state 83
-	expression : expression '[' . expression ']'  (97)
+	expression : expression '[' . expression ']'  (96)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -1527,7 +1527,7 @@ state 86
 
 
 state 87
-	expression : expression operator . expression  (96)
+	expression : expression operator . expression  (97)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -1546,7 +1546,7 @@ state 87
 
 
 state 88
-	declaration : CONST variable ATTR . literals  (13)
+	declaration : CONST variable ATTR . literals  (12)
 
 	LITERAL_I  shift 22
 	LITERAL_S  shift 23
@@ -1673,8 +1673,8 @@ state 99
 
 state 100
 	args : expression .  (69)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1808,9 +1808,9 @@ state 107
 
 
 state 108
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
-	expression : expression '[' expression . ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression '[' expression . ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1836,8 +1836,8 @@ state 108
 
 state 109
 	instruct : expression '#' expression . ';'  (65)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1861,26 +1861,26 @@ state 109
 	operator  goto 87
 
 
-110: shift/reduce conflict (shift 68, reduce 96) on ATTR
-110: shift/reduce conflict (shift 69, reduce 96) on '^'
-110: shift/reduce conflict (shift 70, reduce 96) on GE
-110: shift/reduce conflict (shift 71, reduce 96) on LE
-110: shift/reduce conflict (shift 72, reduce 96) on NE
-110: shift/reduce conflict (shift 73, reduce 96) on '>'
-110: shift/reduce conflict (shift 74, reduce 96) on '<'
-110: shift/reduce conflict (shift 75, reduce 96) on '+'
-110: shift/reduce conflict (shift 76, reduce 96) on '-'
-110: shift/reduce conflict (shift 77, reduce 96) on '*'
-110: shift/reduce conflict (shift 78, reduce 96) on '/'
-110: shift/reduce conflict (shift 79, reduce 96) on '%'
-110: shift/reduce conflict (shift 80, reduce 96) on '&'
-110: shift/reduce conflict (shift 81, reduce 96) on '|'
-110: shift/reduce conflict (shift 83, reduce 96) on '['
-110: shift/reduce conflict (shift 86, reduce 96) on '='
+110: shift/reduce conflict (shift 68, reduce 97) on ATTR
+110: shift/reduce conflict (shift 69, reduce 97) on '^'
+110: shift/reduce conflict (shift 70, reduce 97) on GE
+110: shift/reduce conflict (shift 71, reduce 97) on LE
+110: shift/reduce conflict (shift 72, reduce 97) on NE
+110: shift/reduce conflict (shift 73, reduce 97) on '>'
+110: shift/reduce conflict (shift 74, reduce 97) on '<'
+110: shift/reduce conflict (shift 75, reduce 97) on '+'
+110: shift/reduce conflict (shift 76, reduce 97) on '-'
+110: shift/reduce conflict (shift 77, reduce 97) on '*'
+110: shift/reduce conflict (shift 78, reduce 97) on '/'
+110: shift/reduce conflict (shift 79, reduce 97) on '%'
+110: shift/reduce conflict (shift 80, reduce 97) on '&'
+110: shift/reduce conflict (shift 81, reduce 97) on '|'
+110: shift/reduce conflict (shift 83, reduce 97) on '['
+110: shift/reduce conflict (shift 86, reduce 97) on '='
 state 110
-	expression : expression . operator expression  (96)
-	expression : expression operator expression .  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
+	expression : expression operator expression .  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -1898,40 +1898,40 @@ state 110
 	'|'  shift 81
 	'['  shift 83
 	'='  shift 86
-	LITERAL_I  reduce 96
-	LITERAL_S  reduce 96
-	LITERAL_C  reduce 96
-	IDENTIFICADOR  reduce 96
-	START  reduce 96
-	END  reduce 96
-	IF  reduce 96
-	THEN  reduce 96
-	ELSE  reduce 96
-	ELIF  reduce 96
-	FI  reduce 96
-	FOR  reduce 96
-	UNTIL  reduce 96
-	STEP  reduce 96
-	DO  reduce 96
-	DONE  reduce 96
-	REPEAT  reduce 96
-	STOP  reduce 96
-	RETURN  reduce 96
-	';'  reduce 96
-	','  reduce 96
-	']'  reduce 96
-	'!'  reduce 96
-	'#'  reduce 96
-	'?'  reduce 96
-	'~'  reduce 96
-	'('  reduce 96
-	')'  reduce 96
+	LITERAL_I  reduce 97
+	LITERAL_S  reduce 97
+	LITERAL_C  reduce 97
+	IDENTIFICADOR  reduce 97
+	START  reduce 97
+	END  reduce 97
+	IF  reduce 97
+	THEN  reduce 97
+	ELSE  reduce 97
+	ELIF  reduce 97
+	FI  reduce 97
+	FOR  reduce 97
+	UNTIL  reduce 97
+	STEP  reduce 97
+	DO  reduce 97
+	DONE  reduce 97
+	REPEAT  reduce 97
+	STOP  reduce 97
+	RETURN  reduce 97
+	';'  reduce 97
+	','  reduce 97
+	']'  reduce 97
+	'!'  reduce 97
+	'#'  reduce 97
+	'?'  reduce 97
+	'~'  reduce 97
+	'('  reduce 97
+	')'  reduce 97
 
 	operator  goto 87
 
 
 state 111
-	declaration : CONST variable ATTR literals .  (13)
+	declaration : CONST variable ATTR literals .  (12)
 	literals : literals . literal  (17)
 	literals : literals . ',' literal  (18)
 
@@ -1939,9 +1939,9 @@ state 111
 	LITERAL_S  shift 23
 	LITERAL_C  shift 24
 	','  shift 122
-	START  reduce 13
-	END  reduce 13
-	';'  reduce 13
+	START  reduce 12
+	END  reduce 12
+	';'  reduce 12
 
 	literal  goto 123
 
@@ -2227,8 +2227,8 @@ state 131
 
 state 132
 	instruct : FOR expression UNTIL expression . STEP expression DO instructs DONE  (58)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	STEP  shift 158
 	ATTR  shift 68
@@ -2253,9 +2253,9 @@ state 132
 
 
 state 133
-	expression : expression '[' expression ']' .  (97)
+	expression : expression '[' expression ']' .  (96)
 
-	.  reduce 97
+	.  reduce 96
 
 
 state 134
@@ -2496,8 +2496,8 @@ state 150
 
 state 151
 	args : args ',' expression .  (70)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	ATTR  shift 68
 	'^'  shift 69
@@ -2523,8 +2523,8 @@ state 151
 
 state 152
 	elif : ELIF expression . THEN instructs  (68)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	THEN  shift 167
 	ATTR  shift 68
@@ -2813,8 +2813,8 @@ state 170
 
 state 171
 	instruct : FOR expression UNTIL expression STEP expression . DO instructs DONE  (58)
-	expression : expression . operator expression  (96)
-	expression : expression . '[' expression ']'  (97)
+	expression : expression . '[' expression ']'  (96)
+	expression : expression . operator expression  (97)
 
 	DO  shift 177
 	ATTR  shift 68
@@ -2987,5 +2987,5 @@ State 63 contains 2 shift/reduce conflicts.
 State 110 contains 16 shift/reduce conflicts.
 
 
-62 terminals, 21 nonterminals
+61 terminals, 21 nonterminals
 100 grammar rules, 181 states
