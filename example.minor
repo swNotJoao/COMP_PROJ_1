@@ -5,7 +5,7 @@ program
 
 public const number my_number := 1999 ;
 number var_1;
-number var_3 := 12, 231, 23, "string", 'alsostr', 'c';
+number var_3 := 12, 231, 23, "string", "alsostr", 'c';
 string var_2;
 
 function forward number atoi string s done;
