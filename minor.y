@@ -39,7 +39,7 @@ int lbl;
 %left GE LE EQ NE '>' '<'
 %left '+' '-'
 %left '*' '/' '%' '&' '|'
-%nonassoc UMINUS  '?' '~' UAND
+%nonassoc UMINUS  UINPUT UNEG UAND
 
 %type <n> file program module declarations declaration instructs instruct
 
@@ -80,7 +80,6 @@ literal : LITERAL_I {;}
 
 function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
 	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
-	| FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
 	| FUNCTION qualifier type IDENTIFICADOR	DO body {;}
 	| FUNCTION qualifier type IDENTIFICADOR	DONE {;}
 	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
@@ -150,33 +149,34 @@ args : expression {;}
 	| args ',' expression {;}
 	;
 
-expression	: '?' expression %prec '?' {;}
-	| '-' expression %prec UMINUS		  {;}
-	| '&' expression %prec UAND	{;}
-	| '~' expression %prec '~' {;}
+operator : '^' {;}
+	|  '&' 	{;}
+	|  '|' 	{;}
+	|  '+' 	{;}
+	|  '-' 	{;}
+	|  '*' 	{;}
+	|  '/' 	{;}
+	|  '%' 	{;}
+	|  '<' 	{;}
+	|  '>' 	{;}
+	|  '=' 	{;}
+	|  GE 	{;}
+	|  LE 	{;}
+	|  NE 	{;}
+	| ATTR {;}
+
+expression	: IDENTIFICADOR {;}
+	| literal {;}
+	| '?' expression %prec UINPUT {;}
+	| '-' expression %prec UMINUS {;}
+	| '&' expression %prec UINPUT {;}
+	| '~' expression %prec UNEG {;}
 	| '?' {;}
-	| expression '^' expression			  {;}
-	| expression '&' expression			  {;}
-	| expression '|' expression			  {;}
-	| expression '+' expression			  {;}
-	| expression '-' expression			  {;}
-	| expression '*' expression			  {;}
-	| expression '/' expression			  {;}
-	| expression '%' expression			  {;}
-	| expression '<' expression			  {;}
-	| expression '>' expression			  {;}
-	| expression '=' expression			  {;}
-	| expression GE expression			  {;}
-	| expression LE expression			  {;}
-	| expression NE expression			  {;}
 	| '(' expression ')'			  {;}
 	| '[' expression ']' {;}
-	| literals {;}
-	| IDENTIFICADOR			  {;}
 	| IDENTIFICADOR '(' args ')' {;}
-	| expression '[' expression ']' ATTR expression {;}
-	| IDENTIFICADOR ATTR expression {;}
-	| expression '[' expression ']'
+	| expression operator expression {;}
+	| expression '[' expression ']' {;}
 	;
 
 

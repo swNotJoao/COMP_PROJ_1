@@ -8,18 +8,28 @@
 char *dupstr(const char *s);
 extern void yyerror(const char *msg);
 int has_program = 0;
+int trash = 1;
 
 %}
 
-%%
+%s ACTUAL_PROGRAM TRASH
 
+%%
+  if(trash){
+    BEGIN TRASH;
+  }
+  else{
+    BEGIN ACTUAL_PROGRAM;
+  }
+
+<ACTUAL_PROGRAM>{
 \$\$.*			;
 \$([^\$]|\$\$)*\$	;
 
 "program" {if(has_program == 0){has_program = 1; return PROGRAM;} return IDENTIFICADOR;};
 "module" return MODULE;
 "start" return START;
-"end" return END;
+"end" {trash = 1; return END;}
 "void" return VOID;
 "const" return CONST;
 "number" return NUMBER;
@@ -57,6 +67,15 @@ int has_program = 0;
 [ \t\n\r]+		;
 
 .			yyerror("Unknown Character");
+}
+
+<TRASH>{
+"program" {trash = 0; if(has_program == 1){} return PROGRAM;};
+"module" {trash = 0; if(has_program == 1){} return PROGRAM;};
+
+.|\n ;
+}
+
 %%
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }

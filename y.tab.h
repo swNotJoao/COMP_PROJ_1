@@ -34,7 +34,9 @@
 #define EQ 290
 #define NE 291
 #define UMINUS 292
-#define UAND 293
+#define UINPUT 293
+#define UNEG 294
+#define UAND 295
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
