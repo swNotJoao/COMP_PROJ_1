@@ -12,7 +12,7 @@ int trash = 1;
 
 %}
 
-%s ACTUAL_PROGRAM TRASH
+%x ACTUAL_PROGRAM TRASH
 
 %%
   if(trash){
@@ -70,8 +70,8 @@ int trash = 1;
 }
 
 <TRASH>{
-"program" {trash = 0; if(has_program == 1){} return PROGRAM;};
-"module" {trash = 0; if(has_program == 1){} return MODULE;};
+"program"[ \n\r\t] {trash = 0; has_program = 1; if(has_program == 1){} return PROGRAM;};
+"module"[ \n\r\t] {trash = 0; if(has_program == 1){} return MODULE;};
 
 .|\n ;
 }

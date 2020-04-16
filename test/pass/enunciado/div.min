@@ -1,3 +1,4 @@
+Este programa calcula os divisores de um numero inteiro lido do terminal.
 program $$ div
 number i;
 number n;

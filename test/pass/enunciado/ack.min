@@ -1,10 +1,4 @@
-lsadkajdk
-nodeStatedsa
-dasdas
-dasdasasd
-dasdasdadsa
-d
-
+Funcao de ackermann: nao usar argumentos superiores a m=3 n=12
 program $ ackermann $
 number cnt := 0;
 function forward number atoi string s done;
@@ -20,3 +14,4 @@ start
      ackermann(atoi(argv(1)), atoi(argv(2)))! " #"! cnt! "\n"!
   fi
 end
+Fim da funcao de ackermann

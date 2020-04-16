@@ -51,6 +51,7 @@ file : program {;}
 program : PROGRAM declarations START body END {;}
 	| PROGRAM declarations START END {;}
 	| PROGRAM START body END {;}
+	| PROGRAM START END {;}
 	;
 
 declarations : declaration {;}
@@ -174,6 +175,7 @@ expression	: IDENTIFICADOR {;}
 	| '(' expression ')'			  {;}
 	| '[' expression ']' {;}
 	| IDENTIFICADOR '(' args ')' {;}
+	| expression literal {;}
 	| expression '[' expression ']' {;}
 	| expression operator expression {;}
 	;
