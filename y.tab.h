@@ -27,16 +27,22 @@
 #define REPEAT 283
 #define STOP 284
 #define RETURN 285
-#define ATTR 286
-#define GE 287
-#define LE 288
-#define EQ 289
-#define NE 290
-#define ULOCATION 291
-#define UMINUS 292
-#define UINPUT 293
-#define UNEG 294
-#define UAND 295
+#define DECLARATIONS 286
+#define DECLARATION 287
+#define BODY 288
+#define NIL 289
+#define VAR 290
+#define LITERAL 291
+#define ATTR 292
+#define GE 293
+#define LE 294
+#define EQ 295
+#define NE 296
+#define ULOCATION 297
+#define UMINUS 298
+#define UINPUT 299
+#define UNEG 300
+#define UAND 301
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

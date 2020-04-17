@@ -33,6 +33,8 @@ int lbl;
 %token IF THEN ELSE ELIF FI FOR UNTIL STEP DO DONE REPEAT STOP
 %token RETURN
 
+%token DECLARATIONS DECLARATION BODY NIL VAR LITERAL
+
 %nonassoc ELSE
 %right ATTR '^'
 %left GE LE EQ NE '>' '<'
@@ -50,38 +52,38 @@ file : program {;}
 	| module {;}
 	;
 
-program : PROGRAM declarations START body END {;}
-	| PROGRAM declarations START END {;}
-	| PROGRAM START body END {;}
+program : PROGRAM declarations START body END {$$ = binNode(PROGRAM, $2, $4);}
+	| PROGRAM declarations START END {printNode(uniNode(PROGRAM, $2), 0, (char**)yyname);}
+	| PROGRAM START body END {uniNode(PROGRAM, $3);}
 	;
 
-module : MODULE declarations END {;}
-	| MODULE END {;}
+module : MODULE declarations END {printNode(uniNode(MODULE, $2), 0, (char**)yyname);}
+	| MODULE END {printNode(nilNode(NIL), 0, (char**)yyname);}
 	;
 
-declarations : declaration {;}
-	| declarations ';' declaration {;}
+declarations : declaration {$$ = uniNode(DECLARATION, $1);}
+	| declarations ';' declaration {$$ = binNode(DECLARATIONS, $1, $3);}
 	;
 
-declaration : function {;}
-	| qualifier CONST variable ATTR literals {;}
-	| qualifier CONST variable ATTR int_vec {;}
-	| qualifier CONST variable {;}
-	| qualifier variable{;}
-	| CONST variable ATTR literals {;}
-	| CONST variable ATTR int_vec {;}
-	| CONST variable {;}
-	| variable ATTR literals {;}
-	| variable ATTR int_vec {;}
-	| variable {;}
+declaration : function {$$ = uniNode(FUNCTION, $1);}
+	| qualifier CONST variable ATTR literals {$$ = binNode(CONST, $3, $5);}
+	| qualifier CONST variable ATTR int_vec {$$ = binNode(CONST, $3, $5);}
+	| qualifier CONST variable {$$ = uniNode(CONST, $3);}
+	| qualifier variable {$$ = uniNode(VAR, $2);}
+	| CONST variable ATTR literals {$$ = binNode(CONST, $2, $4);}
+	| CONST variable ATTR int_vec {$$ = binNode(CONST, $2, $4);}
+	| CONST variable {$$ = uniNode(CONST, $2);}
+	| variable ATTR literals {$$ = binNode(ATTR, $1, $3);}
+	| variable ATTR int_vec {$$ = binNode(ATTR, $1, $3);}
+	| variable {$$ = uniNode(VAR, $1);}
 	;
 
-literals : literal {;}
-	| literals literal {;}
+literals : literal {$$ = uniNode(LITERAL, $1);}
+	| literals literal {$$ = binNode(LITERAL, $1, $2);}
 	;
 
-int_vec : LITERAL_I {;}
-	| int_vec ',' LITERAL_I {;}
+int_vec : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
+	| int_vec ',' LITERAL_I {$$ = binNode(',', $1, intNode(LITERAL_I, $3));}
 	;
 
 literal : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
@@ -107,30 +109,30 @@ function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
 	| FUNCTION VOID IDENTIFICADOR	DONE {;}
 	;
 
-qualifier : PUBLIC {;}
-	| FORWARD {;}
+qualifier : PUBLIC {$$ = nilNode(NIL);}
+	| FORWARD {$$ = nilNode(NIL);}
 	;
 
-variables : variable {;}
-	| variables ';' variable {;}
+variables : variable {$$ = uniNode(VAR, $1);}
+	| variables ';' variable {$$ = binNode(';', $1, $3);}
 	;
 
-variable : type IDENTIFICADOR '[' LITERAL_I ']' {;}
-	| type IDENTIFICADOR {;}
+variable : type IDENTIFICADOR '[' LITERAL_I ']' {$$ = triNode('[', $1, strNode(IDENTIFICADOR, $2), intNode(LITERAL_I, $4));}
+	| type IDENTIFICADOR {$$ = binNode(IDENTIFICADOR, $1, strNode(IDENTIFICADOR, $2));}
 	;
 
-type : NUMBER {;}
-	| STRING {;}
-	| ARRAY {;}
+type : NUMBER {$$ = nilNode(NUMBER);}
+	| STRING {$$ = nilNode(STRING);}
+	| ARRAY {$$ = nilNode(ARRAY);}
 	;
 
-body : variables ';' instructs {;}
-	| variables ';' {;}
-	| instructs {;}
+body : variables ';' instructs {$$ = binNode(';', $1, $3);}
+	| variables ';' {$$ = uniNode(';', $1);}
+	| instructs {$$ = uniNode(';', $1);}
 	;
 
-instructs : instruct {;}
-	| instructs instruct {;}
+instructs : instruct {$$ = uniNode(';', $1);}
+	| instructs instruct {$$ = binNode(';', $1, $2);}
 	;
 
 instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
