@@ -1130,7 +1130,7 @@ case 2:
 break;
 case 3:
 #line 55 "minor.y"
-	{yyval.n = binNode(PROGRAM, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
+	{printNode(binNode(PROGRAM, yystack.l_mark[-3].n, yystack.l_mark[-1].n), 0, (char**)yyname);}
 break;
 case 4:
 #line 56 "minor.y"
@@ -1138,7 +1138,7 @@ case 4:
 break;
 case 5:
 #line 57 "minor.y"
-	{uniNode(PROGRAM, yystack.l_mark[-1].n);}
+	{printNode(uniNode(PROGRAM, yystack.l_mark[-1].n), 0, (char**)yyname);}
 break;
 case 6:
 #line 60 "minor.y"
@@ -1230,75 +1230,75 @@ case 27:
 break;
 case 28:
 #line 94 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, yystack.l_mark[-4].n, yystack.l_mark[-3].n, strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[-1].n);}
 break;
 case 29:
 #line 95 "minor.y"
-	{;}
+	{yyval.n = pentNode(FUNCTION, yystack.l_mark[-5].n, yystack.l_mark[-4].n, strNode(IDENTIFICADOR, yystack.l_mark[-3].s), yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 30:
 #line 96 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, yystack.l_mark[-4].n, yystack.l_mark[-3].n, strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[0].n);}
 break;
 case 31:
 #line 97 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, yystack.l_mark[-3].n, yystack.l_mark[-2].n, strNode(IDENTIFICADOR, yystack.l_mark[-1].s));}
 break;
 case 32:
 #line 98 "minor.y"
-	{;}
+	{yyval.n = pentNode(FUNCTION, yystack.l_mark[-5].n, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-3].s), yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 33:
 #line 99 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, yystack.l_mark[-4].n, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[-1].n);}
 break;
 case 34:
 #line 100 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, yystack.l_mark[-4].n, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[0].n);}
 break;
 case 35:
 #line 101 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, yystack.l_mark[-3].n, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-1].s));}
 break;
 case 36:
 #line 102 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, yystack.l_mark[-4].n, strNode(IDENTIFICADOR, yystack.l_mark[-3].s), yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 37:
 #line 103 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, yystack.l_mark[-3].n, strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[-1].n);}
 break;
 case 38:
 #line 104 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, yystack.l_mark[-3].n, strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[0].n);}
 break;
 case 39:
 #line 105 "minor.y"
-	{;}
+	{yyval.n = binNode(FUNCTION, yystack.l_mark[-2].n, strNode(IDENTIFICADOR, yystack.l_mark[-1].s));}
 break;
 case 40:
 #line 106 "minor.y"
-	{;}
+	{yyval.n = quadNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-3].s), yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 41:
 #line 107 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[-1].n);}
 break;
 case 42:
 #line 108 "minor.y"
-	{;}
+	{yyval.n = triNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-2].s), yystack.l_mark[0].n);}
 break;
 case 43:
 #line 109 "minor.y"
-	{;}
+	{yyval.n = binNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, yystack.l_mark[-1].s));}
 break;
 case 44:
 #line 112 "minor.y"
-	{yyval.n = nilNode(NIL);}
+	{yyval.n = uniNode(PUBLIC, nilNode(NIL));}
 break;
 case 45:
 #line 113 "minor.y"
-	{yyval.n = nilNode(NIL);}
+	{yyval.n = uniNode(FORWARD, nilNode(NIL));}
 break;
 case 46:
 #line 116 "minor.y"
@@ -1350,79 +1350,79 @@ case 57:
 break;
 case 58:
 #line 138 "minor.y"
-	{;}
+	{yyval.n = quadNode(IF, yystack.l_mark[-6].n, yystack.l_mark[-4].n, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 59:
 #line 139 "minor.y"
-	{;}
+	{yyval.n = triNode(IF, yystack.l_mark[-5].n, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 60:
 #line 140 "minor.y"
-	{;}
+	{yyval.n = triNode(IF, yystack.l_mark[-4].n, yystack.l_mark[-2].n, yystack.l_mark[-1].n);}
 break;
 case 61:
 #line 141 "minor.y"
-	{;}
+	{yyval.n = binNode(IF, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 62:
 #line 142 "minor.y"
-	{;}
+	{yyval.n = binNode(IF, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 63:
 #line 143 "minor.y"
-	{;}
+	{yyval.n = uniNode(IF, yystack.l_mark[-2].n);}
 break;
 case 64:
 #line 144 "minor.y"
-	{;}
+	{yyval.n = quadNode(FOR, yystack.l_mark[-7].n, yystack.l_mark[-5].n, yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 65:
 #line 145 "minor.y"
-	{;}
+	{yyval.n = uniNode('!', yystack.l_mark[-1].n);}
 break;
 case 66:
 #line 146 "minor.y"
-	{;}
+	{yyval.n = uniNode(';', yystack.l_mark[-1].n);}
 break;
 case 67:
 #line 147 "minor.y"
-	{;}
+	{yyval.n = uniNode('!', yystack.l_mark[-1].n);}
 break;
 case 68:
 #line 148 "minor.y"
-	{;}
+	{yyval.n = uniNode(REPEAT, nilNode(NIL));}
 break;
 case 69:
 #line 149 "minor.y"
-	{;}
+	{yyval.n = uniNode(STOP, nilNode(NIL));}
 break;
 case 70:
 #line 150 "minor.y"
-	{;}
+	{yyval.n = uniNode(RETURN, yystack.l_mark[0].n);}
 break;
 case 71:
 #line 151 "minor.y"
-	{;}
+	{yyval.n = uniNode(RETURN, nilNode(NIL));}
 break;
 case 72:
 #line 152 "minor.y"
-	{;}
+	{yyval.n = binNode('#', yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 73:
 #line 155 "minor.y"
-	{;}
+	{yyval.n = uniNode(' ', yystack.l_mark[0].n);}
 break;
 case 74:
 #line 156 "minor.y"
-	{;}
+	{yyval.n = binNode(' ', yystack.l_mark[-1].n, yystack.l_mark[0].n);}
 break;
 case 75:
 #line 159 "minor.y"
-	{;}
+	{yyval.n = binNode(ELIF, yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 76:
 #line 162 "minor.y"
-	{yyval.n = yystack.l_mark[0].n;}
+	{yyval.n = uniNode(',', yystack.l_mark[0].n);}
 break;
 case 77:
 #line 163 "minor.y"
@@ -1430,7 +1430,7 @@ case 77:
 break;
 case 78:
 #line 166 "minor.y"
-	{yyval.n = nilNode(UINPUT);}
+	{yyval.n = uniNode(UINPUT, nilNode(NIL));}
 break;
 case 79:
 #line 167 "minor.y"
@@ -1438,7 +1438,7 @@ case 79:
 break;
 case 80:
 #line 168 "minor.y"
-	{;}
+	{yyval.n = binNode('(', strNode(IDENTIFICADOR, yystack.l_mark[-3].s), yystack.l_mark[-1].n);}
 break;
 case 81:
 #line 169 "minor.y"
@@ -1446,15 +1446,15 @@ case 81:
 break;
 case 82:
 #line 170 "minor.y"
-	{yyval.n = yystack.l_mark[0].n;}
+	{yyval.n = uniNode(LITERAL, yystack.l_mark[0].n);}
 break;
 case 83:
 #line 171 "minor.y"
-	{yyval.n = yystack.l_mark[-1].n;}
+	{yyval.n = uniNode('(', yystack.l_mark[-1].n);}
 break;
 case 84:
 #line 172 "minor.y"
-	{;}
+	{yyval.n = binNode('[', yystack.l_mark[-3].n, yystack.l_mark[-1].n);}
 break;
 case 85:
 #line 173 "minor.y"

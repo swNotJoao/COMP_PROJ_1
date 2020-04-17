@@ -52,9 +52,9 @@ file : program {;}
 	| module {;}
 	;
 
-program : PROGRAM declarations START body END {$$ = binNode(PROGRAM, $2, $4);}
+program : PROGRAM declarations START body END {printNode(binNode(PROGRAM, $2, $4), 0, (char**)yyname);}
 	| PROGRAM declarations START END {printNode(uniNode(PROGRAM, $2), 0, (char**)yyname);}
-	| PROGRAM START body END {uniNode(PROGRAM, $3);}
+	| PROGRAM START body END {printNode(uniNode(PROGRAM, $3), 0, (char**)yyname);}
 	;
 
 module : MODULE declarations END {printNode(uniNode(MODULE, $2), 0, (char**)yyname);}
@@ -91,26 +91,26 @@ literal : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
 	| LITERAL_S {$$ = strNode(LITERAL_S, $1);}
 	;
 
-function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
-	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {;}
-	| FUNCTION qualifier type IDENTIFICADOR	DO body {;}
-	| FUNCTION qualifier type IDENTIFICADOR	DONE {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR variables	DONE {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR	DO body {;}
-	| FUNCTION qualifier VOID IDENTIFICADOR	DONE {;}
-	| FUNCTION type IDENTIFICADOR variables	DO body {;}
-	| FUNCTION type IDENTIFICADOR variables	DONE {;}
-	| FUNCTION type IDENTIFICADOR	DO body {;}
-	| FUNCTION type IDENTIFICADOR	DONE {;}
-	| FUNCTION VOID IDENTIFICADOR variables	DO body {;}
-	| FUNCTION VOID IDENTIFICADOR variables	DONE {;}
-	| FUNCTION VOID IDENTIFICADOR	DO body {;}
-	| FUNCTION VOID IDENTIFICADOR	DONE {;}
+function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {$$ = quadNode(FUNCTION, $2, $3, strNode(IDENTIFICADOR, $4), $5);}
+	| FUNCTION qualifier type IDENTIFICADOR variables	DO body {$$ = pentNode(FUNCTION, $2, $3, strNode(IDENTIFICADOR, $4), $5, $7);}
+	| FUNCTION qualifier type IDENTIFICADOR	DO body {$$ = quadNode(FUNCTION, $2, $3, strNode(IDENTIFICADOR, $4), $6);}
+	| FUNCTION qualifier type IDENTIFICADOR	DONE {$$ = triNode(FUNCTION, $2, $3, strNode(IDENTIFICADOR, $4));}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DO body {$$ = pentNode(FUNCTION, $2, nilNode(VOID), strNode(IDENTIFICADOR, $4), $5, $7);}
+	| FUNCTION qualifier VOID IDENTIFICADOR variables	DONE {$$ = quadNode(FUNCTION, $2, nilNode(VOID), strNode(IDENTIFICADOR, $4), $5);}
+	| FUNCTION qualifier VOID IDENTIFICADOR	DO body {$$ = quadNode(FUNCTION, $2, nilNode(VOID), strNode(IDENTIFICADOR, $4), $6);}
+	| FUNCTION qualifier VOID IDENTIFICADOR	DONE {$$ = triNode(FUNCTION, $2, nilNode(VOID), strNode(IDENTIFICADOR, $4));}
+	| FUNCTION type IDENTIFICADOR variables	DO body {$$ = quadNode(FUNCTION, $2, strNode(IDENTIFICADOR, $3), $4, $6);}
+	| FUNCTION type IDENTIFICADOR variables	DONE {$$ = triNode(FUNCTION, $2, strNode(IDENTIFICADOR, $3), $4);}
+	| FUNCTION type IDENTIFICADOR	DO body {$$ = triNode(FUNCTION, $2, strNode(IDENTIFICADOR, $3), $5);}
+	| FUNCTION type IDENTIFICADOR	DONE {$$ = binNode(FUNCTION, $2, strNode(IDENTIFICADOR, $3));}
+	| FUNCTION VOID IDENTIFICADOR variables	DO body {$$ = quadNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, $3), $4, $6);}
+	| FUNCTION VOID IDENTIFICADOR variables	DONE {$$ = triNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, $3), $4);}
+	| FUNCTION VOID IDENTIFICADOR	DO body {$$ = triNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, $3), $5);}
+	| FUNCTION VOID IDENTIFICADOR	DONE {$$ = binNode(FUNCTION, nilNode(VOID), strNode(IDENTIFICADOR, $3));}
 	;
 
-qualifier : PUBLIC {$$ = nilNode(NIL);}
-	| FORWARD {$$ = nilNode(NIL);}
+qualifier : PUBLIC {$$ = uniNode(PUBLIC, nilNode(NIL));}
+	| FORWARD {$$ = uniNode(FORWARD, nilNode(NIL));}
 	;
 
 variables : variable {$$ = uniNode(VAR, $1);}
@@ -135,41 +135,41 @@ instructs : instruct {$$ = uniNode(';', $1);}
 	| instructs instruct {$$ = binNode(';', $1, $2);}
 	;
 
-instruct : IF expression THEN instructs elifs ELSE instructs FI {;}
-	| IF expression THEN instructs ELSE instructs FI {;}
-	| IF expression THEN instructs elifs FI {;}
-	| IF expression THEN instructs FI {;}
-	| IF expression THEN elifs FI {;}
-	| IF expression THEN FI {;}
-	| FOR expression UNTIL expression STEP expression DO instructs DONE {;}
-	| expression '!' {;}
-	| expression ';' {;}
-	| literals '!' {;}
-	| REPEAT {;}
-	| STOP {;}
-	| RETURN expression {;}
-	| RETURN {;}
-	| expression '#' expression ';' {;}
+instruct : IF expression THEN instructs elifs ELSE instructs FI {$$ = quadNode(IF, $2, $4, $5, $7);}
+	| IF expression THEN instructs ELSE instructs FI {$$ = triNode(IF, $2, $4, $6);}
+	| IF expression THEN instructs elifs FI {$$ = triNode(IF, $2, $4, $5);}
+	| IF expression THEN instructs FI {$$ = binNode(IF, $2, $4);}
+	| IF expression THEN elifs FI {$$ = binNode(IF, $2, $4);}
+	| IF expression THEN FI {$$ = uniNode(IF, $2);}
+	| FOR expression UNTIL expression STEP expression DO instructs DONE {$$ = quadNode(FOR, $2, $4, $6, $8);}
+	| expression '!' {$$ = uniNode('!', $1);}
+	| expression ';' {$$ = uniNode(';', $1);}
+	| literals '!' {$$ = uniNode('!', $1);}
+	| REPEAT {$$ = uniNode(REPEAT, nilNode(NIL));}
+	| STOP {$$ = uniNode(STOP, nilNode(NIL));}
+	| RETURN expression {$$ = uniNode(RETURN, $2);}
+	| RETURN {$$ = uniNode(RETURN, nilNode(NIL));}
+	| expression '#' expression ';' {$$ = binNode('#', $1, $3);}
 	;
 
-elifs : elif {;}
-	| elifs elif {;}
+elifs : elif {$$ = uniNode(' ', $1);}
+	| elifs elif {$$ = binNode(' ', $1, $2);}
 	;
 
-elif : ELIF expression THEN instructs {;}
+elif : ELIF expression THEN instructs {$$ = binNode(ELIF, $2, $4);}
 	;
 
-args : expression {$$ = $1;}
+args : expression {$$ = uniNode(',', $1);}
 	| args ',' expression {$$ = binNode(',', $1, $3);}
 	;
 
-expression	: '?'  {$$ = nilNode(UINPUT);}
+expression	: '?'  {$$ = uniNode(UINPUT, nilNode(NIL));}
 	| '~' expression %prec UNEG {$$ = uniNode(UNEG, $2);}
-	|	IDENTIFICADOR '(' args ')' {;}
+	|	IDENTIFICADOR '(' args ')' {$$ = binNode('(', strNode(IDENTIFICADOR, $1), $3);}
 	| IDENTIFICADOR {$$ = strNode(IDENTIFICADOR, $1);}
-	|	literal {$$ = $1;}
-	| '(' expression ')' {$$ = $2;}
-	| expression '[' expression ']' {;}
+	|	literal {$$ = uniNode(LITERAL, $1);}
+	| '(' expression ')' {$$ = uniNode('(', $2);}
+	| expression '[' expression ']' {$$ = binNode('[', $1, $3);}
 	| expression '+' expression {$$ = binNode('+', $1, $3);}
 	| expression '-' expression {$$ = binNode('-', $1, $3);}
 	| '-' expression %prec UMINUS {$$ = uniNode(UMINUS, $2);}
