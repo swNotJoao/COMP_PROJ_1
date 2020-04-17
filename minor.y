@@ -40,7 +40,9 @@ int lbl;
 %left '*' '/' '%' '&' '|' ULOCATION
 %nonassoc UMINUS UINPUT UNEG UAND
 
-%type <n> file program module declarations declaration instructs instruct
+%type <n> file program module declarations declaration instructs instruct expression
+%type <n> literals int_vec literal function qualifier type variable variables
+%type <n> elif elifs args body
 
 %%
 
@@ -82,9 +84,9 @@ int_vec : LITERAL_I {;}
 	| int_vec ',' LITERAL_I {;}
 	;
 
-literal : LITERAL_I {;}
-	| LITERAL_C {/*$$ = yylval.s[0])*/;}
-	| LITERAL_S {;}
+literal : LITERAL_I {$$ = intNode(LITERAL_I, $1);}
+	| LITERAL_C {$$ = intNode(LITERAL_C, $1);}
+	| LITERAL_S {$$ = strNode(LITERAL_S, $1);}
 	;
 
 function: FUNCTION qualifier type IDENTIFICADOR variables	DONE {;}
@@ -155,34 +157,34 @@ elifs : elif {;}
 elif : ELIF expression THEN instructs {;}
 	;
 
-args : expression {;}
-	| args ',' expression {;}
+args : expression {$$ = $1;}
+	| args ',' expression {$$ = binNode(',', $1, $3);}
 	;
 
-expression	: '?' {;}
-	| '~' expression %prec UNEG {;}
+expression	: '?'  {$$ = nilNode(UINPUT);}
+	| '~' expression %prec UNEG {$$ = uniNode(UNEG, $2);}
 	|	IDENTIFICADOR '(' args ')' {;}
-	| IDENTIFICADOR {;}
-	|	literal {;}
-	| '(' expression ')' {;}
+	| IDENTIFICADOR {$$ = strNode(IDENTIFICADOR, $1);}
+	|	literal {$$ = $1;}
+	| '(' expression ')' {$$ = $2;}
 	| expression '[' expression ']' {;}
-	| expression '+' expression {;}
-	| expression '-' expression {;}
-	| '-' expression %prec UMINUS {;}
-	| expression '*' expression {;}
-	| expression '/' expression {;}
-	| expression '%' expression {;}
-	| expression '^' expression {;}
-	| expression '>' expression {;}
-	| expression '<' expression {;}
-	| expression '=' expression {;}
-	| expression '|' expression {;}
-	| expression '&' expression {;}
-	| '&' expression %prec ULOCATION {;}
-	| expression GE expression {;}
-	| expression LE expression {;}
-	| expression NE expression {;}
-	| expression ATTR expression {;}
+	| expression '+' expression {$$ = binNode('+', $1, $3);}
+	| expression '-' expression {$$ = binNode('-', $1, $3);}
+	| '-' expression %prec UMINUS {$$ = uniNode(UMINUS, $2);}
+	| expression '*' expression {$$ = binNode('*', $1, $3);}
+	| expression '/' expression {$$ = binNode('/', $1, $3);}
+	| expression '%' expression {$$ = binNode('%', $1, $3);}
+	| expression '^' expression {$$ = binNode('^', $1, $3);}
+	| expression '>' expression {$$ = binNode('>', $1, $3);}
+	| expression '<' expression {$$ = binNode('<', $1, $3);}
+	| expression '=' expression {$$ = binNode('=', $1, $3);}
+	| expression '|' expression {$$ = binNode('|', $1, $3);}
+	| expression '&' expression {$$ = binNode('&', $1, $3);}
+	| '&' expression %prec ULOCATION {$$ = uniNode(ULOCATION, $2);}
+	| expression GE expression {$$ = binNode(GE, $1, $3);}
+	| expression LE expression {$$ = binNode(LE, $1, $3);}
+	| expression NE expression {$$ = binNode(NE, $1, $3);}
+	| expression ATTR expression {$$ = binNode(ATTR, $1, $3);}
 	;
 
 %%
